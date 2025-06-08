@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useFrame } from '@react-three/fiber';
-import { Torus, Sphere, Cylinder, PerspectiveCamera } from '@react-three/drei';
+import { PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface Logo3DProps {
@@ -73,8 +73,8 @@ export const Logo3D = ({ isScrolled }: Logo3DProps) => {
       className={`
         fixed z-10 transition-all duration-700 ease-out
         ${isScrolled 
-          ? 'top-8 right-8 w-24 h-24 md:w-32 md:h-32' 
-          : 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[500px] md:h-[500px]'
+          ? 'top-1/2 right-8 -translate-y-1/2 w-32 h-32 md:w-40 md:h-40' 
+          : 'top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[400px] md:h-[400px]'
         }
       `}
     >
