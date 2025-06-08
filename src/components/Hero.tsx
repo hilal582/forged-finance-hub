@@ -4,11 +4,11 @@ import { Button } from '@/components/ui/button';
 import { Logo3D } from './Logo3D';
 
 export const Hero = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 100);
+      setScrollY(window.scrollY);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -32,77 +32,73 @@ export const Hero = () => {
         </div>
       </header>
 
-      <Logo3D isScrolled={isScrolled} />
+      <Logo3D scrollY={scrollY} />
       
-      <section className="min-h-screen relative overflow-hidden bg-gradient-to-br from-background via-finance-gray-900 to-background">
-        {/* Initial Content */}
-        <div className={`transition-all duration-1000 ease-out ${isScrolled ? 'opacity-0 pointer-events-none' : 'opacity-100'}`}>
-          <div className="flex items-center justify-center min-h-screen pt-20 pb-32">
-            <div className="text-center px-6 max-w-4xl mx-auto">
-              <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
-                <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-                  FORGED FINANCE
-                </span>
-              </h1>
-              
-              <p className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed">
-                Your hub for finance careers across Europe
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-                <Button size="lg" className="text-lg px-8 py-6 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:scale-105">
-                  Get Started
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="text-lg px-8 py-6 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105"
-                >
-                  Learn More
-                </Button>
-              </div>
+      {/* First Page */}
+      <section className="min-h-screen bg-black flex flex-col">
+        {/* Content below 3D logo */}
+        <div className="flex-1 flex flex-col justify-end items-center pb-32 pt-96">
+          <div className="text-center px-6 max-w-4xl mx-auto">
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+              <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+                FORGED FINANCE
+              </span>
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed">
+              Your hub for finance careers across Europe
+            </p>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+              <Button size="lg" className="text-lg px-8 py-6 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:scale-105">
+                Get Started
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="text-lg px-8 py-6 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105"
+              >
+                Learn More
+              </Button>
             </div>
           </div>
           
-          <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-muted-foreground z-20">
+          <div className="flex flex-col items-center text-muted-foreground">
             <span className="text-sm mb-2">Scroll Down</span>
             <ChevronDown className="w-6 h-6 animate-bounce" />
           </div>
         </div>
+      </section>
 
-        {/* Scrolled Content */}
-        <div className={`fixed inset-0 flex items-center transition-all duration-1000 ease-out ${isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-          <div className="container mx-auto px-6 flex items-center justify-between">
-            <div className="max-w-xl">
-              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
-                Your hub for
-                <br />
-                <span className="text-primary">finance careers</span>
-                <br />
-                across Europe
-              </h2>
-              <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
-                Find and track top investment banking, private equity, and asset management roles with a streamlined application experience.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="text-lg px-8 py-6 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:scale-105">
-                  Get Started
-                </Button>
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="text-lg px-8 py-6 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105"
-                >
-                  Learn More
-                </Button>
-              </div>
+      {/* Second Page Content */}
+      <section className="min-h-screen bg-black flex items-center">
+        <div className="container mx-auto px-6 lg:px-12 flex items-center justify-center">
+          <div className="max-w-2xl mx-auto lg:mx-0 lg:max-w-xl text-center lg:text-left">
+            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">
+              Your hub for
+              <br />
+              <span className="text-primary">finance careers</span>
+              <br />
+              across Europe
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed">
+              Find and track top investment banking, private equity, and asset management roles with a streamlined application experience.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+              <Button size="lg" className="text-lg px-8 py-6 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-300 hover:scale-105">
+                Get Started
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="text-lg px-8 py-6 rounded-full border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300 hover:scale-105"
+              >
+                Learn More
+              </Button>
             </div>
           </div>
         </div>
       </section>
-      
-      {/* Spacer to enable scrolling */}
-      <div className="h-screen bg-transparent"></div>
     </>
   );
 };

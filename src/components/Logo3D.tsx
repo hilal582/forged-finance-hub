@@ -5,7 +5,7 @@ import { PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface Logo3DProps {
-  isScrolled: boolean;
+  scrollY: number;
 }
 
 // Temporary geometric logo component until user uploads their 3D model
@@ -51,32 +51,35 @@ const TemporaryLogo = () => {
   );
 };
 
-export const Logo3D = ({ isScrolled }: Logo3DProps) => {
-  const [containerSize, setContainerSize] = useState({ width: 500, height: 500 });
-
-  useEffect(() => {
-    const updateSize = () => {
-      if (window.innerWidth < 768) {
-        setContainerSize({ width: 300, height: 300 });
-      } else {
-        setContainerSize({ width: 500, height: 500 });
-      }
-    };
-
-    updateSize();
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
-  }, []);
+export const Logo3D = ({ scrollY }: Logo3DProps) => {
+  // Calculate smooth position based on scroll
+  const scrollProgress = Math.min(scrollY / window.innerHeight, 1);
+  
+  // Smooth interpolation for position
+  const centerX = 50; // 50% (center)
+  const centerY = 25; // 25% from top initially
+  const targetX = window.innerWidth > 1024 ? 75 : 50; // 75% on desktop, center on mobile
+  const targetY = 50; // 50% (center) when scrolled
+  
+  const currentX = centerX + (targetX - centerX) * scrollProgress;
+  const currentY = centerY + (targetY - centerY) * scrollProgress;
+  
+  // Size interpolation
+  const initialSize = window.innerWidth < 768 ? 300 : 400;
+  const targetSize = window.innerWidth < 768 ? 250 : 320;
+  const currentSize = initialSize + (targetSize - initialSize) * scrollProgress;
 
   return (
     <div 
-      className={`
-        fixed z-10 transition-all duration-1000 ease-out
-        ${isScrolled 
-          ? 'top-1/2 right-32 -translate-y-1/2 w-64 h-64 md:w-80 md:h-80' 
-          : 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[400px] md:h-[400px]'
-        }
-      `}
+      className="fixed z-10"
+      style={{
+        left: `${currentX}%`,
+        top: `${currentY}%`,
+        transform: 'translate(-50%, -50%)',
+        width: `${currentSize}px`,
+        height: `${currentSize}px`,
+        transition: scrollY === 0 ? 'all 0.3s ease-out' : 'none'
+      }}
     >
       <Canvas gl={{ alpha: true, antialias: true }}>
         <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={75} />
