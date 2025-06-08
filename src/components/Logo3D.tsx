@@ -22,27 +22,29 @@ const TemporaryLogo = () => {
   return (
     <group ref={groupRef}>
       {/* Main ring */}
-      <Torus args={[1.5, 0.3, 16, 100]} position={[0, 0, 0]}>
+      <mesh>
+        <torusGeometry args={[1.5, 0.3, 16, 100]} />
         <meshStandardMaterial color="#ffffff" metalness={0.9} roughness={0.1} />
-      </Torus>
+      </mesh>
       
       {/* Center sphere */}
-      <Sphere args={[0.8, 32, 32]} position={[0, 0, 0]}>
+      <mesh>
+        <sphereGeometry args={[0.8, 32, 32]} />
         <meshStandardMaterial color="#ffffff" metalness={0.95} roughness={0.05} />
-      </Sphere>
+      </mesh>
       
       {/* Bars around the logo */}
       {Array.from({ length: 4 }).map((_, i) => {
         const angle = (Math.PI / 2) * i;
         return (
-          <Cylinder
+          <mesh
             key={i}
-            args={[0.1, 0.1, 2.5, 32]}
             position={[Math.cos(angle) * 1.2, 0, Math.sin(angle) * 1.2]}
             rotation={[0, angle, Math.PI / 2]}
           >
+            <cylinderGeometry args={[0.1, 0.1, 2.5, 32]} />
             <meshStandardMaterial color="#ffffff" metalness={0.9} roughness={0.1} />
-          </Cylinder>
+          </mesh>
         );
       })}
     </group>
