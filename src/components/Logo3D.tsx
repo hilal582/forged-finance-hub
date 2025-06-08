@@ -71,10 +71,10 @@ export const Logo3D = ({ isScrolled }: Logo3DProps) => {
   return (
     <div 
       className={`
-        fixed z-10 transition-all duration-700 ease-out
+        fixed z-10 transition-all duration-1000 ease-out
         ${isScrolled 
-          ? 'top-1/2 right-8 -translate-y-1/2 w-32 h-32 md:w-40 md:h-40' 
-          : 'top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[400px] md:h-[400px]'
+          ? 'top-1/2 right-32 -translate-y-1/2 w-64 h-64 md:w-80 md:h-80' 
+          : 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[400px] md:h-[400px]'
         }
       `}
     >
