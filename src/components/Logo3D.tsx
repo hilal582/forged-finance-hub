@@ -5,7 +5,7 @@ import { PerspectiveCamera } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface Logo3DProps {
-  scrollY: number;
+  isScrolled: boolean;
 }
 
 // Temporary geometric logo component until user uploads their 3D model
@@ -51,15 +51,15 @@ const TemporaryLogo = () => {
   );
 };
 
-export const Logo3D = ({ scrollY }: Logo3DProps) => {
-  const [containerSize, setContainerSize] = useState({ width: 400, height: 400 });
+export const Logo3D = ({ isScrolled }: Logo3DProps) => {
+  const [containerSize, setContainerSize] = useState({ width: 500, height: 500 });
 
   useEffect(() => {
     const updateSize = () => {
       if (window.innerWidth < 768) {
         setContainerSize({ width: 300, height: 300 });
       } else {
-        setContainerSize({ width: 400, height: 400 });
+        setContainerSize({ width: 500, height: 500 });
       }
     };
 
@@ -68,33 +68,15 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
     return () => window.removeEventListener('resize', updateSize);
   }, []);
 
-  // Calculate progress based on scroll (0 to 1)
-  const scrollProgress = Math.min(scrollY / window.innerHeight, 1);
-  
-  // Smooth interpolation between initial and final positions
-  const initialX = 50; // 50% (center)
-  const finalX = window.innerWidth > 768 ? 75 : 80; // Right side position
-  const currentX = initialX + (finalX - initialX) * scrollProgress;
-  
-  const initialY = 45; // Slightly above center
-  const finalY = 50; // Center
-  const currentY = initialY + (finalY - initialY) * scrollProgress;
-  
-  const initialSize = window.innerWidth > 768 ? 400 : 300;
-  const finalSize = window.innerWidth > 768 ? 320 : 250;
-  const currentSize = initialSize + (finalSize - initialSize) * scrollProgress;
-
   return (
     <div 
-      className="fixed z-10"
-      style={{
-        left: `${currentX}%`,
-        top: `${currentY}%`,
-        transform: 'translate(-50%, -50%)',
-        width: `${currentSize}px`,
-        height: `${currentSize}px`,
-        transition: scrollY === 0 ? 'all 0.3s ease-out' : 'none'
-      }}
+      className={`
+        fixed z-10 transition-all duration-1000 ease-out
+        ${isScrolled 
+          ? 'top-1/2 right-32 -translate-y-1/2 w-64 h-64 md:w-80 md:h-80' 
+          : 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] md:w-[400px] md:h-[400px]'
+        }
+      `}
     >
       <Canvas gl={{ alpha: true, antialias: true }}>
         <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={75} />
