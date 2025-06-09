@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
 import { Canvas, useLoader } from '@react-three/fiber';
 import { useFrame } from '@react-three/fiber';
-import { PerspectiveCamera } from '@react-three/drei';
+import { PerspectiveCamera, SpotLight } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 
@@ -48,11 +48,12 @@ const ForgedFinanceLogo = ({ isStatic = false }: { isStatic?: boolean }) => {
     );
   }, []);
 
-  // No rotation for both versions as requested
+  // Remove rotation for static version
   useFrame((state) => {
     if (groupRef.current && !isStatic) {
-      // Very subtle floating animation only
-      groupRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.1;
+      // Much smoother and slower rotation
+      groupRef.current.rotation.y += 0.002;
+      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.1;
     }
   });
 
@@ -111,20 +112,19 @@ export const Logo3D = ({ scrollY, isStatic = false }: Logo3DProps) => {
         >
           <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
           
-          {/* Enhanced lighting setup with spotlight from bottom */}
+          {/* Enhanced lighting setup with spotlight */}
           <ambientLight intensity={0.3} />
-          <spotLight
-            position={[0, -5, 3]}
-            angle={0.6}
-            penumbra={0.3}
-            intensity={3}
+          <SpotLight
+            position={[5, 5, 5]}
+            angle={0.3}
+            penumbra={0.5}
+            intensity={2}
             castShadow
             shadow-mapSize={[2048, 2048]}
-            target-position={[0, 0, 0]}
           />
           <directionalLight 
             position={[2, 2, 2]} 
-            intensity={0.8} 
+            intensity={1} 
             castShadow
             shadow-mapSize={[1024, 1024]}
           />
@@ -142,9 +142,9 @@ export const Logo3D = ({ scrollY, isStatic = false }: Logo3DProps) => {
   const easeInOutCubic = (t: number) => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
   const easedProgress = easeInOutCubic(scrollProgress);
   
-  // Smooth interpolation for position - adjusted for better centering
+  // Smooth interpolation for position
   const centerX = 50; // 50% (center)
-  const centerY = 35; // Moved down from 25% to 35% for better centering
+  const centerY = 25; // 25% from top initially
   const targetX = window.innerWidth > 1024 ? 75 : 50; // 75% on desktop, center on mobile
   const targetY = 50; // 50% (center) when scrolled
   
@@ -158,7 +158,7 @@ export const Logo3D = ({ scrollY, isStatic = false }: Logo3DProps) => {
 
   return (
     <div 
-      className="fixed z-10 transition-all duration-500 ease-out"
+      className="fixed z-10 transition-all duration-300 ease-out"
       style={{
         left: `${currentX}%`,
         top: `${currentY}%`,
@@ -174,20 +174,19 @@ export const Logo3D = ({ scrollY, isStatic = false }: Logo3DProps) => {
       >
         <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
         
-        {/* Enhanced lighting setup with spotlight from bottom to center */}
+        {/* Enhanced lighting setup with spotlight */}
         <ambientLight intensity={0.4} />
-        <spotLight
-          position={[0, -6, 4]}
-          angle={0.5}
-          penumbra={0.2}
-          intensity={4}
+        <SpotLight
+          position={[3, 3, 5]}
+          angle={0.4}
+          penumbra={0.3}
+          intensity={2.5}
           castShadow
           shadow-mapSize={[2048, 2048]}
-          target-position={[0, 0, 0]}
         />
         <directionalLight 
           position={[2, 2, 2]} 
-          intensity={1} 
+          intensity={1.2} 
           castShadow
           shadow-mapSize={[1024, 1024]}
         />
