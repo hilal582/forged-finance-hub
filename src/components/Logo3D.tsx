@@ -1,17 +1,16 @@
 import { useRef, useEffect, useState } from 'react';
 import { Canvas, useLoader } from '@react-three/fiber';
 import { useFrame } from '@react-three/fiber';
-import { PerspectiveCamera, SpotLight } from '@react-three/drei';
+import { PerspectiveCamera } from '@react-three/drei';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import * as THREE from 'three';
 
 interface Logo3DProps {
   scrollY: number;
-  isStatic?: boolean;
 }
 
 // Component to load and display the Forged Finance logo
-const ForgedFinanceLogo = ({ isStatic = false }: { isStatic?: boolean }) => {
+const ForgedFinanceLogo = () => {
   const groupRef = useRef<THREE.Group>(null);
   const [gltf, setGltf] = useState<any>(null);
 
@@ -23,7 +22,7 @@ const ForgedFinanceLogo = ({ isStatic = false }: { isStatic?: boolean }) => {
         setGltf(loadedGltf);
         // Scale and position the model appropriately
         if (loadedGltf.scene) {
-          loadedGltf.scene.scale.setScalar(2);
+          loadedGltf.scene.scale.setScalar(1);
           loadedGltf.scene.position.set(0, 0, 0);
           
           // Apply metallic material to all meshes for luxury look
@@ -31,12 +30,9 @@ const ForgedFinanceLogo = ({ isStatic = false }: { isStatic?: boolean }) => {
             if (child.isMesh) {
               child.material = new THREE.MeshStandardMaterial({
                 color: '#ffffff',
-                metalness: 0.95,
-                roughness: 0.05,
-                envMapIntensity: 1.5,
+                metalness: 0.9,
+                roughness: 0.1,
               });
-              child.castShadow = true;
-              child.receiveShadow = true;
             }
           });
         }
@@ -48,12 +44,10 @@ const ForgedFinanceLogo = ({ isStatic = false }: { isStatic?: boolean }) => {
     );
   }, []);
 
-  // Remove rotation for static version
   useFrame((state) => {
-    if (groupRef.current && !isStatic) {
-      // Much smoother and slower rotation
-      groupRef.current.rotation.y += 0.002;
-      groupRef.current.rotation.x = Math.sin(state.clock.elapsedTime * 0.3) * 0.1;
+    if (groupRef.current) {
+      groupRef.current.rotation.y += 0.005;
+      groupRef.current.rotation.x += 0.002;
     }
   });
 
@@ -62,14 +56,14 @@ const ForgedFinanceLogo = ({ isStatic = false }: { isStatic?: boolean }) => {
     return (
       <group ref={groupRef}>
         {/* Main ring */}
-        <mesh castShadow receiveShadow>
-          <torusGeometry args={[2, 0.4, 16, 100]} />
+        <mesh>
+          <torusGeometry args={[1.5, 0.3, 16, 100]} />
           <meshStandardMaterial color="#ffffff" metalness={0.9} roughness={0.1} />
         </mesh>
         
         {/* Center sphere */}
-        <mesh castShadow receiveShadow>
-          <sphereGeometry args={[1.2, 32, 32]} />
+        <mesh>
+          <sphereGeometry args={[0.8, 32, 32]} />
           <meshStandardMaterial color="#ffffff" metalness={0.95} roughness={0.05} />
         </mesh>
         
@@ -79,12 +73,10 @@ const ForgedFinanceLogo = ({ isStatic = false }: { isStatic?: boolean }) => {
           return (
             <mesh
               key={i}
-              position={[Math.cos(angle) * 1.8, 0, Math.sin(angle) * 1.8]}
+              position={[Math.cos(angle) * 1.2, 0, Math.sin(angle) * 1.2]}
               rotation={[0, angle, Math.PI / 2]}
-              castShadow
-              receiveShadow
             >
-              <cylinderGeometry args={[0.15, 0.15, 3.5, 32]} />
+              <cylinderGeometry args={[0.1, 0.1, 2.5, 32]} />
               <meshStandardMaterial color="#ffffff" metalness={0.9} roughness={0.1} />
             </mesh>
           );
@@ -100,98 +92,44 @@ const ForgedFinanceLogo = ({ isStatic = false }: { isStatic?: boolean }) => {
   );
 };
 
-export const Logo3D = ({ scrollY, isStatic = false }: Logo3DProps) => {
-  if (isStatic) {
-    // Static version for the second section
-    return (
-      <div className="w-full h-full">
-        <Canvas 
-          gl={{ alpha: true, antialias: true }} 
-          shadows
-          camera={{ position: [0, 0, 8], fov: 50 }}
-        >
-          <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
-          
-          {/* Enhanced lighting setup with spotlight */}
-          <ambientLight intensity={0.3} />
-          <SpotLight
-            position={[5, 5, 5]}
-            angle={0.3}
-            penumbra={0.5}
-            intensity={2}
-            castShadow
-            shadow-mapSize={[2048, 2048]}
-          />
-          <directionalLight 
-            position={[2, 2, 2]} 
-            intensity={1} 
-            castShadow
-            shadow-mapSize={[1024, 1024]}
-          />
-          <pointLight position={[-2, -2, 2]} intensity={0.5} />
-          
-          {/* Logo */}
-          <ForgedFinanceLogo isStatic={true} />
-        </Canvas>
-      </div>
-    );
-  }
-
-  // Calculate smooth position based on scroll with easing
+export const Logo3D = ({ scrollY }: Logo3DProps) => {
+  // Calculate smooth position based on scroll
   const scrollProgress = Math.min(scrollY / window.innerHeight, 1);
-  const easeInOutCubic = (t: number) => t < 0.5 ? 4 * t * t * t : (t - 1) * (2 * t - 2) * (2 * t - 2) + 1;
-  const easedProgress = easeInOutCubic(scrollProgress);
   
   // Smooth interpolation for position
   const centerX = 50; // 50% (center)
-  const centerY = 25; // 25% from top initially
+  const centerY = 30; // 30% from top initially for better spacing
   const targetX = window.innerWidth > 1024 ? 75 : 50; // 75% on desktop, center on mobile
   const targetY = 50; // 50% (center) when scrolled
   
-  const currentX = centerX + (targetX - centerX) * easedProgress;
-  const currentY = centerY + (targetY - centerY) * easedProgress;
+  const currentX = centerX + (targetX - centerX) * scrollProgress;
+  const currentY = centerY + (targetY - centerY) * scrollProgress;
   
-  // Size interpolation - bigger logo as requested
-  const initialSize = window.innerWidth < 768 ? 400 : 500;
-  const targetSize = window.innerWidth < 768 ? 320 : 400;
-  const currentSize = initialSize + (targetSize - initialSize) * easedProgress;
+  // Size interpolation - larger for more luxury feel
+  const initialSize = window.innerWidth < 768 ? 350 : 450;
+  const targetSize = window.innerWidth < 768 ? 280 : 350;
+  const currentSize = initialSize + (targetSize - initialSize) * scrollProgress;
 
   return (
     <div 
-      className="fixed z-10 transition-all duration-300 ease-out"
+      className="fixed z-10"
       style={{
         left: `${currentX}%`,
         top: `${currentY}%`,
         transform: 'translate(-50%, -50%)',
         width: `${currentSize}px`,
         height: `${currentSize}px`,
+        transition: scrollY === 0 ? 'all 0.3s ease-out' : 'none'
       }}
     >
-      <Canvas 
-        gl={{ alpha: true, antialias: true }} 
-        shadows
-        camera={{ position: [0, 0, 8], fov: 50 }}
-      >
-        <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
+      <Canvas gl={{ alpha: true, antialias: true }}>
+        <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={75} />
         
-        {/* Enhanced lighting setup with spotlight */}
-        <ambientLight intensity={0.4} />
-        <SpotLight
-          position={[3, 3, 5]}
-          angle={0.4}
-          penumbra={0.3}
-          intensity={2.5}
-          castShadow
-          shadow-mapSize={[2048, 2048]}
-        />
-        <directionalLight 
-          position={[2, 2, 2]} 
-          intensity={1.2} 
-          castShadow
-          shadow-mapSize={[1024, 1024]}
-        />
-        <directionalLight position={[-2, -2, -2]} intensity={0.6} />
-        <pointLight position={[0, 0, 5]} intensity={0.8} />
+        {/* Enhanced lighting for luxury look */}
+        <ambientLight intensity={0.6} />
+        <directionalLight position={[2, 2, 2]} intensity={1.2} />
+        <directionalLight position={[-2, -2, -2]} intensity={0.8} />
+        <pointLight position={[0, 0, 5]} intensity={0.5} />
         
         {/* Logo */}
         <ForgedFinanceLogo />
