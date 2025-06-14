@@ -85,7 +85,7 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
   
   // Smooth interpolation for position
   const centerX = 50; // 50% (center)
-  const centerY = 30; // 30% from top initially for better spacing
+  const centerY = 25; // 25% from top for better spacing with text
   const targetX = window.innerWidth > 1024 ? 75 : 50; // 75% on desktop, center on mobile
   const targetY = 50; // 50% (center) when scrolled
   

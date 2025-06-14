@@ -35,25 +35,24 @@ export const Hero = () => {
       <Logo3D scrollY={scrollY} />
       
       {/* First Page */}
-      <section className="min-h-screen bg-black flex flex-col">
+      <section className="min-h-screen bg-black flex flex-col justify-center items-center relative">
         {/* Content below 3D logo */}
-        <div className="flex-1 flex flex-col justify-end items-center pb-20 pt-96">
-          <div className="text-center px-6 max-w-5xl mx-auto">
-            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-tight leading-none">
-              <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
-                FORGED FINANCE
-              </span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl lg:text-3xl text-muted-foreground mb-16 leading-relaxed font-light">
-              Your hub for finance careers across Europe
-            </p>
-          </div>
+        <div className="text-center px-6 max-w-5xl mx-auto mt-32 md:mt-40">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight leading-none">
+            <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
+              FORGED FINANCE
+            </span>
+          </h1>
           
-          <div className="flex flex-col items-center text-muted-foreground mt-12">
-            <span className="text-sm mb-3 font-medium tracking-wide">Scroll Down to Get Started</span>
-            <ChevronDown className="w-6 h-6 animate-bounce" />
-          </div>
+          <p className="text-xl md:text-2xl lg:text-3xl text-muted-foreground mb-8 leading-relaxed font-light">
+            Your hub for finance careers across Europe
+          </p>
+        </div>
+        
+        {/* Scroll indicator at bottom */}
+        <div className="absolute bottom-8 flex flex-col items-center text-muted-foreground">
+          <span className="text-sm mb-3 font-medium tracking-wide">Scroll Down to Get Started</span>
+          <ChevronDown className="w-6 h-6 animate-bounce" />
         </div>
       </section>
 
