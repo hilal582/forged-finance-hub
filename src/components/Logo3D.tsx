@@ -42,7 +42,7 @@ const DynamicLights = () => {
   const lightRef1 = useRef<THREE.PointLight>(null);
   const lightRef2 = useRef<THREE.PointLight>(null);
   const lightRef3 = useRef<THREE.PointLight>(null);
-  const currentLightRef = useRef<THREE.PointLight>(null);
+  const currentLightRef = useRef<THREE.SpotLight>(null);
   
   useFrame((state) => {
     const time = state.clock.getElapsedTime();
@@ -65,15 +65,15 @@ const DynamicLights = () => {
       lightRef3.current.intensity = 4 + Math.sin(time * 3) * 0.8;
     }
     
-    // Persistent circular current light - starts from top and flows around
+    // Persistent circular current light - focused beam effect
     if (currentLightRef.current) {
-      const radius = 6;
-      const speed = 1.2;
+      const radius = 5;
+      const speed = 1.5;
       currentLightRef.current.position.x = Math.cos(time * speed) * radius;
-      currentLightRef.current.position.y = 1 + Math.sin(time * speed) * 2;
+      currentLightRef.current.position.y = 1 + Math.sin(time * speed) * 1.5;
       currentLightRef.current.position.z = Math.sin(time * speed) * radius;
-      // Keep high intensity for prominent current effect
-      currentLightRef.current.intensity = 8;
+      // More focused intensity for current effect
+      currentLightRef.current.intensity = 6;
     }
   });
 
@@ -108,14 +108,17 @@ const DynamicLights = () => {
         decay={1.5}
       />
       
-      {/* Persistent current light - flows like electric current */}
-      <pointLight 
+      {/* Focused current light - like electric current beam */}
+      <spotLight 
         ref={currentLightRef}
         position={[0, 6, 4]} 
-        intensity={8} 
+        intensity={6} 
         color="#ff3366"
-        distance={18}
-        decay={0.5}
+        distance={8}
+        angle={0.2}
+        penumbra={0.3}
+        decay={2}
+        target-position={[0, 0, 0]}
       />
     </>
   );
