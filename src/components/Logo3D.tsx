@@ -1,8 +1,7 @@
 import { useRef, useEffect, useState } from 'react';
-import { Canvas, useLoader } from '@react-three/fiber';
+import { Canvas } from '@react-three/fiber';
 import { useFrame } from '@react-three/fiber';
-import { PerspectiveCamera } from '@react-three/drei';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import { PerspectiveCamera, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
 
 interface Logo3DProps {
@@ -12,37 +11,22 @@ interface Logo3DProps {
 // Component to load and display the Forged Finance logo
 const ForgedFinanceLogo = () => {
   const groupRef = useRef<THREE.Group>(null);
-  const [gltf, setGltf] = useState<any>(null);
-
+  const { scene } = useGLTF('/forged-finance-logo.glb');
+  
   useEffect(() => {
-    const loader = new GLTFLoader();
-    loader.load(
-      '/src/components/forged-finance-logo.glb',
-      (loadedGltf) => {
-        setGltf(loadedGltf);
-        // Scale and position the model appropriately
-        if (loadedGltf.scene) {
-          loadedGltf.scene.scale.setScalar(1);
-          loadedGltf.scene.position.set(0, 0, 0);
-          
-          // Apply metallic material to all meshes for luxury look
-          loadedGltf.scene.traverse((child: any) => {
-            if (child.isMesh) {
-              child.material = new THREE.MeshStandardMaterial({
-                color: '#ffffff',
-                metalness: 0.9,
-                roughness: 0.1,
-              });
-            }
+    if (scene) {
+      // Apply metallic material to all meshes for luxury look
+      scene.traverse((child: any) => {
+        if (child.isMesh) {
+          child.material = new THREE.MeshStandardMaterial({
+            color: '#ffffff',
+            metalness: 0.9,
+            roughness: 0.1,
           });
         }
-      },
-      undefined,
-      (error) => {
-        console.error('Error loading 3D model:', error);
-      }
-    );
-  }, []);
+      });
+    }
+  }, [scene]);
 
   useFrame((state) => {
     if (groupRef.current) {
@@ -51,7 +35,7 @@ const ForgedFinanceLogo = () => {
     }
   });
 
-  if (!gltf) {
+  if (!scene) {
     // Fallback geometric logo while loading
     return (
       <group ref={groupRef}>
@@ -87,7 +71,7 @@ const ForgedFinanceLogo = () => {
 
   return (
     <group ref={groupRef}>
-      <primitive object={gltf.scene} />
+      <primitive object={scene} />
     </group>
   );
 };
