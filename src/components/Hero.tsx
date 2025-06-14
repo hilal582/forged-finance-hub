@@ -96,6 +96,9 @@ export const Hero = () => {
           <div className="absolute bottom-32 left-1/5 w-56 h-56 bg-white/8 rounded-full blur-[70px] animate-float" />
           <div className="absolute top-1/2 left-3/4 w-40 h-40 bg-pink-400/10 rounded-full blur-[50px]" />
           <div className="absolute bottom-20 right-1/3 w-64 h-64 bg-blue-300/12 rounded-full blur-[85px] animate-pulse" />
+          <div className="absolute top-16 left-1/2 w-88 h-88 bg-indigo-400/8 rounded-full blur-[110px] animate-float" />
+          <div className="absolute bottom-48 right-1/5 w-52 h-52 bg-emerald-400/10 rounded-full blur-[75px]" />
+          <div className="absolute top-2/3 left-16 w-36 h-36 bg-orange-400/8 rounded-full blur-[55px] animate-pulse" />
         </div>
         <div className="max-w-7xl mx-auto px-8 py-24 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
