@@ -14,12 +14,12 @@ export const Hero = () => {
       
       // Calculate which section the logo should be in
       const windowHeight = window.innerHeight;
-      const section1End = windowHeight * 0.7; // Start moving when 70% through first section
+      const section1End = windowHeight * 0.8; // Start moving when 80% through first section
       const section2Start = windowHeight;
       
       if (currentScrollY < section1End) {
         setLogoPosition('section1');
-      } else if (currentScrollY >= section1End && currentScrollY < section2Start + windowHeight * 0.3) {
+      } else if (currentScrollY >= section1End && currentScrollY < section2Start + windowHeight * 0.6) {
         setLogoPosition('transitioning');
       } else {
         setLogoPosition('section2');
@@ -33,8 +33,8 @@ export const Hero = () => {
   // Calculate logo transform based on scroll
   const getLogoTransform = () => {
     const windowHeight = window.innerHeight;
-    const section1End = windowHeight * 0.7;
-    const transitionDistance = windowHeight * 0.6;
+    const section1End = windowHeight * 0.8;
+    const transitionDistance = windowHeight * 0.8;
     
     if (logoPosition === 'section1') {
       return { 
@@ -44,25 +44,31 @@ export const Hero = () => {
         scale: 1,
         left: '50%',
         top: '50%',
-        marginLeft: '-192px',
-        marginTop: '-192px'
+        marginLeft: '-150px',
+        marginTop: '-150px'
       };
     } else if (logoPosition === 'transitioning') {
       const progress = Math.min((scrollY - section1End) / transitionDistance, 1);
-      const yMovement = progress * windowHeight * 1.2;
-      const xMovement = progress * (window.innerWidth * 0.2);
-      const rotation = progress * 360; // Full backflip
-      const scale = 0.7 + (0.5 * progress);
+      const smoothProgress = progress * progress * (3 - 2 * progress); // Smooth step function
+      
+      // Calculate target position (right side of second section)
+      const targetX = window.innerWidth * 0.2;
+      const targetY = windowHeight * 0.8;
+      
+      const xMovement = smoothProgress * targetX;
+      const yMovement = smoothProgress * targetY;
+      const rotation = smoothProgress * 360; // Full backflip around X-axis
+      const scale = 1 - (smoothProgress * 0.2); // Slightly smaller in section 2
       
       return { 
         x: xMovement, 
         y: yMovement, 
         rotation, 
-        scale: Math.min(scale, 1.2),
+        scale,
         left: '50%',
         top: '50%',
-        marginLeft: '-192px',
-        marginTop: '-192px'
+        marginLeft: '-150px',
+        marginTop: '-150px'
       };
     } else {
       return { 
@@ -71,8 +77,8 @@ export const Hero = () => {
         rotation: 360, 
         scale: 0.8,
         left: '75%',
-        top: windowHeight + 200 + 'px',
-        marginLeft: '-150px',
+        top: windowHeight + 150 + 'px',
+        marginLeft: '-120px',
         marginTop: '0px'
       };
     }
@@ -87,7 +93,7 @@ export const Hero = () => {
         <div 
           className="fixed z-40 transition-all duration-1000 ease-in-out pointer-events-none"
           style={{
-            transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale}) rotateY(${transform.rotation}deg)`,
+            transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale}) rotateX(${transform.rotation}deg)`,
             left: transform.left,
             top: transform.top,
             marginLeft: transform.marginLeft,
