@@ -7,16 +7,31 @@ export const Hero = () => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
+    };
+    
+    // Add throttling for better performance
+    let ticking = false;
+    const throttledHandleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          handleScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
+    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', throttledHandleScroll);
   }, []);
 
   // Calculate smooth transition progress based on scroll
   const getTransitionProgress = () => {
     const windowHeight = window.innerHeight;
-    const startScroll = windowHeight * 0.6; // Start moving at 60% through section 1
-    const endScroll = windowHeight * 1.3; // Finish moving by 30% into section 2
+    const startScroll = windowHeight * 0.3; // Start moving much earlier - at 30% through section 1
+    const endScroll = windowHeight * 1.2; // Finish moving by 20% into section 2
     const progress = Math.max(0, Math.min(1, (scrollY - startScroll) / (endScroll - startScroll)));
     
     // Apply smooth easing
