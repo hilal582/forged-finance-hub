@@ -1,95 +1,11 @@
 import { ArrowRight, Play, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Logo3D } from './Logo3D';
-import { useState, useEffect } from 'react';
 
 export const Hero = () => {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrollY(window.scrollY);
-    };
-    
-    // Add throttling for better performance
-    let ticking = false;
-    const throttledHandleScroll = () => {
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          handleScroll();
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-    
-    window.addEventListener('scroll', throttledHandleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', throttledHandleScroll);
-  }, []);
-
-  // Calculate smooth transition progress based on scroll
-  const getTransitionProgress = () => {
-    const windowHeight = window.innerHeight;
-    const startScroll = windowHeight * 0.3; // Start moving much earlier - at 30% through section 1
-    const endScroll = windowHeight * 1.2; // Finish moving by 20% into section 2
-    const progress = Math.max(0, Math.min(1, (scrollY - startScroll) / (endScroll - startScroll)));
-    
-    // Apply smooth easing
-    return progress * progress * (3 - 2 * progress);
-  };
-
-  const transitionProgress = getTransitionProgress();
-
-  // Calculate logo position
-  const getLogoStyle = () => {
-    if (transitionProgress === 0) {
-      // Logo stays in section 1 center
-      return {
-        position: 'static' as const,
-        transform: 'none',
-        opacity: 1
-      };
-    }
-    
-    // Calculate movement to section 2 right side
-    const windowHeight = window.innerHeight;
-    const windowWidth = window.innerWidth;
-    
-    // Target: right side of section 2 (where professional edge was)
-    const targetX = windowWidth * 0.25; // Move right
-    const targetY = windowHeight + windowHeight * 0.15; // Into section 2
-    
-    const currentX = targetX * transitionProgress;
-    const currentY = targetY * transitionProgress;
-    const scale = 1 - (transitionProgress * 0.2); // Slightly smaller when landed
-    
-    return {
-      position: 'fixed' as const,
-      top: '50%',
-      left: '50%',
-      transform: `translate(-50%, -50%) translate(${currentX}px, ${currentY}px) scale(${scale})`,
-      zIndex: 40,
-      pointerEvents: 'none' as const,
-      transition: 'none',
-      opacity: 1,
-      width: '300px',
-      height: '300px'
-    };
-  };
-
-  const logoStyle = getLogoStyle();
 
   return (
     <>
-      {/* Floating/Transitioning 3D Logo */}
-      {transitionProgress > 0 && (
-        <div style={logoStyle}>
-          <div className="w-80 h-80 flex items-center justify-center">
-            <Logo3D />
-          </div>
-        </div>
-      )}
-      
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
@@ -133,13 +49,9 @@ export const Hero = () => {
 
           {/* Main Content - Perfectly Centered */}
           <div className="flex flex-col items-center justify-center text-center">
-            {/* 3D Logo in section 1 - visible only when not transitioning */}
-            <div 
-              className={`w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8 transition-opacity duration-500 ${
-                transitionProgress === 0 ? 'opacity-100' : 'opacity-0'
-              }`}
-            >
-              {transitionProgress === 0 && <Logo3D />}
+            {/* 3D Logo with better sizing */}
+            <div className="w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8">
+              <Logo3D />
             </div>
             
             {/* Title with improved spacing */}
@@ -207,12 +119,9 @@ export const Hero = () => {
               </div>
             </div>
 
-            {/* Right Content - 3D Logo Landing Area */}
-            <div className="space-y-8 flex items-center justify-center">
-              {/* Logo Landing Area - The floating logo will land here */}
-              <div className="w-80 h-80 flex items-center justify-center">
-                {/* Logo is handled by the floating transition logic above */}
-              </div>
+            {/* Right Content */}
+            <div className="space-y-8">
+              {/* Empty space or can add other content later */}
             </div>
           </div>
 
