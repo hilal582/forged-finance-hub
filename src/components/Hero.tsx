@@ -15,26 +15,17 @@ export const Hero = () => {
   // Calculate logo position based on scroll
   const section1Height = window.innerHeight;
   const section2Start = section1Height;
-  const maxScroll = section2Start + 500; // Logo should reach final position after scrolling 500px into section 2
+  const maxScroll = section2Start + 400; // Logo should reach final position after scrolling 400px into section 2
   
   const scrollProgress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
   
   // Logo movement: from center of section 1 to right side of section 2
-  const logoTranslateX = scrollProgress * 45; // Move 45% to the right to reach section 2
-  const logoTranslateY = scrollProgress * -15; // Move up to avoid overlapping
-  const logoScale = 1 - scrollProgress * 0.2; // Scale down slightly
+  const logoTranslateX = scrollProgress * 35; // Move 35% to the right
+  const logoTranslateY = scrollProgress * -25; // Move up more to avoid overlap
+  const logoScale = 1; // Keep size constant
+
   return (
     <>
-      {/* Floating 3D Logo that moves with scroll */}
-      <div 
-        className="fixed top-1/2 left-1/2 z-40 w-80 h-80 lg:w-96 lg:h-96 pointer-events-none"
-        style={{
-          transform: `translate(-50%, -50%) translateX(${logoTranslateX}vw) translateY(${logoTranslateY}vh) scale(${logoScale})`,
-          transition: 'none', // No transition for smooth real-time movement
-        }}
-      >
-        <Logo3D />
-      </div>
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
@@ -64,6 +55,17 @@ export const Hero = () => {
           </div>
         </div>
       </nav>
+
+      {/* Floating 3D Logo that moves with scroll */}
+      <div 
+        className="fixed top-1/3 left-1/2 z-40 w-80 h-80 lg:w-96 lg:h-96 pointer-events-none"
+        style={{
+          transform: `translate(-50%, -50%) translateX(${logoTranslateX}vw) translateY(${logoTranslateY}vh) scale(${logoScale})`,
+          transition: 'none', // No transition for smooth real-time movement
+        }}
+      >
+        <Logo3D />
+      </div>
 
       {/* Hero Section */}
       <section className="min-h-screen bg-black relative overflow-hidden">
