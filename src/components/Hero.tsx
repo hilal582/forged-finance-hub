@@ -6,18 +6,18 @@ import { useEffect, useState } from 'react';
 export const Hero = () => {
   const [showHeader, setShowHeader] = useState(false);
   const [showBottom, setShowBottom] = useState(false);
-  const [showGlitch, setShowGlitch] = useState(false);
+  const [showLogo, setShowLogo] = useState(false);
 
   useEffect(() => {
     // Sequential animation triggers
     const headerTimer = setTimeout(() => setShowHeader(true), 300);
     const bottomTimer = setTimeout(() => setShowBottom(true), 1200);
-    const glitchTimer = setTimeout(() => setShowGlitch(true), 2000);
+    const logoTimer = setTimeout(() => setShowLogo(true), 1500);
 
     return () => {
       clearTimeout(headerTimer);
       clearTimeout(bottomTimer);
-      clearTimeout(glitchTimer);
+      clearTimeout(logoTimer);
     };
   }, []);
 
@@ -65,9 +65,9 @@ export const Hero = () => {
           <div className="absolute top-1/3 right-20 w-48 h-48 bg-purple-400/10 rounded-full blur-[60px] animate-pulse" />
         </div>
         <div className="max-w-7xl mx-auto px-8 h-screen flex flex-col justify-center relative z-10">
-          {/* Live Platform Badge - Top Right with glitch animation */}
+          {/* Live Platform Badge - Top Right with fade animation */}
           <div className={`absolute top-24 right-8 transition-all duration-1000 ${
-            showGlitch ? 'animate-glitch-in opacity-100' : 'opacity-0'
+            showLogo ? 'animate-fade-in opacity-100' : 'opacity-0'
           }`}>
             <div className="inline-flex items-center px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm">
               <div className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse" />
@@ -75,9 +75,9 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* 3D Logo - Center with glitch animation */}
-          <div className={`w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8 mx-auto transition-all duration-1000 ${
-            showGlitch ? 'animate-glitch-in opacity-100' : 'opacity-0'
+          {/* 3D Logo - Center with fade animation */}
+          <div className={`w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-16 mx-auto transition-all duration-1000 ${
+            showLogo ? 'animate-fade-in opacity-100' : 'opacity-0'
           }`}>
             <Logo3D />
           </div>
