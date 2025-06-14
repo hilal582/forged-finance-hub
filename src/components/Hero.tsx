@@ -1,13 +1,26 @@
 import { ArrowRight, Play, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Logo3D } from './Logo3D';
+import { useEffect, useState } from 'react';
 
 export const Hero = () => {
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    // Trigger animations after component mounts
+    const timer = setTimeout(() => {
+      setIsLoaded(true);
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <>
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/5">
+      <nav className={`fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/5 ${
+        isLoaded ? 'animate-slide-from-top' : 'opacity-0 -translate-y-full'
+      }`}>
         <div className="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <img 
@@ -57,19 +70,25 @@ export const Hero = () => {
           {/* Main Content - Perfectly Centered */}
           <div className="flex flex-col items-center justify-center text-center">
             {/* 3D Logo with better sizing */}
-            <div className="w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8">
+            <div className={`w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8 ${
+              isLoaded ? 'animate-glitch-in' : 'opacity-0'
+            }`} style={{ animationDelay: '0.3s' }}>
               <Logo3D />
             </div>
             
             {/* Title with improved spacing */}
-            <div className="space-y-6 mb-12">
+            <div className={`space-y-6 mb-12 ${
+              isLoaded ? 'animate-slide-from-bottom' : 'opacity-0 translate-y-full'
+            }`} style={{ animationDelay: '0.8s' }}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.9] tracking-tight">
                 <span className="block text-white">THE FUTURE OF FINANCE CAREERS</span>
               </h1>
             </div>
             
             {/* Description with better typography and controlled spacing */}
-            <div className="max-w-3xl mb-32">
+            <div className={`max-w-3xl mb-32 ${
+              isLoaded ? 'animate-slide-from-bottom' : 'opacity-0 translate-y-full'
+            }`} style={{ animationDelay: '1.2s' }}>
               <p className="text-lg md:text-xl text-white/60 leading-relaxed font-light">
                 Connect with elite opportunities across Europe's top investment banks, 
                 private equity firms, and asset management companies.
@@ -78,7 +97,9 @@ export const Hero = () => {
           </div>
 
           {/* Swipe Down Indicator with enhanced design and proper positioning */}
-          <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white/50">
+          <div className={`absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white/50 ${
+            isLoaded ? 'animate-fade-in-scale' : 'opacity-0'
+          }`} style={{ animationDelay: '1.6s' }}>
             <span className="text-xs tracking-[0.2em] mb-6 font-medium">SWIPE DOWN TO EXPLORE</span>
             <div className="flex flex-col items-center space-y-2">
               <ChevronDown className="w-5 h-5 animate-bounce" />

@@ -206,6 +206,69 @@
   }
 }
 
+/* Entrance animations */
+@keyframes slideFromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideFromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glitchIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.8) rotateY(45deg);
+    filter: hue-rotate(0deg) blur(3px);
+  }
+  25% {
+    opacity: 0.3;
+    transform: scale(1.1) rotateY(-15deg);
+    filter: hue-rotate(90deg) blur(1px);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(0.9) rotateY(15deg);
+    filter: hue-rotate(180deg) blur(2px);
+  }
+  75% {
+    opacity: 0.6;
+    transform: scale(1.05) rotateY(-5deg);
+    filter: hue-rotate(270deg) blur(0.5px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotateY(0deg);
+    filter: hue-rotate(360deg) blur(0px);
+  }
+}
+
+.animate-slide-from-top {
+  animation: slideFromTop 1s ease-out forwards;
+}
+
+.animate-slide-from-bottom {
+  animation: slideFromBottom 1s ease-out forwards;
+}
+
+.animate-glitch-in {
+  animation: glitchIn 2s ease-out forwards;
+}
+
 /* Utility classes for enhanced effects */
 .backdrop-blur-xl {
   backdrop-filter: blur(24px);
