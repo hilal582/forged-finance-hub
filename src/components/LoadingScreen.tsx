@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { Logo3D } from './Logo3D';
 
 interface LoadingScreenProps {
   onLoadingComplete: () => void;
@@ -33,9 +32,13 @@ export const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
       </div>
 
       {/* Logo container with blinking animation */}
-      <div className="relative z-10 w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center">
+      <div className="relative z-10 w-48 h-48 lg:w-56 lg:h-56 flex items-center justify-center">
         <div className="w-full h-full animate-logo-pulse">
-          <Logo3D />
+          <img 
+            src="/forgedfinance_logo.jpg" 
+            alt="Forged Finance Logo" 
+            className="w-full h-full object-contain"
+          />
         </div>
       </div>
 
