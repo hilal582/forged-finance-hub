@@ -1,31 +1,8 @@
 import { ArrowRight, Play, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Logo3D } from './Logo3D';
-import { useEffect, useState } from 'react';
 
 export const Hero = () => {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Calculate logo position based on scroll
-  const section1Height = window.innerHeight;
-  const section2TextStart = section1Height + 50; // When the "Your hub for" text becomes visible
-  
-  // Logo stops moving when the text content becomes visible
-  const maxScroll = section2TextStart;
-  const scrollProgress = Math.min(scrollY / maxScroll, 1);
-  
-  // Debug logs
-  console.log('ScrollY:', scrollY, 'TextStart:', section2TextStart, 'Progress:', scrollProgress);
-  
-  // Logo movement: moves to final position on right side, then completely stops
-  const logoTranslateX = scrollProgress * 30; // Move to right side to align with right column
-  const logoTranslateY = scrollProgress * 10; // Move down to align with content
 
   return (
     <>
@@ -59,17 +36,6 @@ export const Hero = () => {
         </div>
       </nav>
 
-      {/* Floating 3D Logo that moves with scroll */}
-      <div 
-        className="fixed top-1/3 left-1/2 z-40 w-80 h-80 lg:w-96 lg:h-96 pointer-events-none"
-        style={{
-          transform: `translate(-50%, -50%) translateX(${logoTranslateX}vw) translateY(${logoTranslateY}vh)`,
-          transition: 'none', // No transition for smooth real-time movement
-        }}
-      >
-        <Logo3D />
-      </div>
-
       {/* Hero Section */}
       <section className="min-h-screen bg-black relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 h-screen flex flex-col justify-center relative z-10">
@@ -83,9 +49,9 @@ export const Hero = () => {
 
           {/* Main Content - Perfectly Centered */}
           <div className="flex flex-col items-center justify-center text-center">
-            {/* 3D Logo placeholder - actual logo is now floating */}
-            <div className="w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8 opacity-0">
-              {/* Hidden - using floating logo instead */}
+            {/* 3D Logo with better sizing */}
+            <div className="w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8">
+              <Logo3D />
             </div>
             
             {/* Title with improved spacing */}
@@ -155,7 +121,46 @@ export const Hero = () => {
 
             {/* Right Content */}
             <div className="space-y-8">
-              {/* Empty space or can add other content later */}
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-white mb-8">The Professional Edge</h3>
+                
+                <div className="space-y-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-black rounded-full" />
+                    </div>
+                    <p className="text-white/80">Comprehensive database of finance roles across Europe</p>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-black rounded-full" />
+                    </div>
+                    <p className="text-white/80">Filter by country, division, and job type</p>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-black rounded-full" />
+                    </div>
+                    <p className="text-white/80">Track application deadlines easily</p>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-black rounded-full" />
+                    </div>
+                    <p className="text-white/80">Direct links to application pages</p>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-black rounded-full" />
+                    </div>
+                    <p className="text-white/80">Professional profile for hiring managers</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -177,13 +182,6 @@ export const Hero = () => {
           </div>
         </div>
       </section>
-
-      {/* Footer for reference */}
-      <footer className="bg-gray-900 py-12 text-center">
-        <div className="max-w-7xl mx-auto px-8">
-          <p className="text-white/60">© 2024 Forged Finance. All rights reserved.</p>
-        </div>
-      </footer>
 
     </>
   );
