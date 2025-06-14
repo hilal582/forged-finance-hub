@@ -29,10 +29,11 @@ const ForgedFinanceLogo = () => {
   }, [scene]);
 
   useFrame((state) => {
-    if (groupRef.current) {
-      groupRef.current.rotation.y += 0.005;
-      groupRef.current.rotation.x += 0.002;
-    }
+    // Remove rotation for premium static look
+    // if (groupRef.current) {
+    //   groupRef.current.rotation.y += 0.005;
+    //   groupRef.current.rotation.x += 0.002;
+    // }
   });
 
   if (!scene) {
@@ -89,9 +90,9 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
   const currentX = centerX + (targetX - centerX) * scrollProgress;
   const currentY = centerY + (targetY - centerY) * scrollProgress;
   
-  // Size interpolation - larger for more luxury feel
-  const initialSize = window.innerWidth < 768 ? 350 : 450;
-  const targetSize = window.innerWidth < 768 ? 280 : 350;
+  // Size interpolation - larger for premium presence
+  const initialSize = window.innerWidth < 768 ? 450 : 600;
+  const targetSize = window.innerWidth < 768 ? 380 : 480;
   const currentSize = initialSize + (targetSize - initialSize) * scrollProgress;
 
   return (
@@ -109,11 +110,13 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
       <Canvas gl={{ alpha: true, antialias: true }}>
         <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={75} />
         
-        {/* Enhanced lighting for luxury look */}
-        <ambientLight intensity={0.6} />
-        <directionalLight position={[2, 2, 2]} intensity={1.2} />
-        <directionalLight position={[-2, -2, -2]} intensity={0.8} />
-        <pointLight position={[0, 0, 5]} intensity={0.5} />
+        {/* Premium lighting setup */}
+        <ambientLight intensity={0.4} />
+        <directionalLight position={[5, 5, 5]} intensity={1.5} castShadow />
+        <directionalLight position={[-5, -5, -5]} intensity={0.6} />
+        <directionalLight position={[0, 10, 0]} intensity={0.8} />
+        <pointLight position={[0, 0, 10]} intensity={0.7} />
+        <spotLight position={[10, 10, 10]} intensity={0.5} angle={0.3} penumbra={1} />
         
         {/* Logo */}
         <ForgedFinanceLogo />
