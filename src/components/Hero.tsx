@@ -14,7 +14,7 @@ export const Hero = () => {
 
   // Calculate logo position based on scroll
   const section1Height = window.innerHeight;
-  const section2TextStart = section1Height + 150; // When the "Your hub for" text becomes visible
+  const section2TextStart = section1Height + 50; // When the "Your hub for" text becomes visible
   
   // Logo stops moving when the text content becomes visible
   const maxScroll = section2TextStart;
