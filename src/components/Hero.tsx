@@ -81,6 +81,108 @@ export const Hero = () => {
         </div>
       </section>
 
+      {/* Second Section - Hub for Finance Careers */}
+      <section className="min-h-screen bg-black relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-8 py-24">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Content */}
+            <div className="space-y-8">
+              <div className="space-y-6">
+                <h2 className="text-5xl lg:text-6xl font-bold leading-tight">
+                  <span className="block text-white">Your hub for</span>
+                  <span className="block text-blue-500">finance careers</span>
+                  <span className="block text-white">across Europe</span>
+                </h2>
+                
+                <p className="text-lg text-white/70 leading-relaxed">
+                  Find and track top investment banking, private equity, and 
+                  asset management roles with a streamlined application 
+                  experience.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button 
+                  size="lg" 
+                  className="bg-blue-600 text-white hover:bg-blue-700 px-8 py-6 text-base font-medium"
+                >
+                  Get Started
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+                <Button 
+                  variant="outline"
+                  size="lg" 
+                  className="border-white/20 text-white hover:bg-white/10 px-8 py-6 text-base font-medium"
+                >
+                  Learn More
+                </Button>
+              </div>
+            </div>
+
+            {/* Right Content */}
+            <div className="space-y-8">
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
+                <h3 className="text-2xl font-bold text-white mb-8">The Professional Edge</h3>
+                
+                <div className="space-y-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-white rounded-full" />
+                    </div>
+                    <p className="text-white/80">Comprehensive database of finance roles across Europe</p>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-white rounded-full" />
+                    </div>
+                    <p className="text-white/80">Filter by country, division, and job type</p>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-white rounded-full" />
+                    </div>
+                    <p className="text-white/80">Track application deadlines easily</p>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-white rounded-full" />
+                    </div>
+                    <p className="text-white/80">Direct links to application pages</p>
+                  </div>
+                  
+                  <div className="flex items-start space-x-4">
+                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-white rounded-full" />
+                    </div>
+                    <p className="text-white/80">Professional profile for hiring managers</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Trusted by section */}
+          <div className="mt-24 text-center">
+            <p className="text-white/60 text-lg mb-12">Trusted by top business schools across Europe</p>
+            
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
+              <div className="flex flex-wrap justify-center items-center gap-8 text-white/70">
+                <span className="text-lg">London School of Economics</span>
+                <span className="text-lg">Copenhagen Business School</span>
+                <span className="text-lg">Warwick</span>
+                <span className="text-lg">UCL</span>
+                <span className="text-lg">HEC</span>
+                <span className="text-lg">ESCP</span>
+                <span className="text-lg">ESSEC</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
     </>
   );
 };
