@@ -121,46 +121,7 @@ export const Hero = () => {
 
             {/* Right Content */}
             <div className="space-y-8">
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
-                <h3 className="text-2xl font-bold text-white mb-8">The Professional Edge</h3>
-                
-                <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <div className="w-2 h-2 bg-black rounded-full" />
-                    </div>
-                    <p className="text-white/80">Comprehensive database of finance roles across Europe</p>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <div className="w-2 h-2 bg-black rounded-full" />
-                    </div>
-                    <p className="text-white/80">Filter by country, division, and job type</p>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <div className="w-2 h-2 bg-black rounded-full" />
-                    </div>
-                    <p className="text-white/80">Track application deadlines easily</p>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <div className="w-2 h-2 bg-black rounded-full" />
-                    </div>
-                    <p className="text-white/80">Direct links to application pages</p>
-                  </div>
-                  
-                  <div className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <div className="w-2 h-2 bg-black rounded-full" />
-                    </div>
-                    <p className="text-white/80">Professional profile for hiring managers</p>
-                  </div>
-                </div>
-              </div>
+              {/* Empty space or can add other content later */}
             </div>
           </div>
 
