@@ -12,11 +12,11 @@ export const Hero = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Calculate smooth transition progress
+  // Calculate smooth transition progress based on scroll
   const getTransitionProgress = () => {
     const windowHeight = window.innerHeight;
-    const startScroll = windowHeight * 0.6; // Start transition at 60% of first section
-    const endScroll = windowHeight * 1.4; // End transition at 40% into second section
+    const startScroll = windowHeight * 0.5; // Start transition earlier
+    const endScroll = windowHeight * 1.5; // End transition later in section 2
     const progress = Math.max(0, Math.min(1, (scrollY - startScroll) / (endScroll - startScroll)));
     
     // Apply easing function for smooth animation
@@ -24,32 +24,29 @@ export const Hero = () => {
   };
 
   const transitionProgress = getTransitionProgress();
-  const isTransitioning = transitionProgress > 0 && transitionProgress < 1;
-  const hasLanded = transitionProgress >= 1;
 
-  // Calculate logo transform
+  // Calculate logo style based on continuous scroll position
   const getLogoStyle = () => {
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+    
     if (transitionProgress === 0) {
-      // Logo in section 1 - center position
+      // Logo in section 1 - static position
       return {
         position: 'static' as const,
         transform: 'none',
         opacity: 1
       };
     }
-
-    // During transition and after landing
-    const windowHeight = window.innerHeight;
-    const windowWidth = window.innerWidth;
     
-    // Target position: exactly where shown in the image (right side of section 2)
-    const targetX = windowWidth * 0.3; // Move to right side where the logo is shown
-    const targetY = windowHeight + windowHeight * 0.2; // Land in the middle-right area of section 2
+    // Calculate continuous movement
+    const targetX = windowWidth * 0.3; // Right side target
+    const targetY = windowHeight * 1.2; // Section 2 target
     
     const currentX = targetX * transitionProgress;
     const currentY = targetY * transitionProgress;
-    const rotation = 360 * transitionProgress; // Full backflip
-    const scale = 0.7; // Smaller size to match the image
+    const rotation = 360 * transitionProgress; // Continuous backflip
+    const scale = 1 - (transitionProgress * 0.3); // Scale down during transition
     
     return {
       position: 'fixed' as const,
@@ -58,8 +55,10 @@ export const Hero = () => {
       transform: `translate(-50%, -50%) translate(${currentX}px, ${currentY}px) rotateX(${rotation}deg) scale(${scale})`,
       zIndex: 40,
       pointerEvents: 'none' as const,
-      transition: isTransitioning ? 'none' : 'all 0.3s ease-out',
-      opacity: 1
+      transition: 'none', // Remove transition for smooth real-time movement
+      opacity: 1,
+      width: '300px',
+      height: '300px'
     };
   };
 
