@@ -31,8 +31,9 @@ export const Hero = () => {
 
       {/* Hero Section */}
       <section className="min-h-screen bg-black relative overflow-hidden flex items-center">
-        <div className="max-w-4xl mx-auto px-8 text-center relative z-10">
-          {/* Centered Content */}
+
+        <div className="max-w-7xl mx-auto px-8 grid lg:grid-cols-2 gap-16 items-center relative z-10">
+          {/* Left Content */}
           <div className="space-y-8">
             <div className="space-y-6">
               <div className="inline-flex items-center px-4 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm">
@@ -48,17 +49,34 @@ export const Hero = () => {
                 </span>
               </h1>
               
-              <p className="text-xl text-white/70 leading-relaxed max-w-2xl mx-auto">
+              <p className="text-xl text-white/70 leading-relaxed max-w-lg">
                 Connect with elite opportunities across Europe's top investment banks, 
                 private equity firms, and asset management companies.
               </p>
             </div>
-          </div>
-        </div>
 
-        {/* 3D Logo */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <div className="w-96 h-96">
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button 
+                size="lg" 
+                className="bg-white text-black hover:bg-white/90 px-8 py-6 text-base font-medium group"
+              >
+                START YOUR JOURNEY
+                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-base font-medium group"
+              >
+                <Play className="mr-2 w-5 h-5" />
+                WATCH DEMO
+              </Button>
+            </div>
+
+          </div>
+
+          {/* Right Content - 3D Logo */}
+          <div className="relative h-96 lg:h-full flex items-center justify-center">
             <Logo3D />
           </div>
         </div>
@@ -125,23 +143,13 @@ export const Hero = () => {
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button 
-                size="lg" 
-                className="bg-white text-black hover:bg-white/90 px-8 py-6 text-base font-medium group"
-              >
-                START YOUR JOURNEY
-                <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="border-white/30 text-white hover:bg-white/10 px-8 py-6 text-base font-medium group"
-              >
-                <Play className="mr-2 w-5 h-5" />
-                WATCH DEMO
-              </Button>
-            </div>
+            <Button 
+              size="lg" 
+              className="bg-white text-black hover:bg-white/90 px-8 py-6 text-base font-medium group"
+            >
+              EXPLORE PLATFORM
+              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            </Button>
           </div>
         </div>
       </section>
