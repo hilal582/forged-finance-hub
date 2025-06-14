@@ -20,8 +20,8 @@ export const Hero = () => {
   const scrollProgress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
   
   // Logo movement: from center of section 1 to center of section 2
-  const logoTranslateX = scrollProgress * 30; // Move to center of section 2
-  const logoTranslateY = scrollProgress * 10; // Move down to align with center of section 2
+  const logoTranslateX = scrollProgress * 25; // Move to center of section 2
+  const logoTranslateY = scrollProgress * 8; // Move down to align with center of section 2
 
   return (
     <>
