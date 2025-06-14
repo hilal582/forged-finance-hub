@@ -14,17 +14,18 @@ export const Hero = () => {
 
   // Calculate logo position based on scroll
   const section1Height = window.innerHeight;
-  const section2ContentStart = section1Height + 100; // Content area starts 100px into section 2
+  const section2TextStart = section1Height + 150; // When the "Your hub for" text becomes visible
   
-  // Logo should stop moving when it reaches the content area
-  const scrollProgress = scrollY >= section2ContentStart ? 1 : scrollY / section2ContentStart;
+  // Logo stops moving when the text content becomes visible
+  const maxScroll = section2TextStart;
+  const scrollProgress = Math.min(scrollY / maxScroll, 1);
   
   // Debug logs
-  console.log('ScrollY:', scrollY, 'ContentStart:', section2ContentStart, 'Progress:', scrollProgress);
+  console.log('ScrollY:', scrollY, 'TextStart:', section2TextStart, 'Progress:', scrollProgress);
   
-  // Logo movement: moves to right side to align with content, then stops
-  const logoTranslateX = scrollProgress * 35; // Move further right to align with right column
-  const logoTranslateY = scrollProgress * 12; // Move down to align with content area
+  // Logo movement: moves to final position on right side, then completely stops
+  const logoTranslateX = scrollProgress * 30; // Move to right side to align with right column
+  const logoTranslateY = scrollProgress * 10; // Move down to align with content
 
   return (
     <>
