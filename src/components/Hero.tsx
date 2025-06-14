@@ -1,4 +1,4 @@
-import { ArrowRight, Play, ChevronDown } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Logo3D } from './Logo3D';
 import { useEffect, useState, useRef } from 'react';
@@ -23,6 +23,9 @@ export const Hero = () => {
 
     window.addEventListener('scroll', handleScroll);
     window.addEventListener('resize', handleResize);
+    
+    // Initial calculation
+    handleResize();
     
     return () => {
       window.removeEventListener('scroll', handleScroll);
@@ -111,6 +114,7 @@ export const Hero = () => {
           transform: logoTransform,
           opacity: logoOpacity,
           transition: 'transform 0.1s ease-out, opacity 0.3s ease-out',
+          willChange: 'transform, opacity',
         }}
       >
         <Logo3D />
@@ -169,7 +173,7 @@ export const Hero = () => {
         <div className="max-w-7xl mx-auto px-8 py-24">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left Content */}
-            <div className="space-y-8">
+            <div className="space-y-8 relative">
               <div className="space-y-6">
                 <h2 className="text-5xl lg:text-6xl font-bold leading-tight">
                   <span className="block text-white">Your hub for</span>
