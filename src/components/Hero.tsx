@@ -1,13 +1,32 @@
 import { ArrowRight, Play, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Logo3D } from './Logo3D';
+import { useEffect, useState } from 'react';
 
 export const Hero = () => {
+  const [showHeader, setShowHeader] = useState(false);
+  const [showBottom, setShowBottom] = useState(false);
+  const [showGlitch, setShowGlitch] = useState(false);
+
+  useEffect(() => {
+    // Sequential animation triggers
+    const headerTimer = setTimeout(() => setShowHeader(true), 300);
+    const bottomTimer = setTimeout(() => setShowBottom(true), 1200);
+    const glitchTimer = setTimeout(() => setShowGlitch(true), 2000);
+
+    return () => {
+      clearTimeout(headerTimer);
+      clearTimeout(bottomTimer);
+      clearTimeout(glitchTimer);
+    };
+  }, []);
 
   return (
     <>
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/5">
+      <nav className={`fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/5 transition-all duration-1000 ${
+        showHeader ? 'animate-slide-from-top opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'
+      }`}>
         <div className="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <img 
@@ -46,43 +65,49 @@ export const Hero = () => {
           <div className="absolute top-1/3 right-20 w-48 h-48 bg-purple-400/10 rounded-full blur-[60px] animate-pulse" />
         </div>
         <div className="max-w-7xl mx-auto px-8 h-screen flex flex-col justify-center relative z-10">
-          {/* Live Platform Badge - Top Right with better positioning */}
-          <div className="absolute top-24 right-8">
+          {/* Live Platform Badge - Top Right with glitch animation */}
+          <div className={`absolute top-24 right-8 transition-all duration-1000 ${
+            showGlitch ? 'animate-glitch-in opacity-100' : 'opacity-0'
+          }`}>
             <div className="inline-flex items-center px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm">
               <div className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse" />
               <span className="text-white/80 text-sm tracking-wider font-medium">LIVE PLATFORM</span>
             </div>
           </div>
 
-          {/* Main Content - Perfectly Centered */}
-          <div className="flex flex-col items-center justify-center text-center">
-            {/* 3D Logo with better sizing */}
-            <div className="w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8">
-              <Logo3D />
-            </div>
-            
-            {/* Title with improved spacing */}
-            <div className="space-y-6 mb-12">
+          {/* 3D Logo - Center with glitch animation */}
+          <div className={`w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8 mx-auto transition-all duration-1000 ${
+            showGlitch ? 'animate-glitch-in opacity-100' : 'opacity-0'
+          }`}>
+            <Logo3D />
+          </div>
+
+          {/* Bottom Content - Slides up together */}
+          <div className={`flex flex-col items-center justify-end flex-1 text-center transition-all duration-1000 ${
+            showBottom ? 'animate-slide-from-bottom opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
+          }`}>
+            {/* Title */}
+            <div className="space-y-6 mb-8">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.9] tracking-tight">
                 <span className="block text-white">THE FUTURE OF FINANCE CAREERS</span>
               </h1>
             </div>
             
-            {/* Description with better typography and controlled spacing */}
-            <div className="max-w-3xl mb-32">
+            {/* Description */}
+            <div className="max-w-3xl mb-24">
               <p className="text-lg md:text-xl text-white/60 leading-relaxed font-light">
                 Connect with elite opportunities across Europe's top investment banks, 
                 private equity firms, and asset management companies.
               </p>
             </div>
-          </div>
 
-          {/* Swipe Down Indicator with enhanced design and proper positioning */}
-          <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white/50">
-            <span className="text-xs tracking-[0.2em] mb-6 font-medium">SWIPE DOWN TO EXPLORE</span>
-            <div className="flex flex-col items-center space-y-2">
-              <ChevronDown className="w-5 h-5 animate-bounce" />
-              <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
+            {/* Swipe Down Indicator */}
+            <div className="flex flex-col items-center text-white/50 mb-12">
+              <span className="text-xs tracking-[0.2em] mb-6 font-medium">SWIPE DOWN TO EXPLORE</span>
+              <div className="flex flex-col items-center space-y-2">
+                <ChevronDown className="w-5 h-5 animate-bounce" />
+                <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
+              </div>
             </div>
           </div>
         </div>
