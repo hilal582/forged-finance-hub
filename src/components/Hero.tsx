@@ -1,10 +1,12 @@
 import { ArrowRight, Play, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Logo3D } from './Logo3D';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export const Hero = () => {
   const [scrollY, setScrollY] = useState(0);
+  const targetRef = useRef<HTMLDivElement>(null);
+  const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -12,20 +14,36 @@ export const Hero = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Get target position
+  useEffect(() => {
+    if (targetRef.current) {
+      const rect = targetRef.current.getBoundingClientRect();
+      // Get center position of target element
+      setTargetPosition({
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+      });
+    }
+  }, []);
+
   // Calculate logo position based on scroll
   const section1Height = window.innerHeight;
-  const section2TextStart = section1Height + 150; // When the "Your hub for" text becomes visible
-  
-  // Logo stops moving when the text content becomes visible
-  const maxScroll = section2TextStart;
-  const scrollProgress = Math.min(scrollY / maxScroll, 1);
-  
-  // Debug logs
-  console.log('ScrollY:', scrollY, 'TextStart:', section2TextStart, 'Progress:', scrollProgress);
-  
-  // Logo movement: moves to final position on right side, then completely stops
-  const logoTranslateX = scrollProgress * 30; // Move to right side to align with right column
-  const logoTranslateY = scrollProgress * 10; // Move down to align with content
+  const maxScroll = section1Height + 400; // Adjust as needed
+
+  let logoPosition = { x: 0, y: 0 };
+
+  if (targetPosition.x && scrollY > section1Height) {
+    const progress = Math.min((scrollY - section1Height) / 400, 1);
+    
+    // Calculate final position (center of target element)
+    const finalX = targetPosition.x - window.innerWidth / 2;
+    const finalY = targetPosition.y - window.innerHeight / 2;
+    
+    logoPosition = {
+      x: finalX * progress,
+      y: finalY * progress
+    };
+  }
 
   return (
     <>
@@ -61,10 +79,11 @@ export const Hero = () => {
 
       {/* Floating 3D Logo that moves with scroll */}
       <div 
-        className="fixed top-1/3 left-1/2 z-40 w-80 h-80 lg:w-96 lg:h-96 pointer-events-none"
+        className="fixed top-1/2 left-1/2 z-40 w-80 h-80 lg:w-96 lg:h-96 pointer-events-none"
         style={{
-          transform: `translate(-50%, -50%) translateX(${logoTranslateX}vw) translateY(${logoTranslateY}vh)`,
-          transition: 'none', // No transition for smooth real-time movement
+          transform: `translate(-50%, -50%) translate(${logoPosition.x}px, ${logoPosition.y}px)`,
+          transition: scrollY > window.innerHeight ? 'transform 0.1s ease-out' : 'none',
+          opacity: scrollY > window.innerHeight + 400 ? 0 : 1 // Fade out after reaching target
         }}
       >
         <Logo3D />
@@ -118,9 +137,16 @@ export const Hero = () => {
       {/* Second Section - Hub for Finance Careers */}
       <section className="min-h-screen bg-black relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 py-24">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div ref={targetRef} className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left Content */}
-            <div className="space-y-8">
+            <div className="space-y-8 relative">
+              {/* Static logo that appears when floating logo is hidden */}
+              {scrollY > window.innerHeight + 400 && (
+                <div className="w-40 h-40 absolute -top-24 -left-10">
+                  <Logo3D />
+                </div>
+              )}
+              
               <div className="space-y-6">
                 <h2 className="text-5xl lg:text-6xl font-bold leading-tight">
                   <span className="block text-white">Your hub for</span>
