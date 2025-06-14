@@ -92,15 +92,8 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
   const currentX = centerX + (targetX - centerX) * scrollProgress;
   const currentY = centerY + (targetY - centerY) * scrollProgress;
   
-  // Jump effect: make bigger during scroll, then smaller at landing
-  const jumpProgress = Math.sin(scrollProgress * Math.PI); // Creates arc from 0 to 1 to 0
-  const baseSize = window.innerWidth < 768 ? 550 : 750;
-  const jumpSize = window.innerWidth < 768 ? 200 : 300; // Extra size during jump
-  const finalSize = window.innerWidth < 768 ? 350 : 450; // Final smaller size
-  
-  const currentSize = scrollProgress < 1 
-    ? baseSize + jumpSize * jumpProgress
-    : finalSize;
+  // Keep consistent size throughout both sections
+  const currentSize = window.innerWidth < 768 ? 450 : 600;
   
   // Smooth backflip rotation during scroll
   const rotationX = scrollProgress * Math.PI * 2 * (1 - Math.pow(1 - scrollProgress, 3)); // Smooth easing
