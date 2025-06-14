@@ -58,7 +58,7 @@ export const Hero = () => {
 
       {/* Floating 3D Logo that moves with scroll */}
       <div 
-        className="fixed top-1/2 left-1/2 z-40 w-80 h-80 lg:w-96 lg:h-96 pointer-events-none"
+        className="fixed top-1/3 left-1/2 z-40 w-80 h-80 lg:w-96 lg:h-96 pointer-events-none"
         style={{
           transform: `translate(-50%, -50%) translateX(${logoTranslateX}vw) translateY(${logoTranslateY}vh) scale(${logoScale})`,
           transition: 'none', // No transition for smooth real-time movement
