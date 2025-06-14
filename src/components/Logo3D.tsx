@@ -6,7 +6,7 @@ import * as THREE from 'three';
 
 const ForgedFinanceLogo = () => {
   const groupRef = useRef<THREE.Group>(null);
-  const { scene } = useGLTF('/forged-finance-logo.glb');
+  const { scene } = useGLTF('/base_basic_shaded.glb');
   
   useEffect(() => {
     if (scene) {
