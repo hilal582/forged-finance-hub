@@ -15,23 +15,20 @@ export const Hero = () => {
   // Calculate smooth transition progress based on scroll
   const getTransitionProgress = () => {
     const windowHeight = window.innerHeight;
-    const startScroll = windowHeight * 0.5; // Start transition earlier
-    const endScroll = windowHeight * 1.5; // End transition later in section 2
+    const startScroll = windowHeight * 0.6; // Start moving at 60% through section 1
+    const endScroll = windowHeight * 1.3; // Finish moving by 30% into section 2
     const progress = Math.max(0, Math.min(1, (scrollY - startScroll) / (endScroll - startScroll)));
     
-    // Apply easing function for smooth animation
+    // Apply smooth easing
     return progress * progress * (3 - 2 * progress);
   };
 
   const transitionProgress = getTransitionProgress();
 
-  // Calculate logo style based on continuous scroll position
+  // Calculate logo position
   const getLogoStyle = () => {
-    const windowHeight = window.innerHeight;
-    const windowWidth = window.innerWidth;
-    
     if (transitionProgress === 0) {
-      // Logo in section 1 - static position
+      // Logo stays in section 1 center
       return {
         position: 'static' as const,
         transform: 'none',
@@ -39,23 +36,26 @@ export const Hero = () => {
       };
     }
     
-    // Calculate continuous movement
-    const targetX = windowWidth * 0.3; // Right side target
-    const targetY = windowHeight * 1.2; // Section 2 target
+    // Calculate movement to section 2 right side
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+    
+    // Target: right side of section 2 (where professional edge was)
+    const targetX = windowWidth * 0.25; // Move right
+    const targetY = windowHeight + windowHeight * 0.15; // Into section 2
     
     const currentX = targetX * transitionProgress;
     const currentY = targetY * transitionProgress;
-    const rotation = 360 * transitionProgress; // Continuous backflip
-    const scale = 1 - (transitionProgress * 0.3); // Scale down during transition
+    const scale = 1 - (transitionProgress * 0.2); // Slightly smaller when landed
     
     return {
       position: 'fixed' as const,
       top: '50%',
       left: '50%',
-      transform: `translate(-50%, -50%) translate(${currentX}px, ${currentY}px) rotateX(${rotation}deg) scale(${scale})`,
+      transform: `translate(-50%, -50%) translate(${currentX}px, ${currentY}px) scale(${scale})`,
       zIndex: 40,
       pointerEvents: 'none' as const,
-      transition: 'none', // Remove transition for smooth real-time movement
+      transition: 'none',
       opacity: 1,
       width: '300px',
       height: '300px'
