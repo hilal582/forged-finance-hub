@@ -1,28 +1,8 @@
 import { ArrowRight, Play, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Logo3D } from './Logo3D';
-import { useEffect, useState } from 'react';
 
 export const Hero = () => {
-  const [scrollY, setScrollY] = useState(0);
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Calculate logo position based on scroll
-  const section1Height = window.innerHeight;
-  const section2Start = section1Height;
-  const maxScroll = section2Start + 400; // Logo should reach final position after scrolling 400px into section 2
-  
-  const scrollProgress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
-  
-  // Logo movement: from center of section 1 to right side of section 2
-  const logoTranslateX = scrollProgress * 40; // Move 40% to the right
-  const logoTranslateY = scrollProgress * -10; // Move up slightly
-  const logoScale = 1 - scrollProgress * 0.3; // Scale down slightly
 
   return (
     <>
@@ -56,17 +36,6 @@ export const Hero = () => {
         </div>
       </nav>
 
-      {/* Floating 3D Logo that moves with scroll */}
-      <div 
-        className="fixed top-1/2 left-1/2 z-40 w-80 h-80 lg:w-96 lg:h-96 pointer-events-none"
-        style={{
-          transform: `translate(-50%, -50%) translateX(${logoTranslateX}vw) translateY(${logoTranslateY}vh) scale(${logoScale})`,
-          transition: 'none', // No transition for smooth real-time movement
-        }}
-      >
-        <Logo3D />
-      </div>
-
       {/* Hero Section */}
       <section className="min-h-screen bg-black relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 h-screen flex flex-col justify-center relative z-10">
@@ -80,9 +49,9 @@ export const Hero = () => {
 
           {/* Main Content - Perfectly Centered */}
           <div className="flex flex-col items-center justify-center text-center">
-            {/* 3D Logo placeholder - actual logo is now floating */}
-            <div className="w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8 opacity-0">
-              {/* Hidden - using floating logo instead */}
+            {/* 3D Logo with better sizing */}
+            <div className="w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8">
+              <Logo3D />
             </div>
             
             {/* Title with improved spacing */}
