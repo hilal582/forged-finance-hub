@@ -15,14 +15,17 @@ const ForgedFinanceLogo = () => {
   
   useEffect(() => {
     if (scene) {
-      // Apply metallic material to all meshes for luxury look
+      // Apply enhanced metallic material for more depth
       scene.traverse((child: any) => {
         if (child.isMesh) {
           child.material = new THREE.MeshStandardMaterial({
             color: '#ffffff',
-            metalness: 0.9,
-            roughness: 0.1,
+            metalness: 0.95,
+            roughness: 0.05,
+            envMapIntensity: 1.5,
           });
+          child.castShadow = true;
+          child.receiveShadow = true;
         }
       });
     }
@@ -90,14 +93,14 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
   const currentX = centerX + (targetX - centerX) * scrollProgress;
   const currentY = centerY + (targetY - centerY) * scrollProgress;
   
-  // Size interpolation - larger for premium presence
-  const initialSize = window.innerWidth < 768 ? 450 : 600;
-  const targetSize = window.innerWidth < 768 ? 380 : 480;
+  // Size interpolation - much larger for prominent presence
+  const initialSize = window.innerWidth < 768 ? 550 : 750;
+  const targetSize = window.innerWidth < 768 ? 450 : 600;
   const currentSize = initialSize + (targetSize - initialSize) * scrollProgress;
 
   return (
     <div 
-      className="fixed z-10"
+      className="fixed z-50"
       style={{
         left: `${currentX}%`,
         top: `${currentY}%`,
@@ -107,16 +110,40 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
         transition: scrollY === 0 ? 'all 0.3s ease-out' : 'none'
       }}
     >
-      <Canvas gl={{ alpha: true, antialias: true }}>
-        <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={75} />
+      <Canvas gl={{ alpha: true, antialias: true }} shadows>
+        <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
         
-        {/* Premium lighting setup */}
-        <ambientLight intensity={0.4} />
-        <directionalLight position={[5, 5, 5]} intensity={1.5} castShadow />
-        <directionalLight position={[-5, -5, -5]} intensity={0.6} />
-        <directionalLight position={[0, 10, 0]} intensity={0.8} />
-        <pointLight position={[0, 0, 10]} intensity={0.7} />
-        <spotLight position={[10, 10, 10]} intensity={0.5} angle={0.3} penumbra={1} />
+        {/* Enhanced premium lighting for depth */}
+        <ambientLight intensity={0.3} />
+        <directionalLight 
+          position={[10, 10, 5]} 
+          intensity={2} 
+          castShadow 
+          shadow-mapSize-width={2048}
+          shadow-mapSize-height={2048}
+          shadow-camera-far={50}
+          shadow-camera-left={-10}
+          shadow-camera-right={10}
+          shadow-camera-top={10}
+          shadow-camera-bottom={-10}
+        />
+        <directionalLight position={[-8, -8, -5]} intensity={0.8} />
+        <directionalLight position={[0, 15, 0]} intensity={1.2} />
+        <pointLight position={[5, 5, 15]} intensity={1} />
+        <pointLight position={[-5, -5, 15]} intensity={0.8} />
+        <spotLight 
+          position={[15, 15, 15]} 
+          intensity={1.5} 
+          angle={0.2} 
+          penumbra={0.5} 
+          castShadow
+        />
+        <spotLight 
+          position={[-15, -15, 15]} 
+          intensity={1} 
+          angle={0.3} 
+          penumbra={0.8} 
+        />
         
         {/* Logo */}
         <ForgedFinanceLogo />
