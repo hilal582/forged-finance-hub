@@ -67,13 +67,13 @@ const DynamicLights = () => {
     
     // Persistent circular current light - starts from top and flows around
     if (currentLightRef.current) {
-      const radius = 4;
-      const speed = 1.5;
+      const radius = 6;
+      const speed = 1.2;
       currentLightRef.current.position.x = Math.cos(time * speed) * radius;
-      currentLightRef.current.position.y = 2 + Math.sin(time * speed) * radius;
+      currentLightRef.current.position.y = 1 + Math.sin(time * speed) * 2;
       currentLightRef.current.position.z = Math.sin(time * speed) * radius;
-      // Keep consistent intensity for the current effect
-      currentLightRef.current.intensity = 5;
+      // Keep high intensity for prominent current effect
+      currentLightRef.current.intensity = 8;
     }
   });
 
@@ -112,10 +112,10 @@ const DynamicLights = () => {
       <pointLight 
         ref={currentLightRef}
         position={[0, 6, 4]} 
-        intensity={5} 
+        intensity={8} 
         color="#ff3366"
-        distance={12}
-        decay={1}
+        distance={18}
+        decay={0.5}
       />
     </>
   );
