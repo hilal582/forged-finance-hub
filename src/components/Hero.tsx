@@ -20,7 +20,7 @@ export const Hero = () => {
   const scrollProgress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
   
   // Logo movement: from center of section 1 to aligned position in section 2
-  const logoTranslateX = scrollProgress * 25; // Move 25% to the right to align with content
+  const logoTranslateX = scrollProgress * 35; // Move 25% to the right to align with content
 
   return (
     <>
