@@ -1,17 +1,36 @@
 import { Canvas } from '@react-three/fiber';
 import { useGLTF, PerspectiveCamera } from '@react-three/drei';
 import { useFrame } from '@react-three/fiber';
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import * as THREE from 'three';
 
 const ForgedFinanceLogo = () => {
   const groupRef = useRef<THREE.Group>(null);
   const { scene } = useGLTF('/forged-finance-logo.glb');
   
+  useEffect(() => {
+    if (scene) {
+      // Apply white material to all meshes for sharpness and white color
+      scene.traverse((child: any) => {
+        if (child.isMesh) {
+          child.material = new THREE.MeshStandardMaterial({
+            color: '#ffffff',
+            metalness: 0.1,
+            roughness: 0.2,
+            emissive: '#ffffff',
+            emissiveIntensity: 0.1,
+          });
+          child.castShadow = true;
+          child.receiveShadow = true;
+        }
+      });
+    }
+  }, [scene]);
+  
   useFrame((state) => {
     if (groupRef.current) {
-      // Subtle rotation animation
-      groupRef.current.rotation.y += 0.005;
+      // Slower rotation animation
+      groupRef.current.rotation.y += 0.002;
     }
   });
 
@@ -21,7 +40,7 @@ const ForgedFinanceLogo = () => {
 
   return (
     <group ref={groupRef}>
-      <primitive object={scene} scale={1.5} />
+      <primitive object={scene} scale={1.8} />
     </group>
   );
 };
@@ -36,7 +55,8 @@ export const Logo3D = () => {
           powerPreference: "high-performance"
         }} 
         shadows
-        dpr={[1, 2]}
+        dpr={[1, 3]}
+        camera={{ fov: 45, position: [0, 0, 5] }}
       >
         <PerspectiveCamera makeDefault position={[0, 0, 5]} fov={50} />
         

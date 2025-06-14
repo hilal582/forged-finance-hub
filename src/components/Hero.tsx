@@ -79,21 +79,6 @@ export const Hero = () => {
               </Button>
             </div>
 
-            {/* Stats */}
-            <div className="grid grid-cols-3 gap-8 pt-8 border-t border-white/10">
-              <div>
-                <div className="text-3xl font-bold text-white">2.5K+</div>
-                <div className="text-white/60 text-sm tracking-wide">ACTIVE ROLES</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-white">150+</div>
-                <div className="text-white/60 text-sm tracking-wide">TOP FIRMS</div>
-              </div>
-              <div>
-                <div className="text-3xl font-bold text-white">25</div>
-                <div className="text-white/60 text-sm tracking-wide">COUNTRIES</div>
-              </div>
-            </div>
           </div>
 
           {/* Right Content - 3D Logo */}
