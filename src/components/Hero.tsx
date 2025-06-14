@@ -14,12 +14,12 @@ export const Hero = () => {
 
   // Calculate logo position based on scroll
   const section1Height = window.innerHeight;
-  const section2Start = section1Height;
-  const maxScroll = section2Start + 400; // Logo should reach final position after scrolling 400px into section 2
+  const centerOfSection2 = section1Height + (window.innerHeight / 2);
   
-  const scrollProgress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
+  // Logo stops moving when scroll reaches center of section 2
+  const scrollProgress = Math.min(scrollY / centerOfSection2, 1);
   
-  // Logo movement: from center of section 1 to center of section 2
+  // Logo movement: from center of section 1 to center of section 2, then stop
   const logoTranslateX = scrollProgress * 25; // Move to center of section 2
   const logoTranslateY = scrollProgress * 8; // Move down to align with center of section 2
 
