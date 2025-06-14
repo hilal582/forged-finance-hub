@@ -27,12 +27,7 @@ const ForgedFinanceLogo = () => {
     }
   }, [scene]);
   
-  useFrame((state) => {
-    if (groupRef.current) {
-      // Slower rotation animation
-      groupRef.current.rotation.y += 0.002;
-    }
-  });
+  // Removed rotation animation
 
   if (!scene) {
     return null;

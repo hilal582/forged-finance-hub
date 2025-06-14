@@ -32,8 +32,8 @@ export const Hero = () => {
       {/* Hero Section */}
       <section className="min-h-screen bg-black relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 h-screen flex flex-col justify-center relative z-10">
-          {/* Live Platform Badge - Top Left with better positioning */}
-          <div className="absolute top-24 left-8">
+          {/* Live Platform Badge - Top Right with better positioning */}
+          <div className="absolute top-24 right-8">
             <div className="inline-flex items-center px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm">
               <div className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse" />
               <span className="text-white/80 text-sm tracking-wider font-medium">LIVE PLATFORM</span>
@@ -55,7 +55,7 @@ export const Hero = () => {
             </div>
             
             {/* Description with better typography */}
-            <div className="max-w-3xl">
+            <div className="max-w-3xl mb-16">
               <p className="text-lg md:text-xl text-white/60 leading-relaxed font-light">
                 Connect with elite opportunities across Europe's top investment banks, 
                 private equity firms, and asset management companies.
@@ -64,7 +64,7 @@ export const Hero = () => {
           </div>
 
           {/* Swipe Down Indicator with enhanced design */}
-          <div className="absolute bottom-11 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white/50">
+          <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white/50">
             <span className="text-xs tracking-[0.2em] mb-6 font-medium">SWIPE DOWN TO EXPLORE</span>
             <div className="flex flex-col items-center space-y-2">
               <ChevronDown className="w-5 h-5 animate-bounce" />
