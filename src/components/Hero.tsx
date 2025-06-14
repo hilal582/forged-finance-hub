@@ -1,5 +1,6 @@
 import { ArrowRight, Play, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Logo3D } from './Logo3D';
 
 export const Hero = () => {
 
@@ -95,9 +96,9 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* Right Content - Space for 3D Logo */}
-          <div className="relative h-96 lg:h-full">
-            {/* This space is intentionally left for the 3D logo */}
+          {/* Right Content - 3D Logo */}
+          <div className="relative h-96 lg:h-full flex items-center justify-center">
+            <Logo3D />
           </div>
         </div>
 
