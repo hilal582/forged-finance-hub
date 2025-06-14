@@ -38,6 +38,13 @@ export const Hero = () => {
 
       {/* Hero Section */}
       <section className="min-h-screen bg-black relative overflow-hidden">
+        {/* Dynamic Spotlights */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-1/4 w-96 h-96 bg-white/10 rounded-full blur-[100px] animate-pulse" />
+          <div className="absolute top-40 right-1/3 w-64 h-64 bg-blue-400/15 rounded-full blur-[80px] animate-float" />
+          <div className="absolute bottom-40 left-1/2 w-80 h-80 bg-white/8 rounded-full blur-[120px]" />
+          <div className="absolute top-1/3 right-20 w-48 h-48 bg-purple-400/10 rounded-full blur-[60px] animate-pulse" />
+        </div>
         <div className="max-w-7xl mx-auto px-8 h-screen flex flex-col justify-center relative z-10">
           {/* Live Platform Badge - Top Right with better positioning */}
           <div className="absolute top-24 right-8">
@@ -83,7 +90,14 @@ export const Hero = () => {
 
       {/* Second Section - Hub for Finance Careers */}
       <section className="min-h-screen bg-black relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-8 py-24">
+        {/* Dynamic Spotlights for Section 2 */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-32 right-1/4 w-72 h-72 bg-cyan-400/12 rounded-full blur-[90px] animate-pulse" />
+          <div className="absolute bottom-32 left-1/5 w-56 h-56 bg-white/8 rounded-full blur-[70px] animate-float" />
+          <div className="absolute top-1/2 left-3/4 w-40 h-40 bg-pink-400/10 rounded-full blur-[50px]" />
+          <div className="absolute bottom-20 right-1/3 w-64 h-64 bg-blue-300/12 rounded-full blur-[85px] animate-pulse" />
+        </div>
+        <div className="max-w-7xl mx-auto px-8 py-24 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left Content */}
             <div className="space-y-8">
