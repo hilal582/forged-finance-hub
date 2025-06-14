@@ -20,10 +20,10 @@ export const Hero = () => {
             </div>
           </div>
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#" className="text-white/70 hover:text-white transition-colors text-sm tracking-wide">Platform</a>
-            <a href="#" className="text-white/70 hover:text-white transition-colors text-sm tracking-wide">Pricing</a>
-            <a href="#" className="text-white/70 hover:text-white transition-colors text-sm tracking-wide">About</a>
-            <a href="#" className="text-white/70 hover:text-white transition-colors text-sm tracking-wide">Contact</a>
+            <a href="#" className="text-white/70 hover:text-white transition-colors text-sm tracking-wide">PLATFORM</a>
+            <a href="#" className="text-white/70 hover:text-white transition-colors text-sm tracking-wide">PRICING</a>
+            <a href="#" className="text-white/70 hover:text-white transition-colors text-sm tracking-wide">ABOUT</a>
+            <a href="#" className="text-white/70 hover:text-white transition-colors text-sm tracking-wide">CONTACT</a>
           </div>
           <div className="flex items-center space-x-4">
             <Button variant="ghost" className="text-white hover:bg-white/10 text-sm tracking-wide">
