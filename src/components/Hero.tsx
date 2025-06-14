@@ -14,17 +14,17 @@ export const Hero = () => {
 
   // Calculate logo position based on scroll
   const section1Height = window.innerHeight;
-  const section2Start = section1Height; // Section 2 starts right after section 1
+  const section2ContentStart = section1Height + 100; // Content area starts 100px into section 2
   
-  // Logo should stop moving once we reach section 2
-  const scrollProgress = scrollY >= section2Start ? 1 : scrollY / section2Start;
+  // Logo should stop moving when it reaches the content area
+  const scrollProgress = scrollY >= section2ContentStart ? 1 : scrollY / section2ContentStart;
   
   // Debug logs
-  console.log('ScrollY:', scrollY, 'Section2Start:', section2Start, 'Progress:', scrollProgress);
+  console.log('ScrollY:', scrollY, 'ContentStart:', section2ContentStart, 'Progress:', scrollProgress);
   
-  // Logo movement: moves until section 2, then stays fixed
-  const logoTranslateX = scrollProgress * 25; // Move to right side for section 2
-  const logoTranslateY = scrollProgress * 8; // Move down slightly
+  // Logo movement: moves to right side to align with content, then stops
+  const logoTranslateX = scrollProgress * 35; // Move further right to align with right column
+  const logoTranslateY = scrollProgress * 12; // Move down to align with content area
 
   return (
     <>
