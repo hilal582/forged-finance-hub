@@ -14,17 +14,17 @@ export const Hero = () => {
 
   // Calculate logo position based on scroll
   const section1Height = window.innerHeight;
-  const stopScrollPosition = section1Height + 300; // Stop when reaching section 2 content
+  const section2Start = section1Height; // Section 2 starts right after section 1
   
-  // Logo stops moving when scroll reaches this position
-  const scrollProgress = scrollY >= stopScrollPosition ? 1 : scrollY / stopScrollPosition;
+  // Logo should stop moving once we reach section 2
+  const scrollProgress = scrollY >= section2Start ? 1 : scrollY / section2Start;
   
   // Debug logs
-  console.log('ScrollY:', scrollY, 'StopPosition:', stopScrollPosition, 'Progress:', scrollProgress);
+  console.log('ScrollY:', scrollY, 'Section2Start:', section2Start, 'Progress:', scrollProgress);
   
-  // Logo movement: from center of section 1 to final position in section 2, then stop
-  const logoTranslateX = scrollProgress * 25; // Move to center of section 2
-  const logoTranslateY = scrollProgress * 8; // Move down to align with center of section 2
+  // Logo movement: moves until section 2, then stays fixed
+  const logoTranslateX = scrollProgress * 25; // Move to right side for section 2
+  const logoTranslateY = scrollProgress * 8; // Move down slightly
 
   return (
     <>
@@ -176,6 +176,13 @@ export const Hero = () => {
           </div>
         </div>
       </section>
+
+      {/* Footer for reference */}
+      <footer className="bg-gray-900 py-12 text-center">
+        <div className="max-w-7xl mx-auto px-8">
+          <p className="text-white/60">© 2024 Forged Finance. All rights reserved.</p>
+        </div>
+      </footer>
 
     </>
   );
