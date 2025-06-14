@@ -33,7 +33,7 @@ export const Hero = () => {
       <section className="min-h-screen bg-black relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-8 h-screen flex flex-col justify-center relative z-10">
           {/* Live Platform Badge - Top Left with better positioning */}
-          <div className="absolute top-24 left-8">
+          <div className="absolute top-25 left-8">
             <div className="inline-flex items-center px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm">
               <div className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse" />
               <span className="text-white/80 text-sm tracking-wider font-medium">LIVE PLATFORM</span>
