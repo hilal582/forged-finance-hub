@@ -7,17 +7,37 @@ export const Hero = () => {
   const [showHeader, setShowHeader] = useState(false);
   const [showBottomContent, setShowBottomContent] = useState(false);
   const [showLogo, setShowLogo] = useState(false);
+  const [showSecondSection, setShowSecondSection] = useState(false);
 
   useEffect(() => {
-    // Sequential animation sequence
+    // Sequential animation sequence for first section
     const headerTimer = setTimeout(() => setShowHeader(true), 300);
     const bottomTimer = setTimeout(() => setShowBottomContent(true), 1200);
     const logoTimer = setTimeout(() => setShowLogo(true), 2000);
+
+    // Intersection Observer for second section
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setShowSecondSection(true);
+          }
+        });
+      },
+      { threshold: 0.3 } // Trigger when 30% of the section is visible
+    );
+
+    // Observe the second section
+    const secondSection = document.getElementById('second-section');
+    if (secondSection) {
+      observer.observe(secondSection);
+    }
 
     return () => {
       clearTimeout(headerTimer);
       clearTimeout(bottomTimer);
       clearTimeout(logoTimer);
+      observer.disconnect();
     };
   }, []);
 
@@ -118,7 +138,7 @@ export const Hero = () => {
       </section>
 
       {/* Second Section - Hub for Finance Careers */}
-      <section className="min-h-screen bg-black relative overflow-hidden">
+      <section id="second-section" className="min-h-screen bg-black relative overflow-hidden">
         {/* Dynamic Spotlights for Section 2 */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-32 right-1/4 w-72 h-72 bg-cyan-400/12 rounded-full blur-[90px] animate-pulse" />
@@ -132,7 +152,9 @@ export const Hero = () => {
         <div className="max-w-7xl mx-auto px-8 py-24 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left Content */}
-            <div className="space-y-8">
+            <div className={`space-y-8 transition-all duration-1000 ${
+              showSecondSection ? 'animate-slide-in-left opacity-100 translate-x-0' : 'opacity-0 -translate-x-full'
+            }`}>
               <div className="space-y-6">
                 <h2 className="text-5xl lg:text-6xl font-bold leading-tight">
                   <span className="block text-white">Your hub for</span>
@@ -147,10 +169,12 @@ export const Hero = () => {
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-1000 delay-300 ${
+                showSecondSection ? 'animate-fade-in opacity-100' : 'opacity-0'
+              }`}>
                 <Button 
                   size="lg" 
-                  className="bg-white text-black hover:bg-white/90 px-8 py-6 text-base font-medium"
+                  className="bg-white text-black hover:bg-white/90 px-8 py-6 text-base font-medium hover:scale-105 transition-transform"
                 >
                   Get Started
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -158,7 +182,7 @@ export const Hero = () => {
                 <Button 
                   variant="outline"
                   size="lg" 
-                  className="border-white/20 text-white hover:bg-white/10 px-8 py-6 text-base font-medium"
+                  className="border-white/20 text-white hover:bg-white/10 px-8 py-6 text-base font-medium hover:scale-105 transition-transform"
                 >
                   Learn More
                 </Button>
@@ -166,40 +190,52 @@ export const Hero = () => {
             </div>
 
             {/* Right Content */}
-            <div className="space-y-8">
-              <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
+            <div className={`space-y-8 transition-all duration-1000 delay-200 ${
+              showSecondSection ? 'animate-slide-in-right opacity-100 translate-x-0' : 'opacity-0 translate-x-full'
+            }`}>
+              <div className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-300">
                 <h3 className="text-2xl font-bold text-white mb-8">The Professional Edge</h3>
                 
                 <div className="space-y-6">
-                  <div className="flex items-start space-x-4">
+                  <div className={`flex items-start space-x-4 transition-all duration-700 delay-500 ${
+                    showSecondSection ? 'animate-fade-in opacity-100' : 'opacity-0'
+                  }`}>
                     <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                       <div className="w-2 h-2 bg-black rounded-full" />
                     </div>
                     <p className="text-white/80">Comprehensive database of finance roles across Europe</p>
                   </div>
                   
-                  <div className="flex items-start space-x-4">
+                  <div className={`flex items-start space-x-4 transition-all duration-700 delay-600 ${
+                    showSecondSection ? 'animate-fade-in opacity-100' : 'opacity-0'
+                  }`}>
                     <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                       <div className="w-2 h-2 bg-black rounded-full" />
                     </div>
                     <p className="text-white/80">Filter by country, division, and job type</p>
                   </div>
                   
-                  <div className="flex items-start space-x-4">
+                  <div className={`flex items-start space-x-4 transition-all duration-700 delay-700 ${
+                    showSecondSection ? 'animate-fade-in opacity-100' : 'opacity-0'
+                  }`}>
                     <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                       <div className="w-2 h-2 bg-black rounded-full" />
                     </div>
                     <p className="text-white/80">Track application deadlines easily</p>
                   </div>
                   
-                  <div className="flex items-start space-x-4">
+                  <div className={`flex items-start space-x-4 transition-all duration-700 delay-800 ${
+                    showSecondSection ? 'animate-fade-in opacity-100' : 'opacity-0'
+                  }`}>
                     <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                       <div className="w-2 h-2 bg-black rounded-full" />
                     </div>
                     <p className="text-white/80">Direct links to application pages</p>
                   </div>
                   
-                  <div className="flex items-start space-x-4">
+                  <div className={`flex items-start space-x-4 transition-all duration-700 delay-900 ${
+                    showSecondSection ? 'animate-fade-in opacity-100' : 'opacity-0'
+                  }`}>
                     <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                       <div className="w-2 h-2 bg-black rounded-full" />
                     </div>
@@ -211,18 +247,20 @@ export const Hero = () => {
           </div>
 
           {/* Trusted by section */}
-          <div className="mt-24 text-center">
+          <div className={`mt-24 text-center transition-all duration-1000 delay-1000 ${
+            showSecondSection ? 'animate-slide-from-bottom opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
+          }`}>
             <p className="text-white/60 text-lg mb-12">Trusted by top business schools across Europe</p>
             
-            <div className="bg-white/5 border border-white/10 rounded-2xl p-8">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors duration-300">
               <div className="flex flex-wrap justify-center items-center gap-8 text-white/70">
-                <span className="text-lg">London School of Economics</span>
-                <span className="text-lg">Copenhagen Business School</span>
-                <span className="text-lg">Warwick</span>
-                <span className="text-lg">UCL</span>
-                <span className="text-lg">HEC</span>
-                <span className="text-lg">ESCP</span>
-                <span className="text-lg">ESSEC</span>
+                <span className="text-lg hover:text-white transition-colors duration-200">London School of Economics</span>
+                <span className="text-lg hover:text-white transition-colors duration-200">Copenhagen Business School</span>
+                <span className="text-lg hover:text-white transition-colors duration-200">Warwick</span>
+                <span className="text-lg hover:text-white transition-colors duration-200">UCL</span>
+                <span className="text-lg hover:text-white transition-colors duration-200">HEC</span>
+                <span className="text-lg hover:text-white transition-colors duration-200">ESCP</span>
+                <span className="text-lg hover:text-white transition-colors duration-200">ESSEC</span>
               </div>
             </div>
           </div>
