@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { useFrame } from '@react-three/fiber';
 import { PerspectiveCamera, useGLTF } from '@react-three/drei';
@@ -6,22 +6,26 @@ import * as THREE from 'three';
 
 interface Logo3DProps {
   scrollY: number;
+  mousePosition: { x: number; y: number };
 }
 
-// Component to load and display the Forged Finance logo
-const ForgedFinanceLogo = ({ rotationX }: { rotationX: number }) => {
+// Enhanced logo component with better materials and lighting response
+const ForgedFinanceLogo = ({ rotationX, mousePosition }: { rotationX: number; mousePosition: { x: number; y: number } }) => {
   const groupRef = useRef<THREE.Group>(null);
   const { scene } = useGLTF('/forged-finance-logo.glb');
   
   useEffect(() => {
     if (scene) {
-      // Apply pure white material with proper lighting response
+      // Apply premium metallic material
       scene.traverse((child: any) => {
         if (child.isMesh) {
-          child.material = new THREE.MeshPhongMaterial({
+          child.material = new THREE.MeshPhysicalMaterial({
             color: '#ffffff',
-            shininess: 100,
-            specular: '#ffffff',
+            metalness: 0.9,
+            roughness: 0.1,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.1,
+            reflectivity: 1.0,
           });
           child.castShadow = true;
           child.receiveShadow = true;
@@ -31,36 +35,56 @@ const ForgedFinanceLogo = ({ rotationX }: { rotationX: number }) => {
   }, [scene]);
 
   useFrame((state) => {
-    // Keep static for premium look
+    if (groupRef.current) {
+      // Subtle mouse interaction
+      groupRef.current.rotation.y += (mousePosition.x * 0.1 - groupRef.current.rotation.y) * 0.05;
+      groupRef.current.rotation.x += (mousePosition.y * 0.1 - groupRef.current.rotation.x) * 0.05;
+    }
   });
 
   if (!scene) {
-    // Fallback geometric logo while loading
+    // Enhanced fallback geometric logo
     return (
       <group ref={groupRef}>
-        {/* Main ring */}
+        {/* Main structure */}
         <mesh>
-          <torusGeometry args={[1.5, 0.3, 16, 100]} />
-          <meshStandardMaterial color="#ffffff" metalness={0.9} roughness={0.1} />
+          <torusGeometry args={[1.5, 0.2, 16, 100]} />
+          <meshPhysicalMaterial 
+            color="#ffffff" 
+            metalness={0.9} 
+            roughness={0.1}
+            clearcoat={1.0}
+            clearcoatRoughness={0.1}
+          />
         </mesh>
         
-        {/* Center sphere */}
+        {/* Center element */}
         <mesh>
-          <sphereGeometry args={[0.8, 32, 32]} />
-          <meshStandardMaterial color="#ffffff" metalness={0.95} roughness={0.05} />
+          <sphereGeometry args={[0.6, 32, 32]} />
+          <meshPhysicalMaterial 
+            color="#ffffff" 
+            metalness={0.95} 
+            roughness={0.05}
+            clearcoat={1.0}
+          />
         </mesh>
         
-        {/* Bars around the logo */}
-        {Array.from({ length: 4 }).map((_, i) => {
-          const angle = (Math.PI / 2) * i;
+        {/* Surrounding elements */}
+        {Array.from({ length: 6 }).map((_, i) => {
+          const angle = (Math.PI / 3) * i;
           return (
             <mesh
               key={i}
-              position={[Math.cos(angle) * 1.2, 0, Math.sin(angle) * 1.2]}
-              rotation={[0, angle, Math.PI / 2]}
+              position={[Math.cos(angle) * 1.8, 0, Math.sin(angle) * 1.8]}
+              rotation={[0, angle, 0]}
             >
-              <cylinderGeometry args={[0.1, 0.1, 2.5, 32]} />
-              <meshStandardMaterial color="#ffffff" metalness={0.9} roughness={0.1} />
+              <boxGeometry args={[0.1, 1.5, 0.1]} />
+              <meshPhysicalMaterial 
+                color="#ffffff" 
+                metalness={0.9} 
+                roughness={0.1}
+                clearcoat={1.0}
+              />
             </mesh>
           );
         })}
@@ -75,130 +99,154 @@ const ForgedFinanceLogo = ({ rotationX }: { rotationX: number }) => {
   );
 };
 
-export const Logo3D = ({ scrollY }: Logo3DProps) => {
-  // Calculate smooth position based on scroll
+export const Logo3D = ({ scrollY, mousePosition }: Logo3DProps) => {
+  // Calculate scroll progress
   const scrollProgress = Math.min(scrollY / window.innerHeight, 1);
   
-  // Smooth interpolation for position
-  const centerX = 50; // 50% (center)
-  const centerY = 30; // 30% from top for better spacing with text
-  const targetX = window.innerWidth > 1024 ? 75 : 50; // 75% on desktop, center on mobile
-  const targetY = 50; // 50% (center) when scrolled
+  // Position calculations for smooth transition
+  const startX = 65; // Start on the right side
+  const startY = 50; // Center vertically
+  const endX = 35;   // Move to left side
+  const endY = 50;   // Stay centered
   
-  const currentX = centerX + (targetX - centerX) * scrollProgress;
-  const currentY = centerY + (targetY - centerY) * scrollProgress;
+  const currentX = startX + (endX - startX) * scrollProgress;
+  const currentY = startY + (endY - startY) * scrollProgress;
   
-  // Responsive size
-  const currentSize = window.innerWidth < 768 ? 400 : window.innerWidth < 1024 ? 500 : 600;
+  // Size scaling
+  const startSize = window.innerWidth < 768 ? 300 : 400;
+  const endSize = window.innerWidth < 768 ? 250 : 350;
+  const currentSize = startSize + (endSize - startSize) * scrollProgress;
   
-  // Smooth backflip rotation during scroll
-  const rotationX = scrollProgress * Math.PI * 2 * (1 - Math.pow(1 - scrollProgress, 3));
+  // Backflip rotation
+  const rotationX = scrollProgress * Math.PI * 2;
+  
+  // Determine if we're in the second section for special effects
+  const isInSecondSection = scrollProgress > 0.7;
 
-  // Calculate if we're in second section for engraved effect
-  const isInSecondSection = scrollProgress > 0.5;
-  
   return (
     <div 
-      className="fixed z-40"
+      className="fixed z-30 pointer-events-none"
       style={{
         left: `${currentX}%`,
         top: `${currentY}%`,
         transform: 'translate(-50%, -50%)',
         width: `${currentSize}px`,
         height: `${currentSize}px`,
-        transition: scrollY === 0 ? 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none'
+        transition: scrollY === 0 ? 'all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none'
       }}
     >
-      {/* Engraved effect background when in second section */}
+      {/* Engraved wall effect background */}
       {isInSecondSection && (
         <div 
           className="absolute inset-0 rounded-full"
           style={{
             background: `
               radial-gradient(circle at center, 
-                rgba(0,0,0,0.8) 0%, 
-                rgba(0,0,0,0.9) 40%, 
-                rgba(0,0,0,1) 70%
-              ),
-              radial-gradient(circle at center, 
-                rgba(255,255,255,0.1) 0%, 
-                transparent 50%
+                rgba(0,0,0,0.9) 0%, 
+                rgba(0,0,0,0.95) 60%, 
+                rgba(0,0,0,1) 80%
               )
             `,
             boxShadow: `
-              inset 0 0 100px rgba(0,0,0,0.8),
-              inset 0 0 50px rgba(0,0,0,0.9),
-              0 0 100px rgba(255,255,255,0.1)
+              inset 0 0 100px rgba(0,0,0,0.9),
+              inset 0 0 200px rgba(0,0,0,0.8),
+              0 0 100px rgba(255,255,255,0.1),
+              0 0 200px rgba(255,255,255,0.05)
             `,
-            transform: 'scale(1.2)',
-            zIndex: -1
+            transform: 'scale(1.4)',
+            zIndex: -2,
+            filter: 'blur(1px)'
           }}
         />
       )}
-      
-      <Canvas gl={{ alpha: true, antialias: true }} shadows>
-        <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
+
+      <Canvas 
+        gl={{ 
+          alpha: true, 
+          antialias: true,
+          powerPreference: "high-performance"
+        }} 
+        shadows
+        dpr={[1, 2]}
+      >
+        <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={45} />
         
-        {/* Enhanced lighting for engraved effect */}
-        <ambientLight intensity={isInSecondSection ? 0.2 : 0.4} color="#ffffff" />
+        {/* Enhanced lighting setup */}
+        <ambientLight intensity={isInSecondSection ? 0.3 : 0.5} color="#ffffff" />
         
-        {/* Key light - main spotlight */}
+        {/* Key light */}
         <spotLight 
-          position={[8, 12, 8]} 
-          intensity={isInSecondSection ? 6 : 4} 
-          angle={0.4} 
-          penumbra={0.4} 
+          position={[10, 10, 10]} 
+          intensity={isInSecondSection ? 8 : 5} 
+          angle={0.3} 
+          penumbra={0.5} 
           color="#ffffff"
           castShadow
           shadow-mapSize-width={2048}
           shadow-mapSize-height={2048}
         />
         
-        {/* Fill light - softer from opposite side */}
+        {/* Fill light */}
         <directionalLight 
-          position={[-6, 8, 6]} 
+          position={[-8, 6, 8]} 
+          intensity={isInSecondSection ? 3 : 2} 
+          color="#f8fafc"
+        />
+        
+        {/* Rim light */}
+        <directionalLight 
+          position={[0, -8, -10]} 
           intensity={isInSecondSection ? 2 : 1.5} 
-          color="#f0f8ff"
-        />
-        
-        {/* Rim light - for edge definition */}
-        <directionalLight 
-          position={[0, -5, -8]} 
-          intensity={isInSecondSection ? 1.5 : 1} 
-          color="#ffffff"
-        />
-        
-        {/* Top light for depth */}
-        <directionalLight 
-          position={[0, 15, 0]} 
-          intensity={isInSecondSection ? 1.8 : 1.2} 
           color="#ffffff"
         />
         
         {/* Backlight for engraved effect */}
         {isInSecondSection && (
-          <pointLight 
-            position={[0, 0, -10]} 
-            intensity={2} 
-            color="#ffffff"
-          />
+          <>
+            <pointLight 
+              position={[0, 0, -15]} 
+              intensity={4} 
+              color="#ffffff"
+            />
+            <pointLight 
+              position={[5, 5, -10]} 
+              intensity={2} 
+              color="#e2e8f0"
+            />
+            <pointLight 
+              position={[-5, -5, -10]} 
+              intensity={2} 
+              color="#e2e8f0"
+            />
+          </>
         )}
         
-        {/* Logo with rotation */}
-        <ForgedFinanceLogo rotationX={rotationX} />
+        {/* Logo with enhanced rotation and mouse interaction */}
+        <ForgedFinanceLogo rotationX={rotationX} mousePosition={mousePosition} />
       </Canvas>
       
-      {/* Backlit glow effect when engraved */}
+      {/* Backlit glow effect for engraved look */}
       {isInSecondSection && (
-        <div 
-          className="absolute inset-0 rounded-full pointer-events-none"
-          style={{
-            background: 'radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%)',
-            filter: 'blur(20px)',
-            transform: 'scale(1.5)',
-            zIndex: -2
-          }}
-        />
+        <>
+          <div 
+            className="absolute inset-0 rounded-full pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle at center, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.05) 40%, transparent 70%)',
+              filter: 'blur(30px)',
+              transform: 'scale(1.8)',
+              zIndex: -1
+            }}
+          />
+          <div 
+            className="absolute inset-0 rounded-full pointer-events-none"
+            style={{
+              background: 'radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 50%)',
+              filter: 'blur(15px)',
+              transform: 'scale(1.3)',
+              zIndex: -1
+            }}
+          />
+        </>
       )}
     </div>
   );
