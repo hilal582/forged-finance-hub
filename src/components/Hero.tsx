@@ -30,44 +30,51 @@ export const Hero = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="min-h-screen bg-black relative overflow-hidden flex items-center">
-        <div className="max-w-7xl mx-auto px-8 relative z-10">
-          {/* Live Platform Badge - Top Left */}
-          <div className="absolute top-8 left-8">
-            <div className="inline-flex items-center px-4 py-2 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm">
+      <section className="min-h-screen bg-black relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-8 h-screen flex flex-col justify-center relative z-10">
+          {/* Live Platform Badge - Top Left with better positioning */}
+          <div className="absolute top-24 left-8">
+            <div className="inline-flex items-center px-6 py-3 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm">
               <div className="w-2 h-2 bg-green-400 rounded-full mr-3 animate-pulse" />
-              <span className="text-white/80 text-sm tracking-wider">LIVE PLATFORM</span>
+              <span className="text-white/80 text-sm tracking-wider font-medium">LIVE PLATFORM</span>
             </div>
           </div>
 
-          {/* Main Content - Centered */}
-          <div className="flex flex-col items-center justify-center text-center space-y-8">
-            {/* 3D Logo */}
-            <div className="w-96 h-96 mb-8">
+          {/* Main Content - Perfectly Centered */}
+          <div className="flex flex-col items-center justify-center text-center space-y-12">
+            {/* 3D Logo with better sizing */}
+            <div className="w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center">
               <Logo3D />
             </div>
             
-            {/* Title */}
-            <h1 className="text-6xl lg:text-7xl font-bold leading-none tracking-tight">
-              <span className="block text-white">THE FUTURE</span>
-              <span className="block text-white">OF FINANCE</span>
-              <span className="block bg-gradient-to-r from-white via-gray-300 to-white bg-clip-text text-transparent">
-                CAREERS
-              </span>
-            </h1>
+            {/* Title with improved spacing */}
+            <div className="space-y-4">
+              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.9] tracking-tight">
+                <span className="block text-white">THE FUTURE</span>
+                <span className="block text-white">OF FINANCE</span>
+                <span className="block bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent mt-2">
+                  CAREERS
+                </span>
+              </h1>
+            </div>
             
-            {/* Description */}
-            <p className="text-xl text-white/70 leading-relaxed max-w-2xl">
-              Connect with elite opportunities across Europe's top investment banks, 
-              private equity firms, and asset management companies.
-            </p>
+            {/* Description with better typography */}
+            <div className="max-w-3xl">
+              <p className="text-lg md:text-xl text-white/60 leading-relaxed font-light">
+                Connect with elite opportunities across Europe's top investment banks, 
+                private equity firms, and asset management companies.
+              </p>
+            </div>
           </div>
-        </div>
 
-        {/* Swipe Down Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white/60">
-          <span className="text-xs tracking-widest mb-4">SWIPE DOWN TO EXPLORE</span>
-          <ChevronDown className="w-6 h-6 animate-bounce" />
+          {/* Swipe Down Indicator with enhanced design */}
+          <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white/50">
+            <span className="text-xs tracking-[0.2em] mb-6 font-medium">SWIPE DOWN TO EXPLORE</span>
+            <div className="flex flex-col items-center space-y-2">
+              <ChevronDown className="w-5 h-5 animate-bounce" />
+              <div className="w-px h-8 bg-gradient-to-b from-white/30 to-transparent" />
+            </div>
+          </div>
         </div>
       </section>
 
