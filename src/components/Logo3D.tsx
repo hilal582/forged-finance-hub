@@ -15,13 +15,13 @@ const ForgedFinanceLogo = ({ rotationX }: { rotationX: number }) => {
   
   useEffect(() => {
     if (scene) {
-      // Apply white material for clean premium look
+      // Apply pure white material with proper lighting response
       scene.traverse((child: any) => {
         if (child.isMesh) {
-          child.material = new THREE.MeshStandardMaterial({
+          child.material = new THREE.MeshPhongMaterial({
             color: '#ffffff',
-            metalness: 0.1,
-            roughness: 0.2,
+            shininess: 100,
+            specular: '#ffffff',
           });
           child.castShadow = true;
           child.receiveShadow = true;
@@ -102,8 +102,8 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
     ? baseSize + jumpSize * jumpProgress
     : finalSize;
   
-  // Backflip rotation during scroll
-  const rotationX = scrollProgress * Math.PI * 2; // Full 360° backflip
+  // Smooth backflip rotation during scroll
+  const rotationX = scrollProgress * Math.PI * 2 * (1 - Math.pow(1 - scrollProgress, 3)); // Smooth easing
 
   return (
     <div 
@@ -114,32 +114,47 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
         transform: 'translate(-50%, -50%)',
         width: `${currentSize}px`,
         height: `${currentSize}px`,
-        transition: scrollY === 0 ? 'all 0.3s ease-out' : 'none'
+        transition: scrollY === 0 ? 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none'
       }}
     >
       <Canvas gl={{ alpha: true, antialias: true }} shadows>
         <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
         
-        {/* Focused spotlight for dramatic 3D effect */}
-        <ambientLight intensity={0.2} />
+        {/* Professional lighting setup for white logo */}
+        <ambientLight intensity={0.4} color="#ffffff" />
+        
+        {/* Key light - main spotlight */}
         <spotLight 
-          position={[0, 10, 10]} 
-          intensity={3} 
-          angle={0.3} 
-          penumbra={0.3} 
+          position={[8, 12, 8]} 
+          intensity={4} 
+          angle={0.4} 
+          penumbra={0.4} 
+          color="#ffffff"
           castShadow
           shadow-mapSize-width={2048}
           shadow-mapSize-height={2048}
         />
-        <spotLight 
-          position={[10, 5, 5]} 
-          intensity={2} 
-          angle={0.4} 
-          penumbra={0.5} 
+        
+        {/* Fill light - softer from opposite side */}
+        <directionalLight 
+          position={[-6, 8, 6]} 
+          intensity={1.5} 
+          color="#f0f8ff"
+        />
+        
+        {/* Rim light - for edge definition */}
+        <directionalLight 
+          position={[0, -5, -8]} 
+          intensity={1} 
           color="#ffffff"
         />
-        <directionalLight position={[-5, 5, 5]} intensity={0.8} />
-        <pointLight position={[0, 0, 8]} intensity={0.5} />
+        
+        {/* Top light for depth */}
+        <directionalLight 
+          position={[0, 15, 0]} 
+          intensity={1.2} 
+          color="#ffffff"
+        />
         
         {/* Logo with rotation */}
         <ForgedFinanceLogo rotationX={rotationX} />
