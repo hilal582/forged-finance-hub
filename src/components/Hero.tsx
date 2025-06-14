@@ -5,64 +5,44 @@ import { useEffect, useState, useRef } from 'react';
 
 export const Hero = () => {
   const [scrollY, setScrollY] = useState(0);
-  const section2Ref = useRef<HTMLDivElement>(null);
+  const targetRef = useRef<HTMLDivElement>(null);
   const [targetPosition, setTargetPosition] = useState({ x: 0, y: 0 });
-  const [windowSize, setWindowSize] = useState({
-    width: typeof window !== 'undefined' ? window.innerWidth : 0,
-    height: typeof window !== 'undefined' ? window.innerHeight : 0,
-  });
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
-    const handleResize = () => {
-      setWindowSize({
-        width: window.innerWidth,
-        height: window.innerHeight,
-      });
-    };
-
     window.addEventListener('scroll', handleScroll);
-    window.addEventListener('resize', handleResize);
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleResize);
-    };
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Get target position
   useEffect(() => {
-    if (section2Ref.current) {
-      const rect = section2Ref.current.getBoundingClientRect();
-      const sectionTop = rect.top + window.scrollY;
-      const targetY = sectionTop + rect.height * 0.3; // Align with text content
-      const targetX = rect.left + rect.width * 0.25; // Position at 25% of section width
-      
+    if (targetRef.current) {
+      const rect = targetRef.current.getBoundingClientRect();
+      // Get center position of target element
       setTargetPosition({
-        x: targetX - windowSize.width / 2,
-        y: targetY - windowSize.height / 2,
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
       });
     }
-  }, [scrollY, windowSize]);
+  }, []);
 
-  // Calculate movement progress
-  const section1Height = windowSize.height;
-  const section2Start = section1Height;
-  const animationEnd = section2Start + 500; // Animation completes after 500px into section 2
+  // Calculate logo position based on scroll
+  const section1Height = window.innerHeight;
+  const maxScroll = section1Height + 400; // Adjust as needed
 
-  let logoTransform = '';
-  let logoOpacity = 1;
+  let logoPosition = { x: 0, y: 0 };
 
-  if (scrollY < section2Start) {
-    // Still in section 1 - center logo
-    logoTransform = 'translate(-50%, -50%)';
-  } else if (scrollY < animationEnd) {
-    // Moving through section 2
-    const progress = (scrollY - section2Start) / (animationEnd - section2Start);
-    logoTransform = `translate(-50%, -50%) translate(${targetPosition.x * progress}px, ${targetPosition.y * progress}px)`;
-  } else {
-    // Animation complete - hide logo
-    logoTransform = `translate(-50%, -50%) translate(${targetPosition.x}px, ${targetPosition.y}px)`;
-    logoOpacity = 0;
+  if (targetPosition.x && scrollY > section1Height) {
+    const progress = Math.min((scrollY - section1Height) / 400, 1);
+    
+    // Calculate final position (center of target element)
+    const finalX = targetPosition.x - window.innerWidth / 2;
+    const finalY = targetPosition.y - window.innerHeight / 2;
+    
+    logoPosition = {
+      x: finalX * progress,
+      y: finalY * progress
+    };
   }
 
   return (
@@ -97,13 +77,13 @@ export const Hero = () => {
         </div>
       </nav>
 
-      {/* Floating 3D Logo */}
+      {/* Floating 3D Logo that moves with scroll */}
       <div 
         className="fixed top-1/2 left-1/2 z-40 w-80 h-80 lg:w-96 lg:h-96 pointer-events-none"
         style={{
-          transform: logoTransform,
-          opacity: logoOpacity,
-          transition: 'transform 0.1s ease-out, opacity 0.3s ease-out',
+          transform: `translate(-50%, -50%) translate(${logoPosition.x}px, ${logoPosition.y}px)`,
+          transition: scrollY > window.innerHeight ? 'transform 0.1s ease-out' : 'none',
+          opacity: scrollY > window.innerHeight + 400 ? 0 : 1 // Fade out after reaching target
         }}
       >
         <Logo3D />
@@ -156,15 +136,12 @@ export const Hero = () => {
 
       {/* Second Section - Hub for Finance Careers */}
       <section className="min-h-screen bg-black relative overflow-hidden">
-        <div 
-          ref={section2Ref} 
-          className="max-w-7xl mx-auto px-8 py-24"
-        >
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-8 py-24">
+          <div ref={targetRef} className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Left Content */}
             <div className="space-y-8 relative">
               {/* Static logo that appears when floating logo is hidden */}
-              {scrollY > section2Start + 500 && (
+              {scrollY > window.innerHeight + 400 && (
                 <div className="w-40 h-40 absolute -top-24 -left-10">
                   <Logo3D />
                 </div>
