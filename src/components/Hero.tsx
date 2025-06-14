@@ -21,6 +21,8 @@ export const Hero = () => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             setShowSecondSection(true);
+          } else {
+            setShowSecondSection(false);
           }
         });
       },
