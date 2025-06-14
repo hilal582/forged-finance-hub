@@ -31,11 +31,7 @@ const ForgedFinanceLogo = ({ rotationX }: { rotationX: number }) => {
   }, [scene]);
 
   useFrame((state) => {
-    // Remove rotation for premium static look
-    // if (groupRef.current) {
-    //   groupRef.current.rotation.y += 0.005;
-    //   groupRef.current.rotation.x += 0.002;
-    // }
+    // Keep static for premium look
   });
 
   if (!scene) {
@@ -85,22 +81,25 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
   
   // Smooth interpolation for position
   const centerX = 50; // 50% (center)
-  const centerY = 25; // 25% from top for better spacing with text
+  const centerY = 30; // 30% from top for better spacing with text
   const targetX = window.innerWidth > 1024 ? 75 : 50; // 75% on desktop, center on mobile
   const targetY = 50; // 50% (center) when scrolled
   
   const currentX = centerX + (targetX - centerX) * scrollProgress;
   const currentY = centerY + (targetY - centerY) * scrollProgress;
   
-  // Keep consistent size throughout both sections
-  const currentSize = window.innerWidth < 768 ? 550 : 750;
+  // Responsive size
+  const currentSize = window.innerWidth < 768 ? 400 : window.innerWidth < 1024 ? 500 : 600;
   
   // Smooth backflip rotation during scroll
-  const rotationX = scrollProgress * Math.PI * 2 * (1 - Math.pow(1 - scrollProgress, 3)); // Smooth easing
+  const rotationX = scrollProgress * Math.PI * 2 * (1 - Math.pow(1 - scrollProgress, 3));
 
+  // Calculate if we're in second section for engraved effect
+  const isInSecondSection = scrollProgress > 0.5;
+  
   return (
     <div 
-      className="fixed z-50"
+      className="fixed z-40"
       style={{
         left: `${currentX}%`,
         top: `${currentY}%`,
@@ -110,16 +109,43 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
         transition: scrollY === 0 ? 'all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94)' : 'none'
       }}
     >
+      {/* Engraved effect background when in second section */}
+      {isInSecondSection && (
+        <div 
+          className="absolute inset-0 rounded-full"
+          style={{
+            background: `
+              radial-gradient(circle at center, 
+                rgba(0,0,0,0.8) 0%, 
+                rgba(0,0,0,0.9) 40%, 
+                rgba(0,0,0,1) 70%
+              ),
+              radial-gradient(circle at center, 
+                rgba(255,255,255,0.1) 0%, 
+                transparent 50%
+              )
+            `,
+            boxShadow: `
+              inset 0 0 100px rgba(0,0,0,0.8),
+              inset 0 0 50px rgba(0,0,0,0.9),
+              0 0 100px rgba(255,255,255,0.1)
+            `,
+            transform: 'scale(1.2)',
+            zIndex: -1
+          }}
+        />
+      )}
+      
       <Canvas gl={{ alpha: true, antialias: true }} shadows>
         <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
         
-        {/* Professional lighting setup for white logo */}
-        <ambientLight intensity={0.4} color="#ffffff" />
+        {/* Enhanced lighting for engraved effect */}
+        <ambientLight intensity={isInSecondSection ? 0.2 : 0.4} color="#ffffff" />
         
         {/* Key light - main spotlight */}
         <spotLight 
           position={[8, 12, 8]} 
-          intensity={4} 
+          intensity={isInSecondSection ? 6 : 4} 
           angle={0.4} 
           penumbra={0.4} 
           color="#ffffff"
@@ -131,27 +157,49 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
         {/* Fill light - softer from opposite side */}
         <directionalLight 
           position={[-6, 8, 6]} 
-          intensity={1.5} 
+          intensity={isInSecondSection ? 2 : 1.5} 
           color="#f0f8ff"
         />
         
         {/* Rim light - for edge definition */}
         <directionalLight 
           position={[0, -5, -8]} 
-          intensity={1} 
+          intensity={isInSecondSection ? 1.5 : 1} 
           color="#ffffff"
         />
         
         {/* Top light for depth */}
         <directionalLight 
           position={[0, 15, 0]} 
-          intensity={1.2} 
+          intensity={isInSecondSection ? 1.8 : 1.2} 
           color="#ffffff"
         />
+        
+        {/* Backlight for engraved effect */}
+        {isInSecondSection && (
+          <pointLight 
+            position={[0, 0, -10]} 
+            intensity={2} 
+            color="#ffffff"
+          />
+        )}
         
         {/* Logo with rotation */}
         <ForgedFinanceLogo rotationX={rotationX} />
       </Canvas>
+      
+      {/* Backlit glow effect when engraved */}
+      {isInSecondSection && (
+        <div 
+          className="absolute inset-0 rounded-full pointer-events-none"
+          style={{
+            background: 'radial-gradient(circle at center, rgba(255,255,255,0.1) 0%, transparent 70%)',
+            filter: 'blur(20px)',
+            transform: 'scale(1.5)',
+            zIndex: -2
+          }}
+        />
+      )}
     </div>
   );
 };

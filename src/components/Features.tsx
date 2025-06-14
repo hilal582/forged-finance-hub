@@ -36,25 +36,44 @@ const features = [
 
 export const Features = () => {
   return (
-    <section className="py-20 px-6 bg-finance-gray-900">
-      <div className="max-w-6xl mx-auto">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-foreground">
-            The Professional Edge
+    <section className="py-32 px-8 bg-black relative overflow-hidden">
+      {/* Grid Background */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:50px_50px]" />
+      
+      {/* Gradient Overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black via-transparent to-black" />
+      
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="text-center mb-20">
+          <div className="inline-block px-6 py-2 border border-white/20 rounded-full mb-8">
+            <span className="text-white/60 text-sm tracking-widest uppercase">
+              Platform Features
+            </span>
+          </div>
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+            <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+              The Professional
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-gray-300 to-white bg-clip-text text-transparent">
+              Edge
+            </span>
           </h2>
-          <div className="w-20 h-1 bg-primary mx-auto"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-white/50 to-transparent mx-auto"></div>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <Card 
               key={index} 
-              className="bg-card border-border hover:border-primary transition-all duration-300 hover:scale-105 hover:shadow-xl group"
+              className="bg-black/50 border border-white/10 hover:border-white/30 transition-all duration-500 hover:scale-105 group backdrop-blur-sm"
             >
               <CardContent className="p-8">
-                <feature.icon className="w-12 h-12 text-primary mb-6 group-hover:scale-110 transition-transform duration-300" />
-                <h3 className="text-xl font-semibold mb-4 text-card-foreground">{feature.title}</h3>
-                <p className="text-muted-foreground leading-relaxed">{feature.description}</p>
+                <div className="mb-6 p-4 rounded-full bg-white/5 w-fit group-hover:bg-white/10 transition-all duration-300">
+                  <feature.icon className="w-8 h-8 text-white group-hover:scale-110 transition-transform duration-300" />
+                </div>
+                <h3 className="text-xl font-semibold mb-4 text-white tracking-wide">{feature.title}</h3>
+                <p className="text-white/70 leading-relaxed">{feature.description}</p>
               </CardContent>
             </Card>
           ))}
