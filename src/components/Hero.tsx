@@ -21,8 +21,6 @@ export const Hero = () => {
   
   // Logo movement: from center of section 1 to aligned position in section 2
   const logoTranslateX = scrollProgress * 25; // Move 25% to the right to align with content
-  //const logoTranslateY = scrollProgress * -15; // Move up to align with section content
-  const logoScale = 1 - scrollProgress * 0.2; // Scale down slightly for better fit
 
   return (
     <>
