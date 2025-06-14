@@ -42,15 +42,15 @@ export const Hero = () => {
     const windowHeight = window.innerHeight;
     const windowWidth = window.innerWidth;
     
-    // Target position: right side of section 2
-    const targetX = windowWidth * 0.25; // Move to right side
-    const targetY = windowHeight + windowHeight * 0.3; // Land in section 2
+    // Target position: exactly where shown in the image (right side of section 2)
+    const targetX = windowWidth * 0.3; // Move to right side where the logo is shown
+    const targetY = windowHeight + windowHeight * 0.2; // Land in the middle-right area of section 2
     
     const currentX = targetX * transitionProgress;
     const currentY = targetY * transitionProgress;
     const rotation = 360 * transitionProgress; // Full backflip
-    const scale = 1 - (transitionProgress * 0.2); // Slightly smaller when landed
-
+    const scale = 0.7; // Smaller size to match the image
+    
     return {
       position: 'fixed' as const,
       top: '50%',
