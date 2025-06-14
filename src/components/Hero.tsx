@@ -39,7 +39,7 @@ export const Hero = () => {
         {/* Content below 3D logo */}
         <div className="flex-1 flex flex-col justify-end items-center pb-20 pt-96">
           <div className="text-center px-6 max-w-5xl mx-auto">
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-bold mb-8 tracking-tight leading-none">
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-tight leading-none">
               <span className="bg-gradient-to-r from-foreground to-muted-foreground bg-clip-text text-transparent">
                 FORGED FINANCE
               </span>

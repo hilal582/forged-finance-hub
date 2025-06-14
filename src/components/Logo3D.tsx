@@ -93,7 +93,7 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
   const currentY = centerY + (targetY - centerY) * scrollProgress;
   
   // Keep consistent size throughout both sections
-  const currentSize = window.innerWidth < 768 ? 450 : 600;
+  const currentSize = window.innerWidth < 768 ? 550 : 750;
   
   // Smooth backflip rotation during scroll
   const rotationX = scrollProgress * Math.PI * 2 * (1 - Math.pow(1 - scrollProgress, 3)); // Smooth easing
