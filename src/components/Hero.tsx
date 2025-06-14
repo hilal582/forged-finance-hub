@@ -20,9 +20,9 @@ export const Hero = () => {
   const scrollProgress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
   
   // Logo movement: from center of section 1 to right side of section 2
-  const logoTranslateX = scrollProgress * 40; // Move 40% to the right
-  const logoTranslateY = scrollProgress * -10; // Move up slightly
-  const logoScale = 1 - scrollProgress * 0.3; // Scale down slightly
+  const logoTranslateX = scrollProgress * 35; // Move 35% to the right
+  const logoTranslateY = scrollProgress * -25; // Move up more to avoid overlap
+  const logoScale = 1; // Keep size constant
 
   return (
     <>
