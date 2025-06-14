@@ -35,7 +35,7 @@ export const LoadingScreen = ({ onLoadingComplete }: LoadingScreenProps) => {
       <div className="relative z-10 w-48 h-48 lg:w-56 lg:h-56 flex items-center justify-center">
         <div className="w-full h-full animate-logo-pulse">
           <img 
-            src="/forgedfinance_logo.jpg" 
+            src="/forgedfinance_logo.png" 
             alt="Forged Finance Logo" 
             className="w-full h-full object-contain"
           />
