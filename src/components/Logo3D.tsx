@@ -15,13 +15,14 @@ const ForgedFinanceLogo = ({ rotationX }: { rotationX: number }) => {
   
   useEffect(() => {
     if (scene) {
-      // Apply pure white material with proper lighting response
+      // Apply black material with proper lighting response for futuristic look
       scene.traverse((child: any) => {
         if (child.isMesh) {
           child.material = new THREE.MeshPhongMaterial({
-            color: '#ffffff',
+            color: '#000000',
             shininess: 100,
             specular: '#ffffff',
+            emissive: '#001122', // Subtle blue glow
           });
           child.castShadow = true;
           child.receiveShadow = true;
@@ -45,13 +46,13 @@ const ForgedFinanceLogo = ({ rotationX }: { rotationX: number }) => {
         {/* Main ring */}
         <mesh>
           <torusGeometry args={[1.5, 0.3, 16, 100]} />
-          <meshStandardMaterial color="#ffffff" metalness={0.9} roughness={0.1} />
+          <meshStandardMaterial color="#000000" metalness={0.9} roughness={0.1} emissive="#001122" />
         </mesh>
         
         {/* Center sphere */}
         <mesh>
           <sphereGeometry args={[0.8, 32, 32]} />
-          <meshStandardMaterial color="#ffffff" metalness={0.95} roughness={0.05} />
+          <meshStandardMaterial color="#000000" metalness={0.95} roughness={0.05} emissive="#001122" />
         </mesh>
         
         {/* Bars around the logo */}
@@ -64,7 +65,7 @@ const ForgedFinanceLogo = ({ rotationX }: { rotationX: number }) => {
               rotation={[0, angle, Math.PI / 2]}
             >
               <cylinderGeometry args={[0.1, 0.1, 2.5, 32]} />
-              <meshStandardMaterial color="#ffffff" metalness={0.9} roughness={0.1} />
+              <meshStandardMaterial color="#000000" metalness={0.9} roughness={0.1} emissive="#001122" />
             </mesh>
           );
         })}
@@ -92,8 +93,8 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
   const currentX = centerX + (targetX - centerX) * scrollProgress;
   const currentY = centerY + (targetY - centerY) * scrollProgress;
   
-  // Keep consistent size throughout both sections
-  const currentSize = window.innerWidth < 768 ? 550 : 750;
+  // Keep consistent larger size throughout both sections
+  const currentSize = window.innerWidth < 768 ? 650 : 900;
   
   // Smooth backflip rotation during scroll
   const rotationX = scrollProgress * Math.PI * 2 * (1 - Math.pow(1 - scrollProgress, 3)); // Smooth easing
@@ -113,40 +114,50 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
       <Canvas gl={{ alpha: true, antialias: true }} shadows>
         <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
         
-        {/* Professional lighting setup for white logo */}
-        <ambientLight intensity={0.4} color="#ffffff" />
+        {/* Futuristic lighting setup for black logo with backlighting */}
+        <ambientLight intensity={0.2} color="#ffffff" />
         
-        {/* Key light - main spotlight */}
-        <spotLight 
-          position={[8, 12, 8]} 
-          intensity={4} 
-          angle={0.4} 
-          penumbra={0.4} 
-          color="#ffffff"
-          castShadow
-          shadow-mapSize-width={2048}
-          shadow-mapSize-height={2048}
+        {/* Strong backlight - creates rim lighting effect */}
+        <directionalLight 
+          position={[0, 0, -10]} 
+          intensity={3} 
+          color="#00aaff"
         />
         
-        {/* Fill light - softer from opposite side */}
+        {/* Side backlights for depth */}
         <directionalLight 
-          position={[-6, 8, 6]} 
-          intensity={1.5} 
-          color="#f0f8ff"
+          position={[-8, 0, -6]} 
+          intensity={2} 
+          color="#0077cc"
         />
         
-        {/* Rim light - for edge definition */}
         <directionalLight 
-          position={[0, -5, -8]} 
-          intensity={1} 
+          position={[8, 0, -6]} 
+          intensity={2} 
+          color="#0077cc"
+        />
+        
+        {/* Top backlight */}
+        <directionalLight 
+          position={[0, 10, -5]} 
+          intensity={2.5} 
+          color="#0099dd"
+        />
+        
+        {/* Subtle front light to define edges */}
+        <directionalLight 
+          position={[0, 0, 10]} 
+          intensity={0.5} 
           color="#ffffff"
         />
         
-        {/* Top light for depth */}
-        <directionalLight 
-          position={[0, 15, 0]} 
-          intensity={1.2} 
-          color="#ffffff"
+        {/* Point light for extra glow */}
+        <pointLight 
+          position={[0, 0, -8]} 
+          intensity={3} 
+          color="#00ccff"
+          distance={20}
+          decay={2}
         />
         
         {/* Logo with rotation */}
