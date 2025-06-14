@@ -5,104 +5,74 @@ import { useState, useEffect } from 'react';
 
 export const Hero = () => {
   const [scrollY, setScrollY] = useState(0);
-  const [logoPosition, setLogoPosition] = useState('section1');
 
   useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      setScrollY(currentScrollY);
-      
-      // Calculate which section the logo should be in
-      const windowHeight = window.innerHeight;
-      const section1End = windowHeight * 0.8; // Start moving when 80% through first section
-      const section2Start = windowHeight;
-      
-      if (currentScrollY < section1End) {
-        setLogoPosition('section1');
-      } else if (currentScrollY >= section1End && currentScrollY < section2Start + windowHeight * 0.6) {
-        setLogoPosition('transitioning');
-      } else {
-        setLogoPosition('section2');
-      }
-    };
-
+    const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Calculate logo transform based on scroll
-  const getLogoTransform = () => {
+  // Calculate smooth transition progress
+  const getTransitionProgress = () => {
     const windowHeight = window.innerHeight;
-    const section1End = windowHeight * 0.8;
-    const transitionDistance = windowHeight * 0.8;
+    const startScroll = windowHeight * 0.6; // Start transition at 60% of first section
+    const endScroll = windowHeight * 1.4; // End transition at 40% into second section
+    const progress = Math.max(0, Math.min(1, (scrollY - startScroll) / (endScroll - startScroll)));
     
-    if (logoPosition === 'section1') {
-      return { 
-        x: 0, 
-        y: 0, 
-        rotation: 0, 
-        scale: 1,
-        left: '50%',
-        top: '50%',
-        marginLeft: '-150px',
-        marginTop: '-150px'
-      };
-    } else if (logoPosition === 'transitioning') {
-      const progress = Math.min((scrollY - section1End) / transitionDistance, 1);
-      const smoothProgress = progress * progress * (3 - 2 * progress); // Smooth step function
-      
-      // Calculate target position (right side of second section)
-      const targetX = window.innerWidth * 0.2;
-      const targetY = windowHeight * 0.8;
-      
-      const xMovement = smoothProgress * targetX;
-      const yMovement = smoothProgress * targetY;
-      const rotation = smoothProgress * 360; // Full backflip around X-axis
-      const scale = 1 - (smoothProgress * 0.2); // Slightly smaller in section 2
-      
-      return { 
-        x: xMovement, 
-        y: yMovement, 
-        rotation, 
-        scale,
-        left: '50%',
-        top: '50%',
-        marginLeft: '-150px',
-        marginTop: '-150px'
-      };
-    } else {
-      return { 
-        x: 0, 
-        y: 0, 
-        rotation: 360, 
-        scale: 0.8,
-        left: '75%',
-        top: windowHeight + 150 + 'px',
-        marginLeft: '-120px',
-        marginTop: '0px'
-      };
-    }
+    // Apply easing function for smooth animation
+    return progress * progress * (3 - 2 * progress);
   };
 
-  const transform = getLogoTransform();
+  const transitionProgress = getTransitionProgress();
+  const isTransitioning = transitionProgress > 0 && transitionProgress < 1;
+  const hasLanded = transitionProgress >= 1;
+
+  // Calculate logo transform
+  const getLogoStyle = () => {
+    if (transitionProgress === 0) {
+      // Logo in section 1 - center position
+      return {
+        position: 'static' as const,
+        transform: 'none',
+        opacity: 1
+      };
+    }
+
+    // During transition and after landing
+    const windowHeight = window.innerHeight;
+    const windowWidth = window.innerWidth;
+    
+    // Target position: right side of section 2
+    const targetX = windowWidth * 0.25; // Move to right side
+    const targetY = windowHeight + windowHeight * 0.3; // Land in section 2
+    
+    const currentX = targetX * transitionProgress;
+    const currentY = targetY * transitionProgress;
+    const rotation = 360 * transitionProgress; // Full backflip
+    const scale = 1 - (transitionProgress * 0.2); // Slightly smaller when landed
+
+    return {
+      position: 'fixed' as const,
+      top: '50%',
+      left: '50%',
+      transform: `translate(-50%, -50%) translate(${currentX}px, ${currentY}px) rotateX(${rotation}deg) scale(${scale})`,
+      zIndex: 40,
+      pointerEvents: 'none' as const,
+      transition: isTransitioning ? 'none' : 'all 0.3s ease-out',
+      opacity: 1
+    };
+  };
+
+  const logoStyle = getLogoStyle();
 
   return (
     <>
-      {/* Floating 3D Logo */}
-      {logoPosition !== 'section1' && (
-        <div 
-          className="fixed z-40 transition-all duration-1000 ease-in-out pointer-events-none"
-          style={{
-            transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale}) rotateX(${transform.rotation}deg)`,
-            left: transform.left,
-            top: transform.top,
-            marginLeft: transform.marginLeft,
-            marginTop: transform.marginTop,
-            width: '300px',
-            height: '300px'
-          }}
-        >
-          <Logo3D />
+      {/* Floating/Transitioning 3D Logo */}
+      {transitionProgress > 0 && (
+        <div style={logoStyle}>
+          <div className="w-80 h-80 flex items-center justify-center">
+            <Logo3D />
+          </div>
         </div>
       )}
       
@@ -149,13 +119,13 @@ export const Hero = () => {
 
           {/* Main Content - Perfectly Centered */}
           <div className="flex flex-col items-center justify-center text-center">
-            {/* 3D Logo with better sizing - Hidden when transitioning */}
+            {/* 3D Logo in section 1 - visible only when not transitioning */}
             <div 
               className={`w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8 transition-opacity duration-500 ${
-                logoPosition === 'section1' ? 'opacity-100' : 'opacity-0'
+                transitionProgress === 0 ? 'opacity-100' : 'opacity-0'
               }`}
             >
-              {logoPosition === 'section1' && <Logo3D />}
+              {transitionProgress === 0 && <Logo3D />}
             </div>
             
             {/* Title with improved spacing */}
@@ -225,13 +195,9 @@ export const Hero = () => {
 
             {/* Right Content - 3D Logo Landing Area */}
             <div className="space-y-8 flex items-center justify-center">
-              {/* Logo Landing Area */}
+              {/* Logo Landing Area - The floating logo will land here */}
               <div className="w-80 h-80 flex items-center justify-center">
-                {logoPosition === 'section2' && (
-                  <div className="animate-fade-in">
-                    <Logo3D />
-                  </div>
-                )}
+                {/* Logo is handled by the floating transition logic above */}
               </div>
             </div>
           </div>
