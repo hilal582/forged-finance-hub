@@ -15,7 +15,7 @@ export const Hero = () => {
   // Calculate logo position based on scroll
   const section1Height = window.innerHeight;
   const section2Start = section1Height;
-  const maxScroll = section2Start + 400; // Logo should reach final position after scrolling 400px into section 2
+  const maxScroll = section2Start + (window.innerHeight / 2); // Logo stops at center of section 2
   
   const scrollProgress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
   
