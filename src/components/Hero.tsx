@@ -19,8 +19,9 @@ export const Hero = () => {
   
   const scrollProgress = Math.min(Math.max(scrollY / maxScroll, 0), 1);
   
-  // Logo movement: from center of section 1 to aligned position in section 2
-  const logoTranslateX = scrollProgress * 35; // Move 25% to the right to align with content
+  // Logo movement: from center of section 1 to center of section 2
+  const logoTranslateX = scrollProgress * 15; // Move to center of section 2
+  const logoTranslateY = scrollProgress * 10; // Move down to align with center of section 2
 
   return (
     <>
@@ -58,7 +59,7 @@ export const Hero = () => {
       <div 
         className="fixed top-1/3 left-1/2 z-40 w-80 h-80 lg:w-96 lg:h-96 pointer-events-none"
         style={{
-          transform: `translate(-50%, -50%) translateX(${logoTranslateX}vw)`,
+          transform: `translate(-50%, -50%) translateX(${logoTranslateX}vw) translateY(${logoTranslateY}vh)`,
           transition: 'none', // No transition for smooth real-time movement
         }}
       >
