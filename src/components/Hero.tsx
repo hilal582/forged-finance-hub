@@ -90,7 +90,7 @@ export const Hero = () => {
               <div className="space-y-6">
                 <h2 className="text-5xl lg:text-6xl font-bold leading-tight">
                   <span className="block text-white">Your hub for</span>
-                  <span className="block text-blue-500">finance careers</span>
+                  <span className="block text-white">finance careers</span>
                   <span className="block text-white">across Europe</span>
                 </h2>
                 
@@ -104,7 +104,7 @@ export const Hero = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   size="lg" 
-                  className="bg-blue-600 text-white hover:bg-blue-700 px-8 py-6 text-base font-medium"
+                  className="bg-white text-black hover:bg-white/90 px-8 py-6 text-base font-medium"
                 >
                   Get Started
                   <ArrowRight className="ml-2 w-5 h-5" />
@@ -126,36 +126,36 @@ export const Hero = () => {
                 
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <div className="w-2 h-2 bg-white rounded-full" />
+                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-black rounded-full" />
                     </div>
                     <p className="text-white/80">Comprehensive database of finance roles across Europe</p>
                   </div>
                   
                   <div className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <div className="w-2 h-2 bg-white rounded-full" />
+                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-black rounded-full" />
                     </div>
                     <p className="text-white/80">Filter by country, division, and job type</p>
                   </div>
                   
                   <div className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <div className="w-2 h-2 bg-white rounded-full" />
+                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-black rounded-full" />
                     </div>
                     <p className="text-white/80">Track application deadlines easily</p>
                   </div>
                   
                   <div className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <div className="w-2 h-2 bg-white rounded-full" />
+                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-black rounded-full" />
                     </div>
                     <p className="text-white/80">Direct links to application pages</p>
                   </div>
                   
                   <div className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <div className="w-2 h-2 bg-white rounded-full" />
+                    <div className="w-6 h-6 bg-white rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-black rounded-full" />
                     </div>
                     <p className="text-white/80">Professional profile for hiring managers</p>
                   </div>
