@@ -1,11 +1,105 @@
 import { ArrowRight, Play, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Logo3D } from './Logo3D';
+import { useState, useEffect } from 'react';
 
 export const Hero = () => {
+  const [scrollY, setScrollY] = useState(0);
+  const [logoPosition, setLogoPosition] = useState('section1');
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      
+      // Calculate which section the logo should be in
+      const windowHeight = window.innerHeight;
+      const section1End = windowHeight * 0.7; // Start moving when 70% through first section
+      const section2Start = windowHeight;
+      
+      if (currentScrollY < section1End) {
+        setLogoPosition('section1');
+      } else if (currentScrollY >= section1End && currentScrollY < section2Start + windowHeight * 0.3) {
+        setLogoPosition('transitioning');
+      } else {
+        setLogoPosition('section2');
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Calculate logo transform based on scroll
+  const getLogoTransform = () => {
+    const windowHeight = window.innerHeight;
+    const section1End = windowHeight * 0.7;
+    const transitionDistance = windowHeight * 0.6;
+    
+    if (logoPosition === 'section1') {
+      return { 
+        x: 0, 
+        y: 0, 
+        rotation: 0, 
+        scale: 1,
+        left: '50%',
+        top: '50%',
+        marginLeft: '-192px',
+        marginTop: '-192px'
+      };
+    } else if (logoPosition === 'transitioning') {
+      const progress = Math.min((scrollY - section1End) / transitionDistance, 1);
+      const yMovement = progress * windowHeight * 1.2;
+      const xMovement = progress * (window.innerWidth * 0.2);
+      const rotation = progress * 360; // Full backflip
+      const scale = 0.7 + (0.5 * progress);
+      
+      return { 
+        x: xMovement, 
+        y: yMovement, 
+        rotation, 
+        scale: Math.min(scale, 1.2),
+        left: '50%',
+        top: '50%',
+        marginLeft: '-192px',
+        marginTop: '-192px'
+      };
+    } else {
+      return { 
+        x: 0, 
+        y: 0, 
+        rotation: 360, 
+        scale: 0.8,
+        left: '75%',
+        top: windowHeight + 200 + 'px',
+        marginLeft: '-150px',
+        marginTop: '0px'
+      };
+    }
+  };
+
+  const transform = getLogoTransform();
 
   return (
     <>
+      {/* Floating 3D Logo */}
+      {logoPosition !== 'section1' && (
+        <div 
+          className="fixed z-40 transition-all duration-1000 ease-in-out pointer-events-none"
+          style={{
+            transform: `translate(${transform.x}px, ${transform.y}px) scale(${transform.scale}) rotateY(${transform.rotation}deg)`,
+            left: transform.left,
+            top: transform.top,
+            marginLeft: transform.marginLeft,
+            marginTop: transform.marginTop,
+            width: '300px',
+            height: '300px'
+          }}
+        >
+          <Logo3D />
+        </div>
+      )}
+      
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-7xl mx-auto px-8 py-6 flex justify-between items-center">
@@ -49,9 +143,13 @@ export const Hero = () => {
 
           {/* Main Content - Perfectly Centered */}
           <div className="flex flex-col items-center justify-center text-center">
-            {/* 3D Logo with better sizing */}
-            <div className="w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8">
-              <Logo3D />
+            {/* 3D Logo with better sizing - Hidden when transitioning */}
+            <div 
+              className={`w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8 transition-opacity duration-500 ${
+                logoPosition === 'section1' ? 'opacity-100' : 'opacity-0'
+              }`}
+            >
+              {logoPosition === 'section1' && <Logo3D />}
             </div>
             
             {/* Title with improved spacing */}
@@ -119,9 +217,16 @@ export const Hero = () => {
               </div>
             </div>
 
-            {/* Right Content */}
-            <div className="space-y-8">
-              {/* Empty space or can add other content later */}
+            {/* Right Content - 3D Logo Landing Area */}
+            <div className="space-y-8 flex items-center justify-center">
+              {/* Logo Landing Area */}
+              <div className="w-80 h-80 flex items-center justify-center">
+                {logoPosition === 'section2' && (
+                  <div className="animate-fade-in">
+                    <Logo3D />
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
