@@ -1,29 +1,7 @@
-import { useEffect, useState } from 'react';
 import { ArrowRight, Play, ChevronDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Logo3D } from './Logo3D';
 
 export const Hero = () => {
-  const [scrollY, setScrollY] = useState(0);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 2 - 1,
-        y: (e.clientY / window.innerHeight) * 2 - 1
-      });
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    window.addEventListener('mousemove', handleMouseMove);
-    
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
 
   return (
     <>
@@ -50,8 +28,6 @@ export const Hero = () => {
         </div>
       </nav>
 
-      <Logo3D scrollY={scrollY} mousePosition={mousePosition} />
-      
       {/* Hero Section */}
       <section className="min-h-screen bg-black relative overflow-hidden flex items-center">
         {/* Animated Background */}
