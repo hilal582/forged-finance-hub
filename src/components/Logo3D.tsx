@@ -9,20 +9,19 @@ interface Logo3DProps {
 }
 
 // Component to load and display the Forged Finance logo
-const ForgedFinanceLogo = () => {
+const ForgedFinanceLogo = ({ rotationX }: { rotationX: number }) => {
   const groupRef = useRef<THREE.Group>(null);
   const { scene } = useGLTF('/forged-finance-logo.glb');
   
   useEffect(() => {
     if (scene) {
-      // Apply enhanced metallic material for more depth
+      // Apply white material for clean premium look
       scene.traverse((child: any) => {
         if (child.isMesh) {
           child.material = new THREE.MeshStandardMaterial({
             color: '#ffffff',
-            metalness: 0.95,
-            roughness: 0.05,
-            envMapIntensity: 1.5,
+            metalness: 0.1,
+            roughness: 0.2,
           });
           child.castShadow = true;
           child.receiveShadow = true;
@@ -74,7 +73,7 @@ const ForgedFinanceLogo = () => {
   }
 
   return (
-    <group ref={groupRef}>
+    <group ref={groupRef} rotation={[rotationX, 0, 0]}>
       <primitive object={scene} />
     </group>
   );
@@ -93,10 +92,18 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
   const currentX = centerX + (targetX - centerX) * scrollProgress;
   const currentY = centerY + (targetY - centerY) * scrollProgress;
   
-  // Size interpolation - much larger for prominent presence
-  const initialSize = window.innerWidth < 768 ? 550 : 750;
-  const targetSize = window.innerWidth < 768 ? 450 : 600;
-  const currentSize = initialSize + (targetSize - initialSize) * scrollProgress;
+  // Jump effect: make bigger during scroll, then smaller at landing
+  const jumpProgress = Math.sin(scrollProgress * Math.PI); // Creates arc from 0 to 1 to 0
+  const baseSize = window.innerWidth < 768 ? 550 : 750;
+  const jumpSize = window.innerWidth < 768 ? 200 : 300; // Extra size during jump
+  const finalSize = window.innerWidth < 768 ? 350 : 450; // Final smaller size
+  
+  const currentSize = scrollProgress < 1 
+    ? baseSize + jumpSize * jumpProgress
+    : finalSize;
+  
+  // Backflip rotation during scroll
+  const rotationX = scrollProgress * Math.PI * 2; // Full 360° backflip
 
   return (
     <div 
@@ -113,40 +120,29 @@ export const Logo3D = ({ scrollY }: Logo3DProps) => {
       <Canvas gl={{ alpha: true, antialias: true }} shadows>
         <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={50} />
         
-        {/* Enhanced premium lighting for depth */}
-        <ambientLight intensity={0.3} />
-        <directionalLight 
-          position={[10, 10, 5]} 
-          intensity={2} 
-          castShadow 
+        {/* Focused spotlight for dramatic 3D effect */}
+        <ambientLight intensity={0.2} />
+        <spotLight 
+          position={[0, 10, 10]} 
+          intensity={3} 
+          angle={0.3} 
+          penumbra={0.3} 
+          castShadow
           shadow-mapSize-width={2048}
           shadow-mapSize-height={2048}
-          shadow-camera-far={50}
-          shadow-camera-left={-10}
-          shadow-camera-right={10}
-          shadow-camera-top={10}
-          shadow-camera-bottom={-10}
         />
-        <directionalLight position={[-8, -8, -5]} intensity={0.8} />
-        <directionalLight position={[0, 15, 0]} intensity={1.2} />
-        <pointLight position={[5, 5, 15]} intensity={1} />
-        <pointLight position={[-5, -5, 15]} intensity={0.8} />
         <spotLight 
-          position={[15, 15, 15]} 
-          intensity={1.5} 
-          angle={0.2} 
+          position={[10, 5, 5]} 
+          intensity={2} 
+          angle={0.4} 
           penumbra={0.5} 
-          castShadow
+          color="#ffffff"
         />
-        <spotLight 
-          position={[-15, -15, 15]} 
-          intensity={1} 
-          angle={0.3} 
-          penumbra={0.8} 
-        />
+        <directionalLight position={[-5, 5, 5]} intensity={0.8} />
+        <pointLight position={[0, 0, 8]} intensity={0.5} />
         
-        {/* Logo */}
-        <ForgedFinanceLogo />
+        {/* Logo with rotation */}
+        <ForgedFinanceLogo rotationX={rotationX} />
       </Canvas>
     </div>
   );
