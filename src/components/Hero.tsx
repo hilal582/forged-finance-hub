@@ -41,21 +41,21 @@ export const Hero = () => {
           </div>
 
           {/* Main Content - Perfectly Centered */}
-          <div className="flex flex-col items-center justify-center text-center space-y-12">
+          <div className="flex flex-col items-center justify-center text-center">
             {/* 3D Logo with better sizing */}
-            <div className="w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center">
+            <div className="w-80 h-80 lg:w-96 lg:h-96 flex items-center justify-center mb-8">
               <Logo3D />
             </div>
             
             {/* Title with improved spacing */}
-            <div className="space-y-4">
+            <div className="space-y-6 mb-12">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.9] tracking-tight">
                 <span className="block text-white">THE FUTURE OF FINANCE CAREERS</span>
               </h1>
             </div>
             
-            {/* Description with better typography */}
-            <div className="max-w-3xl mb-16">
+            {/* Description with better typography and controlled spacing */}
+            <div className="max-w-3xl mb-32">
               <p className="text-lg md:text-xl text-white/60 leading-relaxed font-light">
                 Connect with elite opportunities across Europe's top investment banks, 
                 private equity firms, and asset management companies.
@@ -63,8 +63,8 @@ export const Hero = () => {
             </div>
           </div>
 
-          {/* Swipe Down Indicator with enhanced design */}
-          <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white/50">
+          {/* Swipe Down Indicator with enhanced design and proper positioning */}
+          <div className="absolute bottom-12 left-1/2 transform -translate-x-1/2 flex flex-col items-center text-white/50">
             <span className="text-xs tracking-[0.2em] mb-6 font-medium">SWIPE DOWN TO EXPLORE</span>
             <div className="flex flex-col items-center space-y-2">
               <ChevronDown className="w-5 h-5 animate-bounce" />
