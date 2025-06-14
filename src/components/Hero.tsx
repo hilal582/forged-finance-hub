@@ -50,11 +50,7 @@ export const Hero = () => {
             {/* Title with improved spacing */}
             <div className="space-y-4">
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.9] tracking-tight">
-                <span className="block text-white">THE FUTURE</span>
-                <span className="block text-white">OF FINANCE</span>
-                <span className="block bg-gradient-to-r from-white via-gray-200 to-white bg-clip-text text-transparent mt-2">
-                  CAREERS
-                </span>
+                <span className="block text-white">THE FUTURE OF FINANCE CAREERS</span>
               </h1>
             </div>
             
