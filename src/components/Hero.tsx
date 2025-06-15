@@ -98,10 +98,22 @@ export const Hero = () => {
       <section className="min-h-screen bg-background relative overflow-hidden">
         {/* Dynamic Spotlights */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-20 left-1/4 w-96 h-96 bg-foreground/10 rounded-full blur-[100px] animate-pulse" />
-          <div className="absolute top-40 right-1/3 w-64 h-64 bg-blue-400/15 rounded-full blur-[80px] animate-float" />
-          <div className="absolute bottom-40 left-1/2 w-80 h-80 bg-foreground/8 rounded-full blur-[120px]" />
-          <div className="absolute top-1/3 right-20 w-48 h-48 bg-purple-400/10 rounded-full blur-[60px] animate-pulse" />
+          {/* Light mode spotlights */}
+          <div className="dark:hidden">
+            <div className="absolute top-20 left-1/4 w-96 h-96 bg-gradient-to-br from-blue-100/60 to-purple-100/40 rounded-full blur-[100px] animate-pulse" />
+            <div className="absolute top-40 right-1/3 w-64 h-64 bg-gradient-to-br from-indigo-100/50 to-blue-200/30 rounded-full blur-[80px] animate-float" />
+            <div className="absolute bottom-40 left-1/2 w-80 h-80 bg-gradient-to-br from-slate-100/40 to-gray-100/30 rounded-full blur-[120px]" />
+            <div className="absolute top-1/3 right-20 w-48 h-48 bg-gradient-to-br from-violet-100/50 to-purple-100/30 rounded-full blur-[60px] animate-pulse" />
+            <div className="absolute bottom-20 left-1/5 w-72 h-72 bg-gradient-to-br from-cyan-100/40 to-blue-100/30 rounded-full blur-[90px] animate-float" />
+          </div>
+          
+          {/* Dark mode spotlights */}
+          <div className="hidden dark:block">
+            <div className="absolute top-20 left-1/4 w-96 h-96 bg-foreground/10 rounded-full blur-[100px] animate-pulse" />
+            <div className="absolute top-40 right-1/3 w-64 h-64 bg-blue-400/15 rounded-full blur-[80px] animate-float" />
+            <div className="absolute bottom-40 left-1/2 w-80 h-80 bg-foreground/8 rounded-full blur-[120px]" />
+            <div className="absolute top-1/3 right-20 w-48 h-48 bg-purple-400/10 rounded-full blur-[60px] animate-pulse" />
+          </div>
         </div>
         <div className="max-w-7xl mx-auto px-8 h-screen flex flex-col justify-center relative z-10">
           {/* Live Platform Badge - Top Right with animation */}
@@ -128,7 +140,7 @@ export const Hero = () => {
               showBottomContent ? 'animate-slide-from-bottom opacity-100 translate-y-0' : 'opacity-0 translate-y-full'
             }`}>
               <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold leading-[0.9] tracking-tight">
-                <span className="block text-foreground">THE FUTURE OF FINANCE CAREERS</span>
+                <span className="block text-foreground drop-shadow-sm">THE FUTURE OF FINANCE CAREERS</span>
               </h1>
             </div>
             
@@ -160,13 +172,27 @@ export const Hero = () => {
       <section id="second-section" className="min-h-screen bg-background relative overflow-hidden">
         {/* Dynamic Spotlights for Section 2 */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-32 right-1/4 w-72 h-72 bg-cyan-400/12 rounded-full blur-[90px] animate-pulse" />
-          <div className="absolute bottom-32 left-1/5 w-56 h-56 bg-foreground/8 rounded-full blur-[70px] animate-float" />
-          <div className="absolute top-1/2 left-3/4 w-40 h-40 bg-pink-400/10 rounded-full blur-[50px]" />
-          <div className="absolute bottom-20 right-1/3 w-64 h-64 bg-blue-300/12 rounded-full blur-[85px] animate-pulse" />
-          <div className="absolute top-16 left-1/2 w-88 h-88 bg-indigo-400/8 rounded-full blur-[110px] animate-float" />
-          <div className="absolute bottom-48 right-1/5 w-52 h-52 bg-emerald-400/10 rounded-full blur-[75px]" />
-          <div className="absolute top-2/3 left-16 w-36 h-36 bg-orange-400/8 rounded-full blur-[55px] animate-pulse" />
+          {/* Light mode spotlights for section 2 */}
+          <div className="dark:hidden">
+            <div className="absolute top-32 right-1/4 w-72 h-72 bg-gradient-to-br from-emerald-100/50 to-teal-100/30 rounded-full blur-[90px] animate-pulse" />
+            <div className="absolute bottom-32 left-1/5 w-56 h-56 bg-gradient-to-br from-slate-100/60 to-gray-200/40 rounded-full blur-[70px] animate-float" />
+            <div className="absolute top-1/2 left-3/4 w-40 h-40 bg-gradient-to-br from-rose-100/40 to-pink-100/30 rounded-full blur-[50px]" />
+            <div className="absolute bottom-20 right-1/3 w-64 h-64 bg-gradient-to-br from-sky-100/45 to-blue-100/35 rounded-full blur-[85px] animate-pulse" />
+            <div className="absolute top-16 left-1/2 w-88 h-88 bg-gradient-to-br from-indigo-50/40 to-violet-100/30 rounded-full blur-[110px] animate-float" />
+            <div className="absolute bottom-48 right-1/5 w-52 h-52 bg-gradient-to-br from-emerald-100/35 to-green-100/25 rounded-full blur-[75px]" />
+            <div className="absolute top-2/3 left-16 w-36 h-36 bg-gradient-to-br from-amber-100/30 to-orange-100/20 rounded-full blur-[55px] animate-pulse" />
+          </div>
+          
+          {/* Dark mode spotlights for section 2 */}
+          <div className="hidden dark:block">
+            <div className="absolute top-32 right-1/4 w-72 h-72 bg-cyan-400/12 rounded-full blur-[90px] animate-pulse" />
+            <div className="absolute bottom-32 left-1/5 w-56 h-56 bg-foreground/8 rounded-full blur-[70px] animate-float" />
+            <div className="absolute top-1/2 left-3/4 w-40 h-40 bg-pink-400/10 rounded-full blur-[50px]" />
+            <div className="absolute bottom-20 right-1/3 w-64 h-64 bg-blue-300/12 rounded-full blur-[85px] animate-pulse" />
+            <div className="absolute top-16 left-1/2 w-88 h-88 bg-indigo-400/8 rounded-full blur-[110px] animate-float" />
+            <div className="absolute bottom-48 right-1/5 w-52 h-52 bg-emerald-400/10 rounded-full blur-[75px]" />
+            <div className="absolute top-2/3 left-16 w-36 h-36 bg-orange-400/8 rounded-full blur-[55px] animate-pulse" />
+          </div>
         </div>
         <div className="max-w-7xl mx-auto px-8 py-24 relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
