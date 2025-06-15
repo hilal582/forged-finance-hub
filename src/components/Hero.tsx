@@ -1,4 +1,4 @@
-import { ArrowRight, Play, ChevronDown } from 'lucide-react';
+import { ArrowRight, Play, ChevronDown, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Logo3D } from './Logo3D';
 import { useEffect, useState } from 'react';
@@ -8,8 +8,17 @@ export const Hero = () => {
   const [showBottomContent, setShowBottomContent] = useState(false);
   const [showLogo, setShowLogo] = useState(false);
   const [showSecondSection, setShowSecondSection] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle('dark', !isDarkMode);
+  };
 
   useEffect(() => {
+    // Set initial dark mode
+    document.documentElement.classList.add('dark');
+    
     // Sequential animation sequence for first section
     const headerTimer = setTimeout(() => setShowHeader(true), 300);
     const bottomTimer = setTimeout(() => setShowBottomContent(true), 1200);
@@ -67,6 +76,14 @@ export const Hero = () => {
             <a href="#" className="text-white/70 hover:text-white transition-colors text-sm tracking-wide">CONTACT</a>
           </div>
           <div className="flex items-center space-x-4">
+            <Button 
+              variant="ghost" 
+              size="sm"
+              onClick={toggleDarkMode}
+              className="text-white hover:bg-white/10 p-2"
+            >
+              {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+            </Button>
             <Button variant="ghost" className="text-white hover:bg-white/10 text-sm tracking-wide">
               SIGN IN
             </Button>
