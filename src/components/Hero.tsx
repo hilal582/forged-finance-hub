@@ -301,7 +301,7 @@ export const Hero = () => {
                 placeholder="Enter your email"
                 className="flex-1 px-6 py-4 bg-card border border-border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary backdrop-blur-sm"
               />
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-4 rounded-xl font-medium">
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-xl font-medium">
                 Subscribe
                 <ArrowRight className="ml-2 w-5 h-5" />
               </Button>
