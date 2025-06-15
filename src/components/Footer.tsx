@@ -30,29 +30,6 @@ export const Footer = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-8 relative z-10">
-        {/* Newsletter Section */}
-        <div className="py-20 border-b border-border">
-          <div className="max-w-4xl mx-auto text-center">
-            <h3 className="text-4xl font-bold text-foreground mb-6">
-              Stay Ahead of the Market
-            </h3>
-            <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              Get weekly insights on finance career trends, new opportunities, 
-              and exclusive access to premium roles.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-              <input 
-                type="email" 
-                placeholder="Enter your email"
-                className="flex-1 px-6 py-4 bg-card border border-border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary backdrop-blur-sm"
-              />
-              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-xl font-medium">
-                Subscribe
-                <ArrowRight className="ml-2 w-5 h-5" />
-              </Button>
-            </div>
-          </div>
-        </div>
 
         {/* Main Footer Content */}
         <div className="py-20">

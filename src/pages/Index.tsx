@@ -11,14 +11,14 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black overflow-x-hidden">
+    <div className="min-h-screen bg-background overflow-x-hidden">
       {isLoading ? (
         <LoadingScreen onLoadingComplete={handleLoadingComplete} />
       ) : (
-        <>
+        <div className="flex flex-col">
           <Hero />
           <Footer />
-        </>
+        </div>
       )}
     </div>
   );
