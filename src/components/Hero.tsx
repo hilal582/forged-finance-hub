@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, Sun, Moon, Check } from 'lucide-react';
+import { ArrowRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -9,39 +9,31 @@ interface HeroProps {
 }
 
 export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
-  const [isDarkMode, setIsDarkMode] = useState(true);
   const { user, signOut } = useAuth();
 
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    document.documentElement.classList.toggle('dark', !isDarkMode);
-  };
-
   useEffect(() => {
-    // Set dark mode by default to match the design
-    setIsDarkMode(true);
     document.documentElement.classList.add('dark');
   }, []);
 
   return (
     <>
-      {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0B1426]/95 backdrop-blur-sm border-b border-[#1E293B]/50">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      {/* Navigation - Exact match */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0B1426] border-b border-[#1E293B]/30">
+        <div className="max-w-[1200px] mx-auto px-8 py-5 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-6 h-6 bg-[#4F46E5] rounded flex items-center justify-center">
+            <div className="w-7 h-7 bg-[#4F46E5] rounded-md flex items-center justify-center">
               <span className="text-white font-bold text-sm">F</span>
             </div>
-            <div className="text-lg font-semibold text-white">
+            <div className="text-xl font-semibold text-white">
               Forged Finance
             </div>
           </div>
           
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             {user ? (
               <Button 
                 variant="ghost" 
-                className="text-gray-300 hover:text-white hover:bg-[#1E293B] text-sm"
+                className="text-gray-300 hover:text-white hover:bg-[#1E293B] text-sm px-4 py-2"
                 onClick={signOut}
               >
                 Sign Out
@@ -49,14 +41,14 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
             ) : (
               <Button 
                 variant="ghost" 
-                className="text-gray-300 hover:text-white hover:bg-[#1E293B] text-sm px-6"
+                className="text-gray-300 hover:text-white hover:bg-[#1E293B] text-sm px-4 py-2"
                 onClick={onSignInClick}
               >
                 Sign In
               </Button>
             )}
             <Button 
-              className="bg-[#4F46E5] text-white hover:bg-[#4338CA] text-sm px-6 rounded-md"
+              className="bg-[#4F46E5] text-white hover:bg-[#4338CA] text-sm px-4 py-2 rounded-md font-medium"
               onClick={onGetAccessClick}
             >
               Sign Up
@@ -65,50 +57,45 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
         </div>
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section - Exact replica */}
       <section className="min-h-screen bg-[#0B1426] relative overflow-hidden pt-20">
-        {/* Background gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0B1426] via-[#1E293B] to-[#0B1426]" />
-        
-        <div className="max-w-7xl mx-auto px-6 h-screen flex items-center relative z-10">
-          <div className="grid lg:grid-cols-2 gap-16 items-center w-full">
-            {/* Left Content */}
-            <div className="space-y-8">
+        <div className="max-w-[1200px] mx-auto px-8 h-screen flex items-center">
+          <div className="grid lg:grid-cols-2 gap-20 items-center w-full">
+            {/* Left Content - Exact typography and spacing */}
+            <div className="space-y-10">
               <div className="space-y-6">
-                <h1 className="text-5xl lg:text-6xl font-bold leading-tight text-white">
+                <h1 className="text-[64px] leading-[72px] font-bold text-white">
                   Your hub for{' '}
                   <span className="text-[#4F46E5]">finance careers</span>{' '}
                   across Europe
                 </h1>
                 
-                <p className="text-xl text-gray-300 leading-relaxed max-w-2xl">
+                <p className="text-[20px] leading-[30px] text-[#94A3B8] max-w-[520px]">
                   Find and track top investment banking, private equity, and 
                   asset management roles with a streamlined application experience.
                 </p>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex gap-4">
                 <Button 
-                  size="lg" 
-                  className="bg-[#4F46E5] text-white hover:bg-[#4338CA] px-8 py-4 text-lg font-medium rounded-md flex items-center gap-2"
+                  className="bg-[#4F46E5] text-white hover:bg-[#4338CA] px-6 py-3 text-base font-medium rounded-md flex items-center gap-2 h-12"
                   onClick={onGetAccessClick}
                 >
                   Get Started
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 h-4" />
                 </Button>
                 <Button 
                   variant="outline"
-                  size="lg" 
-                  className="border-2 border-[#374151] text-white hover:bg-[#374151] px-8 py-4 text-lg font-medium rounded-md bg-transparent"
+                  className="border border-[#374151] text-white hover:bg-[#374151] px-6 py-3 text-base font-medium rounded-md bg-transparent h-12"
                 >
                   Learn More
                 </Button>
               </div>
             </div>
 
-            {/* Right Content - Features Card */}
-            <div className="bg-[#1E293B]/50 border border-[#374151] rounded-2xl p-8 backdrop-blur-sm">
-              <h3 className="text-2xl font-bold text-white mb-8">The Professional Edge</h3>
+            {/* Right Content - Exact card design */}
+            <div className="bg-[#1E293B]/40 border border-[#374151]/50 rounded-2xl p-8">
+              <h3 className="text-[24px] font-bold text-white mb-8">The Professional Edge</h3>
               
               <div className="space-y-6">
                 {[
@@ -119,10 +106,10 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
                   'Professional profile for hiring managers'
                 ].map((feature, index) => (
                   <div key={index} className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-[#4F46E5] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                      <Check className="w-3 h-3 text-white" />
+                    <div className="w-6 h-6 bg-[#4F46E5] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <Check className="w-3.5 h-3.5 text-white" />
                     </div>
-                    <p className="text-gray-300 text-lg">{feature}</p>
+                    <p className="text-[16px] leading-[24px] text-[#E2E8F0]">{feature}</p>
                   </div>
                 ))}
               </div>
@@ -131,16 +118,16 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
         </div>
       </section>
 
-      {/* Trusted by section */}
-      <section className="py-16 bg-[#0B1426] border-t border-[#1E293B]">
-        <div className="max-w-7xl mx-auto px-6">
+      {/* Trusted by section - Exact match */}
+      <section className="py-16 bg-[#0B1426] border-t border-[#1E293B]/30">
+        <div className="max-w-[1200px] mx-auto px-8">
           <div className="text-center mb-12">
-            <h3 className="text-xl text-gray-400 font-medium">
+            <h3 className="text-[18px] text-[#64748B] font-medium">
               Trusted by top business schools across Europe
             </h3>
           </div>
           
-          <div className="flex flex-wrap justify-center items-center gap-8 lg:gap-16 opacity-60">
+          <div className="flex justify-center items-center gap-16 opacity-60">
             {[
               'London School of Economics',
               'Copenhagen Business School', 
@@ -150,7 +137,7 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
               'ESCP',
               'ESSEC'
             ].map((school, index) => (
-              <div key={index} className="text-gray-400 font-medium text-lg">
+              <div key={index} className="text-[#64748B] font-medium text-[16px] whitespace-nowrap">
                 {school}
               </div>
             ))}

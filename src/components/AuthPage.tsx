@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { supabase } from '@/integrations/supabase/client';
@@ -82,25 +82,25 @@ export const AuthPage = () => {
             variant="ghost"
             size="sm"
             onClick={handleBackToHome}
-            className="mr-2 text-gray-300 hover:text-white hover:bg-[#1E293B]"
+            className="mr-2 text-[#64748B] hover:text-white hover:bg-[#1E293B]"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Button>
         </div>
 
-        <Card className="w-full bg-[#1E293B]/50 border-[#374151] backdrop-blur-sm">
+        <Card className="w-full bg-[#1E293B]/40 border-[#374151]/50 backdrop-blur-sm">
           <CardHeader className="text-center">
             <div className="flex items-center justify-center mb-4">
               <div className="w-12 h-12 bg-[#4F46E5] rounded-lg flex items-center justify-center mr-3">
                 <span className="text-white font-bold text-lg">F</span>
               </div>
-              <div className="text-xl font-semibold tracking-wide text-white">
+              <div className="text-xl font-semibold text-white">
                 Forged Finance
               </div>
             </div>
             <CardTitle className="text-white">Welcome</CardTitle>
-            <CardDescription className="text-gray-400">
+            <CardDescription className="text-[#64748B]">
               Sign in to your account or create a new one
             </CardDescription>
           </CardHeader>
@@ -108,8 +108,8 @@ export const AuthPage = () => {
           <CardContent>
             <Tabs defaultValue="signin" className="w-full">
               <TabsList className="grid w-full grid-cols-2 bg-[#374151]">
-                <TabsTrigger value="signin" className="data-[state=active]:bg-[#4F46E5] data-[state=active]:text-white text-gray-300">Sign In</TabsTrigger>
-                <TabsTrigger value="signup" className="data-[state=active]:bg-[#4F46E5] data-[state=active]:text-white text-gray-300">Sign Up</TabsTrigger>
+                <TabsTrigger value="signin" className="data-[state=active]:bg-[#4F46E5] data-[state=active]:text-white text-[#64748B]">Sign In</TabsTrigger>
+                <TabsTrigger value="signup" className="data-[state=active]:bg-[#4F46E5] data-[state=active]:text-white text-[#64748B]">Sign Up</TabsTrigger>
               </TabsList>
 
               {error && (
@@ -131,7 +131,7 @@ export const AuthPage = () => {
               <TabsContent value="signin" className="space-y-4 mt-4">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signin-email" className="text-gray-300">Email</Label>
+                    <Label htmlFor="signin-email" className="text-[#E2E8F0]">Email</Label>
                     <Input
                       id="signin-email"
                       type="email"
@@ -139,11 +139,11 @@ export const AuthPage = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="bg-[#374151] border-[#4B5563] text-white placeholder-gray-400"
+                      className="bg-[#374151] border-[#4B5563] text-white placeholder-[#64748B]"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signin-password" className="text-gray-300">Password</Label>
+                    <Label htmlFor="signin-password" className="text-[#E2E8F0]">Password</Label>
                     <Input
                       id="signin-password"
                       type="password"
@@ -151,7 +151,7 @@ export const AuthPage = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="bg-[#374151] border-[#4B5563] text-white placeholder-gray-400"
+                      className="bg-[#374151] border-[#4B5563] text-white placeholder-[#64748B]"
                     />
                   </div>
                   <Button 
@@ -167,7 +167,7 @@ export const AuthPage = () => {
               <TabsContent value="signup" className="space-y-4 mt-4">
                 <form onSubmit={handleSignUp} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signup-name" className="text-gray-300">Full Name</Label>
+                    <Label htmlFor="signup-name" className="text-[#E2E8F0]">Full Name</Label>
                     <Input
                       id="signup-name"
                       type="text"
@@ -175,11 +175,11 @@ export const AuthPage = () => {
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       required
-                      className="bg-[#374151] border-[#4B5563] text-white placeholder-gray-400"
+                      className="bg-[#374151] border-[#4B5563] text-white placeholder-[#64748B]"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-email" className="text-gray-300">Email</Label>
+                    <Label htmlFor="signup-email" className="text-[#E2E8F0]">Email</Label>
                     <Input
                       id="signup-email"
                       type="email"
@@ -187,11 +187,11 @@ export const AuthPage = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="bg-[#374151] border-[#4B5563] text-white placeholder-gray-400"
+                      className="bg-[#374151] border-[#4B5563] text-white placeholder-[#64748B]"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-password" className="text-gray-300">Password</Label>
+                    <Label htmlFor="signup-password" className="text-[#E2E8F0]">Password</Label>
                     <Input
                       id="signup-password"
                       type="password"
@@ -199,7 +199,7 @@ export const AuthPage = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="bg-[#374151] border-[#4B5563] text-white placeholder-gray-400"
+                      className="bg-[#374151] border-[#4B5563] text-white placeholder-[#64748B]"
                     />
                   </div>
                   <Button 

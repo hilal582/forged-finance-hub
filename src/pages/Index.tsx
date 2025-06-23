@@ -14,7 +14,6 @@ const IndexContent = () => {
 
   const handleGetAccessClick = () => {
     if (user) {
-      // User is already authenticated, could redirect to dashboard
       console.log('User is authenticated, redirect to dashboard');
     } else {
       setShowAuth(true);
@@ -35,10 +34,8 @@ const IndexContent = () => {
 
   return (
     <div className="min-h-screen bg-[#0B1426] overflow-x-hidden">
-      <div className="flex flex-col">
-        <Hero onSignInClick={handleSignInClick} onGetAccessClick={handleGetAccessClick} />
-        <Footer />
-      </div>
+      <Hero onSignInClick={handleSignInClick} onGetAccessClick={handleGetAccessClick} />
+      <Footer />
     </div>
   );
 };
