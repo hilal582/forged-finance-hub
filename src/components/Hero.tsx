@@ -1,7 +1,7 @@
 
+import React, { useEffect, useState } from 'react';
 import { ArrowRight, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useEffect, useState } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 
 interface HeroProps {

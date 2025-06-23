@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Hero } from '@/components/Hero';
 import { Footer } from '@/components/Footer';
 import { AuthPage } from '@/components/AuthPage';
