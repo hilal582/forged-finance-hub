@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Hero } from '@/components/Hero';
 import { Footer } from '@/components/Footer';
@@ -24,8 +23,8 @@ const IndexContent = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
+      <div className="min-h-screen bg-[#0B1426] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-[#4F46E5]"></div>
       </div>
     );
   }
@@ -35,7 +34,7 @@ const IndexContent = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background overflow-x-hidden">
+    <div className="min-h-screen bg-[#0B1426] overflow-x-hidden">
       <div className="flex flex-col">
         <Hero onSignInClick={handleSignInClick} onGetAccessClick={handleGetAccessClick} />
         <Footer />

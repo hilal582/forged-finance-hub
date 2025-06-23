@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -76,24 +75,24 @@ export const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#0B1426] flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="flex items-center mb-6">
           <Button
             variant="ghost"
             size="sm"
             onClick={handleBackToHome}
-            className="mr-2 text-gray-300 hover:text-white hover:bg-slate-800"
+            className="mr-2 text-gray-300 hover:text-white hover:bg-[#1E293B]"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Button>
         </div>
 
-        <Card className="w-full bg-slate-800/50 border-slate-700 backdrop-blur-sm">
+        <Card className="w-full bg-[#1E293B]/50 border-[#374151] backdrop-blur-sm">
           <CardHeader className="text-center">
             <div className="flex items-center justify-center mb-4">
-              <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+              <div className="w-12 h-12 bg-[#4F46E5] rounded-lg flex items-center justify-center mr-3">
                 <span className="text-white font-bold text-lg">F</span>
               </div>
               <div className="text-xl font-semibold tracking-wide text-white">
@@ -108,9 +107,9 @@ export const AuthPage = () => {
 
           <CardContent>
             <Tabs defaultValue="signin" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 bg-slate-700">
-                <TabsTrigger value="signin" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-gray-300">Sign In</TabsTrigger>
-                <TabsTrigger value="signup" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-gray-300">Sign Up</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 bg-[#374151]">
+                <TabsTrigger value="signin" className="data-[state=active]:bg-[#4F46E5] data-[state=active]:text-white text-gray-300">Sign In</TabsTrigger>
+                <TabsTrigger value="signup" className="data-[state=active]:bg-[#4F46E5] data-[state=active]:text-white text-gray-300">Sign Up</TabsTrigger>
               </TabsList>
 
               {error && (
@@ -140,7 +139,7 @@ export const AuthPage = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400"
+                      className="bg-[#374151] border-[#4B5563] text-white placeholder-gray-400"
                     />
                   </div>
                   <div className="space-y-2">
@@ -152,12 +151,12 @@ export const AuthPage = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400"
+                      className="bg-[#374151] border-[#4B5563] text-white placeholder-gray-400"
                     />
                   </div>
                   <Button 
                     type="submit" 
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white" 
+                    className="w-full bg-[#4F46E5] hover:bg-[#4338CA] text-white" 
                     disabled={loading}
                   >
                     {loading ? 'Signing in...' : 'Sign In'}
@@ -176,7 +175,7 @@ export const AuthPage = () => {
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       required
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400"
+                      className="bg-[#374151] border-[#4B5563] text-white placeholder-gray-400"
                     />
                   </div>
                   <div className="space-y-2">
@@ -188,7 +187,7 @@ export const AuthPage = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400"
+                      className="bg-[#374151] border-[#4B5563] text-white placeholder-gray-400"
                     />
                   </div>
                   <div className="space-y-2">
@@ -200,12 +199,12 @@ export const AuthPage = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
-                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400"
+                      className="bg-[#374151] border-[#4B5563] text-white placeholder-gray-400"
                     />
                   </div>
                   <Button 
                     type="submit" 
-                    className="w-full bg-blue-600 hover:bg-blue-700 text-white" 
+                    className="w-full bg-[#4F46E5] hover:bg-[#4338CA] text-white" 
                     disabled={loading}
                   >
                     {loading ? 'Creating account...' : 'Sign Up'}

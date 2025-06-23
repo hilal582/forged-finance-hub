@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { ArrowRight, Sun, Moon, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -27,30 +26,22 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
   return (
     <>
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-slate-900/90 backdrop-blur-xl border-b border-slate-800">
-        <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0B1426]/95 backdrop-blur-sm border-b border-[#1E293B]/50">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+            <div className="w-6 h-6 bg-[#4F46E5] rounded flex items-center justify-center">
               <span className="text-white font-bold text-sm">F</span>
             </div>
-            <div className="text-lg font-semibold tracking-wide text-white">
+            <div className="text-lg font-semibold text-white">
               Forged Finance
             </div>
           </div>
           
           <div className="flex items-center space-x-4">
-            <Button 
-              variant="ghost" 
-              size="sm"
-              onClick={toggleDarkMode}
-              className="text-gray-300 hover:text-white hover:bg-slate-800 p-2"
-            >
-              {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
-            </Button>
             {user ? (
               <Button 
                 variant="ghost" 
-                className="text-gray-300 hover:text-white hover:bg-slate-800 text-sm"
+                className="text-gray-300 hover:text-white hover:bg-[#1E293B] text-sm"
                 onClick={signOut}
               >
                 Sign Out
@@ -58,14 +49,14 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
             ) : (
               <Button 
                 variant="ghost" 
-                className="text-gray-300 hover:text-white hover:bg-slate-800 text-sm px-6"
+                className="text-gray-300 hover:text-white hover:bg-[#1E293B] text-sm px-6"
                 onClick={onSignInClick}
               >
                 Sign In
               </Button>
             )}
             <Button 
-              className="bg-blue-600 text-white hover:bg-blue-700 text-sm px-6 rounded-lg"
+              className="bg-[#4F46E5] text-white hover:bg-[#4338CA] text-sm px-6 rounded-md"
               onClick={onGetAccessClick}
             >
               Sign Up
@@ -75,18 +66,18 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
       </nav>
 
       {/* Hero Section */}
-      <section className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 relative overflow-hidden pt-20">
-        {/* Background pattern overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(59,130,246,0.1),transparent_50%)]" />
+      <section className="min-h-screen bg-[#0B1426] relative overflow-hidden pt-20">
+        {/* Background gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#0B1426] via-[#1E293B] to-[#0B1426]" />
         
-        <div className="max-w-7xl mx-auto px-8 h-screen flex items-center relative z-10">
+        <div className="max-w-7xl mx-auto px-6 h-screen flex items-center relative z-10">
           <div className="grid lg:grid-cols-2 gap-16 items-center w-full">
             {/* Left Content */}
             <div className="space-y-8">
               <div className="space-y-6">
                 <h1 className="text-5xl lg:text-6xl font-bold leading-tight text-white">
                   Your hub for{' '}
-                  <span className="text-blue-400">finance careers</span>{' '}
+                  <span className="text-[#4F46E5]">finance careers</span>{' '}
                   across Europe
                 </h1>
                 
@@ -99,7 +90,7 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   size="lg" 
-                  className="bg-blue-600 text-white hover:bg-blue-700 px-8 py-4 text-lg font-medium rounded-lg flex items-center gap-2"
+                  className="bg-[#4F46E5] text-white hover:bg-[#4338CA] px-8 py-4 text-lg font-medium rounded-md flex items-center gap-2"
                   onClick={onGetAccessClick}
                 >
                   Get Started
@@ -108,7 +99,7 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
                 <Button 
                   variant="outline"
                   size="lg" 
-                  className="border-2 border-slate-600 text-white hover:bg-slate-800 px-8 py-4 text-lg font-medium rounded-lg bg-transparent"
+                  className="border-2 border-[#374151] text-white hover:bg-[#374151] px-8 py-4 text-lg font-medium rounded-md bg-transparent"
                 >
                   Learn More
                 </Button>
@@ -116,7 +107,7 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
             </div>
 
             {/* Right Content - Features Card */}
-            <div className="bg-slate-800/50 border border-slate-700 rounded-2xl p-8 backdrop-blur-sm">
+            <div className="bg-[#1E293B]/50 border border-[#374151] rounded-2xl p-8 backdrop-blur-sm">
               <h3 className="text-2xl font-bold text-white mb-8">The Professional Edge</h3>
               
               <div className="space-y-6">
@@ -128,7 +119,7 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
                   'Professional profile for hiring managers'
                 ].map((feature, index) => (
                   <div key={index} className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                    <div className="w-6 h-6 bg-[#4F46E5] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                       <Check className="w-3 h-3 text-white" />
                     </div>
                     <p className="text-gray-300 text-lg">{feature}</p>
@@ -141,8 +132,8 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
       </section>
 
       {/* Trusted by section */}
-      <section className="py-16 bg-slate-900 border-t border-slate-800">
-        <div className="max-w-7xl mx-auto px-8">
+      <section className="py-16 bg-[#0B1426] border-t border-[#1E293B]">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-12">
             <h3 className="text-xl text-gray-400 font-medium">
               Trusted by top business schools across Europe
