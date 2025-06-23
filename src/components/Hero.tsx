@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+
+import React, { useEffect } from 'react';
 import { ArrowRight, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
@@ -17,13 +18,15 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
 
   return (
     <>
-      {/* Navigation - Exact match */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0B1426] border-b border-[#1E293B]/30">
-        <div className="max-w-[1200px] mx-auto px-8 py-5 flex justify-between items-center">
+      {/* Navigation - Exact match with logo */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0A0F1C] border-b border-[#1A2332]">
+        <div className="max-w-[1200px] mx-auto px-8 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="w-7 h-7 bg-[#4F46E5] rounded-md flex items-center justify-center">
-              <span className="text-white font-bold text-sm">F</span>
-            </div>
+            <img 
+              src="/lovable-uploads/b8a8639e-5559-4a59-b902-4dd8354cac28.png" 
+              alt="Forged Finance Logo" 
+              className="w-8 h-8"
+            />
             <div className="text-xl font-semibold text-white">
               Forged Finance
             </div>
@@ -33,7 +36,7 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
             {user ? (
               <Button 
                 variant="ghost" 
-                className="text-gray-300 hover:text-white hover:bg-[#1E293B] text-sm px-4 py-2"
+                className="text-gray-300 hover:text-white hover:bg-[#1A2332] text-sm px-4 py-2"
                 onClick={signOut}
               >
                 Sign Out
@@ -41,7 +44,7 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
             ) : (
               <Button 
                 variant="ghost" 
-                className="text-gray-300 hover:text-white hover:bg-[#1E293B] text-sm px-4 py-2"
+                className="text-gray-300 hover:text-white hover:bg-[#1A2332] text-sm px-4 py-2"
                 onClick={onSignInClick}
               >
                 Sign In
@@ -57,12 +60,12 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
         </div>
       </nav>
 
-      {/* Hero Section - Exact replica */}
-      <section className="min-h-screen bg-[#0B1426] relative overflow-hidden pt-20">
+      {/* Hero Section - Exact replica with tight spacing */}
+      <section className="min-h-screen bg-gradient-to-br from-[#0A0F1C] via-[#0F1629] to-[#1A2847] relative overflow-hidden pt-20">
         <div className="max-w-[1200px] mx-auto px-8 h-screen flex items-center">
-          <div className="grid lg:grid-cols-2 gap-20 items-center w-full">
+          <div className="grid lg:grid-cols-2 gap-16 items-center w-full">
             {/* Left Content - Exact typography and spacing */}
-            <div className="space-y-10">
+            <div className="space-y-8">
               <div className="space-y-6">
                 <h1 className="text-[64px] leading-[72px] font-bold text-white">
                   Your hub for{' '}
@@ -70,7 +73,7 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
                   across Europe
                 </h1>
                 
-                <p className="text-[20px] leading-[30px] text-[#94A3B8] max-w-[520px]">
+                <p className="text-[18px] leading-[28px] text-[#9CA3AF] max-w-[520px]">
                   Find and track top investment banking, private equity, and 
                   asset management roles with a streamlined application experience.
                 </p>
@@ -93,11 +96,11 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
               </div>
             </div>
 
-            {/* Right Content - Exact card design */}
-            <div className="bg-[#1E293B]/40 border border-[#374151]/50 rounded-2xl p-8">
-              <h3 className="text-[24px] font-bold text-white mb-8">The Professional Edge</h3>
+            {/* Right Content - Exact card design with tight spacing */}
+            <div className="bg-[#1A2332]/60 border border-[#374151]/30 rounded-2xl p-8 backdrop-blur-sm">
+              <h3 className="text-[24px] font-bold text-white mb-6">The Professional Edge</h3>
               
-              <div className="space-y-6">
+              <div className="space-y-4">
                 {[
                   'Comprehensive database of finance roles across Europe',
                   'Filter by country, division, and job type',
@@ -105,11 +108,11 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
                   'Direct links to application pages',
                   'Professional profile for hiring managers'
                 ].map((feature, index) => (
-                  <div key={index} className="flex items-start space-x-4">
-                    <div className="w-6 h-6 bg-[#4F46E5] rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                      <Check className="w-3.5 h-3.5 text-white" />
+                  <div key={index} className="flex items-start space-x-3">
+                    <div className="w-5 h-5 bg-[#4F46E5] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <Check className="w-3 h-3 text-white" />
                     </div>
-                    <p className="text-[16px] leading-[24px] text-[#E2E8F0]">{feature}</p>
+                    <p className="text-[16px] leading-[24px] text-[#E5E7EB]">{feature}</p>
                   </div>
                 ))}
               </div>
@@ -118,16 +121,16 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
         </div>
       </section>
 
-      {/* Trusted by section - Exact match */}
-      <section className="py-16 bg-[#0B1426] border-t border-[#1E293B]/30">
+      {/* Trusted by section - Exact match with minimal spacing */}
+      <section className="py-12 bg-[#0A0F1C] border-t border-[#1A2332]">
         <div className="max-w-[1200px] mx-auto px-8">
-          <div className="text-center mb-12">
-            <h3 className="text-[18px] text-[#64748B] font-medium">
+          <div className="text-center mb-8">
+            <h3 className="text-[16px] text-[#6B7280] font-medium">
               Trusted by top business schools across Europe
             </h3>
           </div>
           
-          <div className="flex justify-center items-center gap-16 opacity-60">
+          <div className="flex justify-center items-center gap-12 opacity-70">
             {[
               'London School of Economics',
               'Copenhagen Business School', 
@@ -137,7 +140,7 @@ export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
               'ESCP',
               'ESSEC'
             ].map((school, index) => (
-              <div key={index} className="text-[#64748B] font-medium text-[16px] whitespace-nowrap">
+              <div key={index} className="text-[#6B7280] font-medium text-[14px] whitespace-nowrap">
                 {school}
               </div>
             ))}

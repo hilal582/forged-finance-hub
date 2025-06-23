@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -31,15 +32,15 @@
   }
 
   .dark {
-    /* Dark Theme - exact colors from image */
-    --background: 210 100% 6%;
+    /* Dark Theme - exact colors matching the image */
+    --background: 221 100% 7%;
     --foreground: 210 40% 98%;
-    --card: 210 100% 6%;
+    --card: 221 100% 7%;
     --card-foreground: 210 40% 98%;
-    --popover: 210 100% 6%;
+    --popover: 221 100% 7%;
     --popover-foreground: 210 40% 98%;
     --primary: 239 84% 67%;
-    --primary-foreground: 210 100% 6%;
+    --primary-foreground: 221 100% 7%;
     --secondary: 217 32% 17%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217 32% 17%;
@@ -65,13 +66,17 @@
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #0B1426;
+    background: linear-gradient(135deg, #0A0F1C 0%, #0F1629 50%, #1A2847 100%);
     color: white;
+    margin: 0;
+    padding: 0;
   }
 
   html {
     scroll-behavior: smooth;
-    background-color: #0B1426;
+    background: linear-gradient(135deg, #0A0F1C 0%, #0F1629 50%, #1A2847 100%);
+    margin: 0;
+    padding: 0;
   }
 
   /* Custom scrollbar to match design */
@@ -111,28 +116,11 @@
   }
 }
 
-/* Remove all unnecessary animations and effects */
-.animate-fade-in-up {
-  animation: none;
-}
-
-.animate-fade-in-scale {
-  animation: none;
-}
-
-.animate-glow {
-  animation: none;
-}
-
-.animate-float {
-  animation: none;
-}
-
 /* Clean, minimal design matching the reference */
 .glass {
-  background: rgba(30, 41, 59, 0.4);
+  background: rgba(26, 35, 50, 0.6);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(55, 65, 81, 0.5);
+  border: 1px solid rgba(55, 65, 81, 0.3);
 }
 
 /* Button styles matching the reference */
