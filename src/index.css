@@ -3,12 +3,11 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Import Inter font - exact match */
+/* Import Inter font */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
 
 @layer base {
   :root {
-    /* Light Theme */
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
     --card: 0 0% 100%;
@@ -32,7 +31,6 @@
   }
 
   .dark {
-    /* Dark Theme - exact colors matching the image */
     --background: 221 100% 7%;
     --foreground: 210 40% 98%;
     --card: 221 100% 7%;
@@ -66,20 +64,17 @@
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background: linear-gradient(135deg, #0A0F1C 0%, #0F1629 50%, #1A2847 100%);
-    color: white;
     margin: 0;
     padding: 0;
   }
 
   html {
     scroll-behavior: smooth;
-    background: linear-gradient(135deg, #0A0F1C 0%, #0F1629 50%, #1A2847 100%);
     margin: 0;
     padding: 0;
   }
 
-  /* Custom scrollbar to match design */
+  /* Custom scrollbar */
   ::-webkit-scrollbar {
     width: 6px;
   }
@@ -114,34 +109,4 @@
   button, a, input, textarea {
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
-}
-
-/* Clean, minimal design matching the reference */
-.glass {
-  background: rgba(26, 35, 50, 0.6);
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(55, 65, 81, 0.3);
-}
-
-/* Button styles matching the reference */
-.btn-primary {
-  background: #4F46E5;
-  color: white;
-  border: none;
-  transition: all 0.2s ease;
-}
-
-.btn-primary:hover {
-  background: #4338CA;
-}
-
-.btn-outline {
-  background: transparent;
-  color: white;
-  border: 1px solid #374151;
-  transition: all 0.2s ease;
-}
-
-.btn-outline:hover {
-  background: #374151;
 }
