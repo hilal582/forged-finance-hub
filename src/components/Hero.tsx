@@ -1,6 +1,6 @@
 
-import React, { useEffect } from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { ArrowRight, Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -10,137 +10,166 @@ interface HeroProps {
 }
 
 export const Hero = ({ onSignInClick, onGetAccessClick }: HeroProps) => {
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const { user, signOut } = useAuth();
 
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    document.documentElement.classList.toggle('dark', !isDarkMode);
+  };
+
   useEffect(() => {
-    document.documentElement.classList.add('dark');
+    // Check system preference for dark mode
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setIsDarkMode(prefersDark);
+    document.documentElement.classList.toggle('dark', prefersDark);
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0F1629] via-[#1A2847] to-[#2A3B5C] text-white">
+    <>
       {/* Navigation */}
-      <nav className="flex justify-between items-center px-6 py-4">
-        <div className="flex items-center space-x-3">
-          <div className="w-8 h-8 bg-white rounded flex items-center justify-center">
-            <span className="text-black font-bold text-lg">F</span>
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-xl border-b border-border">
+        <div className="max-w-7xl mx-auto px-8 py-4 flex justify-between items-center">
+          <div className="flex items-center space-x-3">
+            <img 
+              src="/forgedfinance_logo.jpg" 
+              alt="Forged Finance Logo" 
+              className="h-8 w-8 object-contain"
+            />
+            <div className="text-lg font-bold tracking-[0.25em] text-foreground">
+              FORGED FINANCE
+            </div>
           </div>
-          <span className="text-xl font-semibold">Forged Finance</span>
-        </div>
-        
-        <div className="flex items-center space-x-4">
-          {user ? (
+          <div className="hidden md:flex items-center space-x-8">
+            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Platform</a>
+            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Pricing</a>
+            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm">About</a>
+            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Contact</a>
+          </div>
+          <div className="flex items-center space-x-4">
             <Button 
               variant="ghost" 
-              className="text-white hover:text-white hover:bg-white/10"
-              onClick={signOut}
+              size="sm"
+              onClick={toggleDarkMode}
+              className="text-foreground hover:bg-accent p-2"
             >
-              Sign Out
+              {isDarkMode ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </Button>
-          ) : (
+            {user ? (
+              <Button 
+                variant="ghost" 
+                className="text-foreground hover:bg-accent text-sm"
+                onClick={signOut}
+              >
+                Sign Out
+              </Button>
+            ) : (
+              <Button 
+                variant="ghost" 
+                className="text-foreground hover:bg-accent text-sm"
+                onClick={onSignInClick}
+              >
+                Sign In
+              </Button>
+            )}
             <Button 
-              variant="ghost" 
-              className="text-white hover:text-white hover:bg-white/10"
-              onClick={onSignInClick}
+              className="bg-primary text-primary-foreground hover:bg-primary/90 text-sm px-6"
+              onClick={onGetAccessClick}
             >
-              Sign In
+              Get Access
             </Button>
-          )}
-          <Button 
-            className="bg-[#4F46E5] text-white hover:bg-[#4338CA] px-6 py-2 rounded-lg font-medium"
-            onClick={onGetAccessClick}
-          >
-            Sign Up
-          </Button>
+          </div>
         </div>
       </nav>
 
-      {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-20">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left Content */}
-          <div className="space-y-8">
-            <h1 className="text-6xl font-bold leading-tight">
-              Your hub for{' '}
-              <span className="text-[#4F46E5]">finance careers</span>{' '}
-              across Europe
-            </h1>
-            
-            <p className="text-xl text-gray-300 leading-relaxed max-w-lg">
-              Find and track top investment banking, private equity, and 
-              asset management roles with a streamlined application experience.
-            </p>
+      {/* Features Section */}
+      <section className="py-24 bg-background relative overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-32 right-1/4 w-72 h-72 bg-cyan-400/12 rounded-full blur-[90px] animate-pulse" />
+          <div className="absolute bottom-32 left-1/5 w-56 h-56 bg-primary/8 rounded-full blur-[70px] animate-float" />
+        </div>
 
-            <div className="flex gap-4">
-              <Button 
-                className="bg-[#4F46E5] text-white hover:bg-[#4338CA] px-8 py-3 text-lg font-medium rounded-lg flex items-center gap-2"
-                onClick={onGetAccessClick}
-              >
-                Get Started
-                <ArrowRight className="w-5 h-5" />
-              </Button>
-              <Button 
-                variant="outline"
-                className="border border-gray-500 text-white hover:bg-white/10 px-8 py-3 text-lg font-medium rounded-lg bg-transparent"
-              >
-                Learn More
-              </Button>
+        <div className="max-w-7xl mx-auto px-8 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+            {/* Left Content */}
+            <div className="space-y-8">
+              <div className="space-y-6">
+                <h2 className="text-4xl lg:text-5xl font-bold leading-tight text-foreground">
+                  Your hub for finance careers across Europe
+                </h2>
+                
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Find and track top investment banking, private equity, and 
+                  asset management roles with a streamlined application experience.
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button 
+                  size="lg" 
+                  className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-6 text-base font-medium hover:scale-105 transition-transform"
+                  onClick={onGetAccessClick}
+                >
+                  Get Started
+                  <ArrowRight className="ml-2 w-5 h-5" />
+                </Button>
+                <Button 
+                  variant="outline"
+                  size="lg" 
+                  className="border-border text-foreground hover:bg-accent px-8 py-6 text-base font-medium hover:scale-105 transition-transform"
+                >
+                  Learn More
+                </Button>
+              </div>
             </div>
-          </div>
 
-          {/* Right Content - Features Card */}
-          <div className="bg-[#1E293B]/40 border border-gray-600/30 rounded-2xl p-8 backdrop-blur-sm">
-            <h3 className="text-2xl font-bold mb-8">The Professional Edge</h3>
-            
-            <div className="space-y-6">
-              {[
-                'Comprehensive database of finance roles across Europe',
-                'Filter by country, division, and job type',
-                'Track application deadlines easily',
-                'Direct links to application pages',
-                'Professional profile for hiring managers'
-              ].map((feature, index) => (
-                <div key={index} className="flex items-start space-x-4">
-                  <div className="w-6 h-6 bg-[#4F46E5] rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                    <svg className="w-3 h-3 text-white" viewBox="0 0 12 12" fill="currentColor">
-                      <path d="M10 3L4.5 8.5L2 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" fill="none"/>
-                    </svg>
+            {/* Right Content - Features */}
+            <div className="bg-card border border-border rounded-2xl p-8 hover:bg-accent/50 transition-colors duration-300">
+              <h3 className="text-2xl font-bold text-foreground mb-8">The Professional Edge</h3>
+              
+              <div className="space-y-6">
+                {[
+                  'Comprehensive database of finance roles across Europe',
+                  'Filter by country, division, and job type',
+                  'Track application deadlines easily',
+                  'Direct links to application pages',
+                  'Professional profile for hiring managers'
+                ].map((feature, index) => (
+                  <div key={index} className="flex items-start space-x-4">
+                    <div className="w-6 h-6 bg-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                      <div className="w-2 h-2 bg-primary-foreground rounded-full" />
+                    </div>
+                    <p className="text-muted-foreground">{feature}</p>
                   </div>
-                  <p className="text-lg text-gray-200">{feature}</p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      {/* Trusted by section */}
-      <div className="border-t border-gray-700/50 py-16">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-12">
-            <h3 className="text-lg text-gray-400 font-medium">
-              Trusted by top business schools across Europe
+          {/* Newsletter Section */}
+          <div className="mt-24 text-center">
+            <h3 className="text-4xl font-bold text-foreground mb-6">
+              Stay Ahead of the Market
             </h3>
-          </div>
-          
-          <div className="bg-[#1E293B]/30 border border-gray-600/20 rounded-xl p-8">
-            <div className="flex justify-center items-center gap-16 flex-wrap text-gray-400">
-              {[
-                'hool of Economics)',
-                'Copenhagen Business School', 
-                'Warwick',
-                'UCL',
-                'HEC',
-                'ESCP',
-                'ESSEC'
-              ].map((school, index) => (
-                <div key={index} className="text-lg font-medium">
-                  {school}
-                </div>
-              ))}
+            <p className="text-xl text-muted-foreground mb-8 leading-relaxed max-w-3xl mx-auto">
+              Get weekly insights on finance career trends, new opportunities, 
+              and exclusive access to premium roles.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+              <input 
+                type="email" 
+                placeholder="Enter your email"
+                className="flex-1 px-6 py-4 bg-card border border-border rounded-xl text-foreground placeholder-muted-foreground focus:outline-none focus:border-primary backdrop-blur-sm"
+              />
+              <Button className="bg-primary text-primary-foreground hover:bg-primary/90 px-8 py-4 rounded-xl font-medium">
+                Subscribe
+                <ArrowRight className="ml-2 w-5 h-5" />
+              </Button>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+    </>
   );
 };
