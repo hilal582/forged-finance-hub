@@ -32,7 +32,6 @@ export const AuthPage = () => {
         setError(error.message);
       } else {
         setSuccess('Successfully signed in!');
-        // Redirect will happen automatically through auth state change
       }
     } catch (err) {
       setError('An unexpected error occurred');
@@ -77,56 +76,54 @@ export const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-blue-900 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="flex items-center mb-6">
           <Button
             variant="ghost"
             size="sm"
             onClick={handleBackToHome}
-            className="mr-2"
+            className="mr-2 text-gray-300 hover:text-white hover:bg-slate-800"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Button>
         </div>
 
-        <Card className="w-full">
+        <Card className="w-full bg-slate-800/50 border-slate-700 backdrop-blur-sm">
           <CardHeader className="text-center">
             <div className="flex items-center justify-center mb-4">
-              <img 
-                src="/forgedfinance_logo.jpg" 
-                alt="Forged Finance Logo" 
-                className="h-12 w-12 object-contain mr-3"
-              />
-              <div className="text-xl font-bold tracking-[0.15em]">
-                FORGED FINANCE
+              <div className="w-12 h-12 bg-blue-600 rounded-lg flex items-center justify-center mr-3">
+                <span className="text-white font-bold text-lg">F</span>
+              </div>
+              <div className="text-xl font-semibold tracking-wide text-white">
+                Forged Finance
               </div>
             </div>
-            <CardTitle>Welcome</CardTitle>
-            <CardDescription>
+            <CardTitle className="text-white">Welcome</CardTitle>
+            <CardDescription className="text-gray-400">
               Sign in to your account or create a new one
             </CardDescription>
           </CardHeader>
 
           <CardContent>
             <Tabs defaultValue="signin" className="w-full">
-              <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="signin">Sign In</TabsTrigger>
-                <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              <TabsList className="grid w-full grid-cols-2 bg-slate-700">
+                <TabsTrigger value="signin" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-gray-300">Sign In</TabsTrigger>
+                <TabsTrigger value="signup" className="data-[state=active]:bg-blue-600 data-[state=active]:text-white text-gray-300">Sign Up</TabsTrigger>
               </TabsList>
 
               {error && (
-                <Alert className="mt-4 border-red-200 bg-red-50">
-                  <AlertDescription className="text-red-800">
+                <Alert className="mt-4 border-red-500 bg-red-500/10">
+                  <AlertDescription className="text-red-400">
                     {error}
                   </AlertDescription>
                 </Alert>
               )}
 
               {success && (
-                <Alert className="mt-4 border-green-200 bg-green-50">
-                  <AlertDescription className="text-green-800">
+                <Alert className="mt-4 border-green-500 bg-green-500/10">
+                  <AlertDescription className="text-green-400">
                     {success}
                   </AlertDescription>
                 </Alert>
@@ -135,7 +132,7 @@ export const AuthPage = () => {
               <TabsContent value="signin" className="space-y-4 mt-4">
                 <form onSubmit={handleSignIn} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signin-email">Email</Label>
+                    <Label htmlFor="signin-email" className="text-gray-300">Email</Label>
                     <Input
                       id="signin-email"
                       type="email"
@@ -143,10 +140,11 @@ export const AuthPage = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
+                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signin-password">Password</Label>
+                    <Label htmlFor="signin-password" className="text-gray-300">Password</Label>
                     <Input
                       id="signin-password"
                       type="password"
@@ -154,11 +152,12 @@ export const AuthPage = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
+                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400"
                     />
                   </div>
                   <Button 
                     type="submit" 
-                    className="w-full" 
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white" 
                     disabled={loading}
                   >
                     {loading ? 'Signing in...' : 'Sign In'}
@@ -169,7 +168,7 @@ export const AuthPage = () => {
               <TabsContent value="signup" className="space-y-4 mt-4">
                 <form onSubmit={handleSignUp} className="space-y-4">
                   <div className="space-y-2">
-                    <Label htmlFor="signup-name">Full Name</Label>
+                    <Label htmlFor="signup-name" className="text-gray-300">Full Name</Label>
                     <Input
                       id="signup-name"
                       type="text"
@@ -177,10 +176,11 @@ export const AuthPage = () => {
                       value={fullName}
                       onChange={(e) => setFullName(e.target.value)}
                       required
+                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-email">Email</Label>
+                    <Label htmlFor="signup-email" className="text-gray-300">Email</Label>
                     <Input
                       id="signup-email"
                       type="email"
@@ -188,10 +188,11 @@ export const AuthPage = () => {
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       required
+                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="signup-password">Password</Label>
+                    <Label htmlFor="signup-password" className="text-gray-300">Password</Label>
                     <Input
                       id="signup-password"
                       type="password"
@@ -199,11 +200,12 @@ export const AuthPage = () => {
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       required
+                      className="bg-slate-700 border-slate-600 text-white placeholder-gray-400"
                     />
                   </div>
                   <Button 
                     type="submit" 
-                    className="w-full" 
+                    className="w-full bg-blue-600 hover:bg-blue-700 text-white" 
                     disabled={loading}
                   >
                     {loading ? 'Creating account...' : 'Sign Up'}
